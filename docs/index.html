@@ -11803,17 +11803,6 @@ $( document ).ready(function(){
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-</pre></div>
-
-</div>
-</div>
-</div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
@@ -12114,173 +12103,13 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Overfitting">Overfitting<a class="anchor-link" href="#Overfitting">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Example-1:-Fitting-many-features">Example 1: Fitting many features<a class="anchor-link" href="#Example-1:-Fitting-many-features">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">D</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="n">mus</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.01</span> <span class="o">+</span> <span class="n">mus</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span>
-<span class="n">yy</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.1</span> <span class="o">+</span> <span class="n">mus</span>
-</pre></div>
+<h2 id="Overfitting">Overfitting<a class="anchor-link" href="#Overfitting">&#182;</a></h2><ul>
+<li>Fitting many features</li>
+<li>Explaning noise with many basis function</li>
+</ul>
 
 </div>
 </div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ww</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">yy</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">ww</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">res</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/Users/chitowong/miniconda3/envs/mlpr/lib/python3.7/site-packages/ipykernel_launcher.py:1: FutureWarning: `rcond` parameter will change to the default of machine precision times ``max(M, N)`` where M and N are the input matrix dimensions.
-To use the future default and silence this warning we advise to pass `rcond=None`, to keep using the old, explicitly pass `rcond=-1`.
-  &#34;&#34;&#34;Entry point for launching an IPython kernel.
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[28]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>(0.01993325621989604, array([0.57987382]))</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ww0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">D</span><span class="p">)</span> <span class="o">/</span> <span class="n">D</span>
-<span class="n">ww0</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="p">((</span><span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ww0</span><span class="p">)</span> <span class="o">-</span> <span class="n">yy</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[29]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>(0.02, 1.0046428116107036)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">xx_test</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">D</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.5</span>
-<span class="n">yy_test</span> <span class="o">=</span> <span class="n">xx_test</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ww</span><span class="p">)</span>
-<span class="n">yy_test</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[30]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>-8.500205564561973</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Example2:-Explaning-noise-with-many-basis-function">Example2: Explaning noise with many basis function<a class="anchor-link" href="#Example2:-Explaning-noise-with-many-basis-function">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>
-<span class="n">yy</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -12427,6 +12256,18 @@ To use the future default and silence this warning we advise to pass `rcond=None
 <p>$$p(\mathbf x) = \mathcal N(\mathbf x; \boldsymbol\mu, \Sigma) = \frac{1}{|\Sigma|^{1/2} (2\pi)^{D/2}} \exp \left( -\frac{1}{2} (\mathbf x - \boldsymbol\mu)^\top \Sigma^{-1} (\mathbf x - \boldsymbol\mu) \right)$$</p>
 <p>$\Sigma$ should be positive definite or positive semi-definite.</p>
 <p>If $\Sigma$ is positive semi-definite, $\Sigma$ is not invertible. For example, if $x_1 = x_2$, $\Sigma = \begin{pmatrix} 1 &amp; 1 \\ 1 &amp; 1 \end{pmatrix}$.</p>
+<p>Given a joint distribution</p>
+<p>$$p(\mathbf f, \mathbf g) = \mathcal N \left( \begin{bmatrix}
+    \mathbf f \\ \mathbf g
+\end{bmatrix}; \begin{bmatrix}
+    \boldsymbol\mu_f \\ \boldsymbol\mu_g
+\end{bmatrix}, \begin{bmatrix}
+    \Sigma_f &amp; C \\ C^\top &amp; \Sigma_g
+\end{bmatrix} \right) \text{, }$$</p>
+<ul>
+<li>Marginal distribution: $p(\mathbf f) = \mathcal N(\mathbf f; \boldsymbol\mu_f, \Sigma_f)$</li>
+<li>Conditional distribution: $p(\mathbf f | \mathbf g) = \mathcal N \left( \mathbf f; \boldsymbol\mu_f + C \Sigma_g^{-1} (\mathbf g - \boldsymbol\mu_g), \Sigma_f - C \Sigma_g^{-1} C^\top \right)$</li>
+</ul>
 
 </div>
 </div>
@@ -12444,7 +12285,7 @@ To use the future default and silence this warning we advise to pass `rcond=None
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_39_0.png"
+<img src="MLPR Revision_files/MLPR Revision_32_0.png"
 >
 </div>
 
@@ -12484,7 +12325,7 @@ To use the future default and silence this warning we advise to pass `rcond=None
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_42_0.png"
+<img src="MLPR Revision_files/MLPR Revision_35_0.png"
 >
 </div>
 
@@ -12559,7 +12400,7 @@ To use the future default and silence this warning we advise to pass `rcond=None
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_48_0.png"
+<img src="MLPR Revision_files/MLPR Revision_41_0.png"
 >
 </div>
 
@@ -12890,8 +12731,8 @@ To use the future default and silence this warning we advise to pass `rcond=None
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Model">Model<a class="anchor-link" href="#Model">&#182;</a></h2><p>$$f(\mathbf x; \mathbf w) = \mathbf w^\top \mathbf x \quad y|\mathbf x, \mathbf w \overset{\text{iid}}{\sim} \mathcal N ( \mathbf w^\top \boldsymbol\phi (\mathbf x), \sigma_y^2 )$$</p>
-<p>$$\underbrace{p(\mathbf w | \mathbf y, X)}_\text{Posterior} = \frac{\overbrace{p(\mathbf y | \mathbf w, X)}^\text{Likelihood} \cdot \overbrace{p(\mathbf w)}^\text{Prior}}{p(\mathbf y | X)} \propto p(\mathbf y | \mathbf w, X) p(\mathbf w) = p(\mathbf w) \prod_{n=1}^N p(y^{(n)} | \mathbf x^{(n)}, \mathbf w)$$</p>
+<h2 id="Model">Model<a class="anchor-link" href="#Model">&#182;</a></h2><p>$$f(\mathbf x; \mathbf w) = \mathbf w^\top \mathbf x \quad y|\mathbf x, \mathbf w \overset{\text{iid}}{\sim} \mathcal N ( \mathbf w^\top \mathbf x, \sigma_y^2 )$$</p>
+<p>$$\underbrace{p(\mathbf w | \mathbf y, X)}_\text{Posterior} = \frac{\overbrace{p(\mathbf y | \mathbf w, X)}^\text{Likelihood} \cdot \overbrace{p(\mathbf w)}^\text{Prior}}{\underbrace{p(\mathbf y | X)}_\text{Marginal likelihood}} \propto p(\mathbf y | \mathbf w, X) p(\mathbf w) = p(\mathbf w) \prod_{n=1}^N p(y^{(n)} | \mathbf x^{(n)}, \mathbf w)$$</p>
 
 </div>
 </div>
@@ -12903,11 +12744,11 @@ To use the future default and silence this warning we advise to pass `rcond=None
 <h2 id="Conjugate-prior">Conjugate prior<a class="anchor-link" href="#Conjugate-prior">&#182;</a></h2><p>\begin{align*}
     \text{Prior:} &amp;&amp; \mathbf w &amp;\sim \mathcal N(\mathbf 0, \sigma_w^2 \mathbb I) \\
     \text{Posterior:} &amp;&amp; p(\mathbf w | \mathbf y, X) &amp;\propto p(\mathbf w) p(\mathbf y|\mathbf w, X) \\
-    &amp;&amp; &amp;= \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I) \mathcal N(\mathbf y; \Phi \mathbf w, \sigma_y^2 \mathbb I) \\
+    &amp;&amp; &amp;= \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I) \mathcal N(\mathbf y; X \mathbf w, \sigma_y^2 \mathbb I) \\
     &amp;&amp; &amp;\propto \mathcal N \left( \mathbf w; \mathbf w_N, V_N \right) \\
-    \text{Posterior variance:} &amp;&amp; V_N &amp;= (\sigma_y^{-2} \Phi^\top \Phi + \sigma_w^{-2} \mathbb I)^{-1} \\
-    \text{Posterior mean:} &amp;&amp; \mathbf w_N &amp;= \sigma_y^{-2} V_N \Phi^\top \mathbf y \\
-    &amp;&amp; &amp;= (\Phi^\top \Phi + \sigma_y^2 \sigma_w^{-2} \mathbb I)^{-1} \Phi^\top \mathbf y \equiv \text{MLE with L2}
+    \text{Posterior variance:} &amp;&amp; V_N &amp;= (\sigma_y^{-2} X^\top X + \sigma_w^{-2} \mathbb I)^{-1} \\
+    \text{Posterior mean:} &amp;&amp; \mathbf w_N &amp;= \sigma_y^{-2} V_N X^\top \mathbf y \\
+    &amp;&amp; &amp;= (X^\top X + \sigma_y^2 \sigma_w^{-2} \mathbb I)^{-1} X^\top \mathbf y \equiv \text{MLE with L2}
 \end{align*}</p>
 
 </div>
@@ -12919,7 +12760,7 @@ To use the future default and silence this warning we advise to pass `rcond=None
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Posterior-predictive-distribution">Posterior predictive distribution<a class="anchor-link" href="#Posterior-predictive-distribution">&#182;</a></h2><p>\begin{align*}
     p(y^* | \mathbf x^*, \mathcal D) = p(y^* | \mathbf x^*, \mathbf y, X) &amp;= \int p(y^* | \mathbf x^*, \mathbf w) p(\mathbf w | \mathcal D) \mathrm d \mathbf w \\
-    &amp;= \mathcal N \left( y^*; [\boldsymbol\phi(\mathbf x^*)]^\top \mathbf w_N, \boldsymbol\phi^\top V_N \boldsymbol\phi + \sigma_y^2 \right)
+    &amp;= \mathcal N \left( y^*; (\mathbf x^*)^\top \mathbf w_N, (\mathbf x^*)^\top V_N \mathbf x^* + \sigma_y^2 \right)
 \end{align*}</p>
 
 </div>
@@ -12931,51 +12772,81 @@ To use the future default and silence this warning we advise to pass `rcond=None
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Cost">Cost<a class="anchor-link" href="#Cost">&#182;</a></h2><p>$$c = \mathbb E_{p(y^* | \mathbf x^*, \mathcal D)} [L(y^*, \hat{y^*})]$$</p>
 <ul>
-<li><strong>Square loss:</strong> $L(y^*, \hat{y^*}) = (y^* - \hat{y^*})^2 \quad \Rightarrow \quad \hat{y^*} = \mathbb E_{p(y^* | \mathbf x^*, \mathcal D)} [y^*] = [\boldsymbol\phi(\mathbf x^*)]^\top \mathbf w_N$</li>
+<li><strong>Square loss:</strong> $L(y^*, \hat{y^*}) = (y^* - \hat{y^*})^2 \quad \Rightarrow \quad \hat{y^*} = \mathbb E_{p(y^* | \mathbf x^*, \mathcal D)} [y^*] = (\mathbf x^*)^\top \mathbf w_N$</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Gaussian-Processes">Gaussian Processes<a class="anchor-link" href="#Gaussian-Processes">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Kernel-function">Kernel function<a class="anchor-link" href="#Kernel-function">&#182;</a></h2><p>$$\mathrm{cov}(f_i, f_j) = k(\mathbf x^{(i)}, \mathbf x^{(j)})$$</p>
+<ul>
+<li>Mercer kernels: $K$, where $K_{ij} = k(\mathbf x^{(i)}, \mathbf x^{(j)})$, is positive definite matrix</li>
+<li>Example kernels:<ul>
+<li>$k(\mathbf x^{(i)}, \mathbf x^{(j)}) = \exp (-\| \mathbf x^{(i)} - \mathbf x^{(j)} \|^2)$</li>
+<li>$k(\mathbf x^{(i)}, \mathbf x^{(j)}) = (1 + \| \mathbf x^{(i)} - \mathbf x^{(j)} \|)\exp (-\| \mathbf x^{(i)} - \mathbf x^{(j)} \|)$</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Regression">Regression<a class="anchor-link" href="#Regression">&#182;</a></h2><p>$$\left. \begin{aligned}
+    \left. \begin{aligned}
+        \mathbf f &amp; \sim \mathcal N(\mathbf 0, K) \\
+        K_{ij} &amp;= k(\mathbf x^{(i)}, \mathbf x^{(j)}) \\
+    \end{aligned} \right\} \quad f &amp;\sim \mathcal{GP} \\
+    \mathbf y | \mathbf f &amp; \sim \mathcal N(\mathbf f, \sigma_y^2 \mathbb I)
+\end{aligned} \right\} \quad \begin{bmatrix}
+    \mathbf y \\ \mathbf f_*
+\end{bmatrix} \sim \mathcal N \left( \mathbf 0, \begin{bmatrix}
+    K(X,X)+\sigma_y^2 \mathbb I &amp; K(X,X_*) \\
+    K(X_*,X) &amp; K(X_*,X_*)
+\end{bmatrix} \right)$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Posterior">Posterior<a class="anchor-link" href="#Posterior">&#182;</a></h2><ul>
+<li>$\mathbb E(\mathbf f_* | \mathbf y) = K(X_*, X) \left(K(X,X) + \sigma_y^2 \mathbb I \right)^{-1} \mathbf y$</li>
+<li>$\mathrm{cov}(\mathbf f_* | \mathbf y) = K(X_*, X_*) - K(X_*, X) \left(K(X,X) + \sigma_y^2 \mathbb I \right)^{-1} K(X,X_*)$</li>
+</ul>
+<p><strong>1-D posterior:</strong></p>
+<ul>
+<li>$f(\mathbf x^{(*)}) \sim \mathcal N(m, s^2)$</li>
+<li>$(\mathbf k^{(*)})_i = k(\mathbf x^{(*)}, \mathbf x^{(i)}$</li>
+<li>$M = K + \sigma_y^2 \mathbb I$</li>
+<li>$m= (\mathbf k^{(*)})^\top M^{-1} \mathbf y$</li>
+<li>$s^2 = k(\mathbf x^{(*)}, \mathbf x^{(*)}) - (\mathbf k^{(*)})^\top M^{-1} \mathbf k^{(*)}$</li>
 </ul>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">multivariate_normal</span>
-</pre></div>
-
-</div>
-</div>
-</div>
 
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">wws</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="mf">0.4</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.4</span><span class="o">**</span><span class="mi">2</span><span class="p">]),</span> <span class="mi">100</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[56]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">ww</span> <span class="ow">in</span> <span class="n">wws</span><span class="p">:</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_grid</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">x_grid</span><span class="p">[:,</span><span class="kc">None</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">x_grid</span><span class="o">.</span><span class="n">shape</span><span class="p">)[:,</span><span class="kc">None</span><span class="p">]))</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ww</span><span class="p">))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
@@ -12983,13 +12854,12 @@ To use the future default and silence this warning we advise to pass `rcond=None
 
 <div class="output_area">
 
-<div class="prompt"></div>
-
+<div class="prompt"> </div>
 
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_76_0.png"
+<img src="MLPR Revision_files/MLPR Revision_72_0.png"
 >
 </div>
 
