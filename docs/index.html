@@ -12733,6 +12733,8 @@ $( document ).ready(function(){
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Model">Model<a class="anchor-link" href="#Model">&#182;</a></h2><p>$$f(\mathbf x; \mathbf w) = \mathbf w^\top \mathbf x \quad y|\mathbf x, \mathbf w \overset{\text{iid}}{\sim} \mathcal N ( \mathbf w^\top \mathbf x, \sigma_y^2 )$$</p>
 <p>$$\underbrace{p(\mathbf w | \mathbf y, X)}_\text{Posterior} = \frac{\overbrace{p(\mathbf y | \mathbf w, X)}^\text{Likelihood} \cdot \overbrace{p(\mathbf w)}^\text{Prior}}{\underbrace{p(\mathbf y | X)}_\text{Marginal likelihood}} \propto p(\mathbf y | \mathbf w, X) p(\mathbf w) = p(\mathbf w) \prod_{n=1}^N p(y^{(n)} | \mathbf x^{(n)}, \mathbf w)$$</p>
+<p>Rewriting with $\mathcal D = \{ \mathbf x^{(n)}, y^{(n)} \}$,</p>
+<p>$$p(\mathbf w | \mathcal D) \propto P(\mathcal D | \mathbf w) p(\mathbf w)$$</p>
 
 </div>
 </div>
@@ -12741,27 +12743,12 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Conjugate-prior">Conjugate prior<a class="anchor-link" href="#Conjugate-prior">&#182;</a></h2><p>\begin{align*}
-    \text{Prior:} &amp;&amp; \mathbf w &amp;\sim \mathcal N(\mathbf 0, \sigma_w^2 \mathbb I) \\
-    \text{Posterior:} &amp;&amp; p(\mathbf w | \mathbf y, X) &amp;\propto p(\mathbf w) p(\mathbf y|\mathbf w, X) \\
-    &amp;&amp; &amp;= \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I) \mathcal N(\mathbf y; X \mathbf w, \sigma_y^2 \mathbb I) \\
-    &amp;&amp; &amp;\propto \mathcal N \left( \mathbf w; \mathbf w_N, V_N \right) \\
-    \text{Posterior variance:} &amp;&amp; V_N &amp;= (\sigma_y^{-2} X^\top X + \sigma_w^{-2} \mathbb I)^{-1} \\
-    \text{Posterior mean:} &amp;&amp; \mathbf w_N &amp;= \sigma_y^{-2} V_N X^\top \mathbf y \\
-    &amp;&amp; &amp;= (X^\top X + \sigma_y^2 \sigma_w^{-2} \mathbb I)^{-1} X^\top \mathbf y \equiv \text{MLE with L2}
+<h2 id="Estimator">Estimator<a class="anchor-link" href="#Estimator">&#182;</a></h2><h3 id="Maximum-a-posteriori-(MAP)">Maximum a posteriori (MAP)<a class="anchor-link" href="#Maximum-a-posteriori-(MAP)">&#182;</a></h3><p>\begin{align*}
+    \mathbf w^* &amp;= \underset{\mathbf w}{\mathrm{arg\,max}} p(\mathbf w | \mathcal D) \\
+    &amp;= \underset{\mathbf w}{\mathrm{arg\,min}} \left[ -\log P(\mathcal D | \mathbf w) + \frac{1}{2\sigma_w^2} \mathbf w^\top \mathbf w \right] \\
+    &amp;= \text{Optimum of L2 regularised log-likelihood}
 \end{align*}</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Posterior-predictive-distribution">Posterior predictive distribution<a class="anchor-link" href="#Posterior-predictive-distribution">&#182;</a></h2><p>\begin{align*}
-    p(y^* | \mathbf x^*, \mathcal D) = p(y^* | \mathbf x^*, \mathbf y, X) &amp;= \int p(y^* | \mathbf x^*, \mathbf w) p(\mathbf w | \mathcal D) \mathrm d \mathbf w \\
-    &amp;= \mathcal N \left( y^*; (\mathbf x^*)^\top \mathbf w_N, (\mathbf x^*)^\top V_N \mathbf x^* + \sigma_y^2 \right)
-\end{align*}</p>
+<h3 id="Posterior-predictive-distribution">Posterior predictive distribution<a class="anchor-link" href="#Posterior-predictive-distribution">&#182;</a></h3><p>$$P(y^* | \mathbf x^*, \mathcal D) = \int p(y^*, \mathbf w | \mathbf x^*, \mathcal D) \mathrm d \mathbf w = \int P(y^* | \mathbf x^*, \mathbf w) p (\mathbf w | \mathcal D) \mathrm d \mathbf w$$</p>
 
 </div>
 </div>
@@ -12772,7 +12759,44 @@ $( document ).ready(function(){
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Cost">Cost<a class="anchor-link" href="#Cost">&#182;</a></h2><p>$$c = \mathbb E_{p(y^* | \mathbf x^*, \mathcal D)} [L(y^*, \hat{y^*})]$$</p>
 <ul>
-<li><strong>Square loss:</strong> $L(y^*, \hat{y^*}) = (y^* - \hat{y^*})^2 \quad \Rightarrow \quad \hat{y^*} = \mathbb E_{p(y^* | \mathbf x^*, \mathcal D)} [y^*] = (\mathbf x^*)^\top \mathbf w_N$</li>
+<li><strong>Square loss:</strong> $L(y^*, \hat{y^*}) = (y^* - \hat{y^*})^2 \quad \Rightarrow \quad \hat{y^*} = \mathbb E_{p(y^* | \mathbf x^*, \mathcal D)} [y^*]$</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Bayesian-linear-regression-with-conjugate-prior">Bayesian linear regression with conjugate prior<a class="anchor-link" href="#Bayesian-linear-regression-with-conjugate-prior">&#182;</a></h2><ul>
+<li><strong>Model:</strong> $\displaystyle f(\mathbf x; \mathbf w) = \mathbf w^\top \mathbf x$ and $y|\mathbf x, \mathbf w \overset{\text{iid}}{\sim} \mathcal N (f, \sigma_y^2 )$</li>
+<li><strong>Likelihood:</strong> $\displaystyle P(\mathcal D | \mathbf w) = \prod_n \mathcal N(y^{(n)}; \mathbf w^\top \mathbf x^{(n)}, \sigma_y^2) = \mathcal N(\mathbf y; X \mathbf w, \sigma_y^2 \mathbb I)$</li>
+<li><strong>Prior:</strong> $\displaystyle p(\mathbf w) = \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I)$</li>
+<li><strong>Posterior:</strong> $\displaystyle p(\mathbf w | \mathcal D) \propto \mathcal N(\mathbf y; X \mathbf w, \sigma_y^2 \mathbb I) \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I) \propto \mathcal N(\mathbf w; \mathbf w_N, V_N)$<ul>
+<li>$\displaystyle V_N = (\sigma_y^{-2} X^\top X + \sigma_w^{-2} \mathbb I)^{-1}$</li>
+<li>$\displaystyle \mathbf w_N = \sigma_y^{-2} V_N X^\top \mathbf y$</li>
+</ul>
+</li>
+<li><strong>MAP:</strong> $\displaystyle \mathbf w^* = \mathbf w_N = (X^\top X + \sigma_y^2 \sigma_w^{-2} \mathbb I)^{-1} X^\top \mathbf y$ (optimum of L2 regularised cost with $\displaystyle \lambda = \frac{\sigma_y^2}{\sigma_w^2}$</li>
+<li><strong>Posterior prediction:</strong> $\displaystyle p(y^* | \mathbf x^*, \mathcal D) = \mathcal N \left( y^*; (\mathbf x^*)^\top \mathbf w_N, (\mathbf x^*)^\top V_N \mathbf x^* + \sigma_y^2 \right)$</li>
+<li><strong>Square loss:</strong> $\displaystyle \hat{y^*} = \mathbb E_{p(y^* | \mathbf x^*, \mathcal D)} [y^*] = (\mathbf x^*)^\top \mathbf w_N$</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Bayesian-logistic-regression">Bayesian logistic regression<a class="anchor-link" href="#Bayesian-logistic-regression">&#182;</a></h2><ul>
+<li><strong>Model:</strong> $\displaystyle f(\mathbf x; \mathbf w) = \sigma(\mathbf w^\top \mathbf x)$ and $y|\mathbf x, \mathbf w \overset{\text{iid}}{\sim} \mathrm{Ber}(f)$</li>
+<li><strong>Likelihood:</strong> $\displaystyle P(\mathcal D | \mathbf w) = \prod_n \sigma(z^{(n)} \mathbf w^\top \mathbf x^{(n)})$</li>
+<li><strong>Prior:</strong> $p(\mathbf w) = \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I)$</li>
+<li><strong>Posterior:</strong> $\displaystyle p(\mathbf w | \mathcal D) \propto P(\mathcal D | \mathbf w) \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I) \propto P(\mathcal D | \mathbf w) \cdot \exp \left( -\frac{1}{2 \sigma_w^2} \mathbf w^\top \mathbf w \right)$</li>
+<li><strong>MAP</strong>: $\displaystyle \mathbf w^* = \underset{\mathbf w}{\mathrm{arg\,min}} \left[ \mathrm{NLL} + \frac{1}{2\sigma_w^2} \mathbf w^\top \mathbf w \right]$</li>
+<li><strong>Posterior prediction:</strong> Contours are not parallel</li>
 </ul>
 
 </div>
@@ -12796,12 +12820,49 @@ $( document ).ready(function(){
 <li>Example kernels:<ul>
 <li>$k(\mathbf x^{(i)}, \mathbf x^{(j)}) = \exp (-\| \mathbf x^{(i)} - \mathbf x^{(j)} \|^2)$</li>
 <li>$k(\mathbf x^{(i)}, \mathbf x^{(j)}) = (1 + \| \mathbf x^{(i)} - \mathbf x^{(j)} \|)\exp (-\| \mathbf x^{(i)} - \mathbf x^{(j)} \|)$</li>
+<li><strong>Bayesian linear regression's kernel:</strong> $\displaystyle k(\mathbf x^{(i)}, \mathbf x^{(j)}) = \sigma_w^2 (\mathbf x^{(i)})^\top \mathbf x^{(j)} + \sigma_b^2$<ul>
+<li>$f(\mathbf x^{(i)}) = \mathbf w^\top \mathbf x^{(i)} + b$</li>
+<li>$\mathbf w \sim \mathcal N(\mathbf 0, \sigma_w^2 \mathbb I)$</li>
+<li>$b \sim \mathcal N(0, \sigma_b^2)$</li>
+</ul>
+</li>
+<li><strong>Gaussian kernel:</strong> $\displaystyle k(\mathbf x^{(i)}, \mathbf x^{(j)}) = \sigma_f^2 \exp \left( -\frac{1}{2 l_d^2} \left\| \mathbf x^{(i)} - \mathbf x^{(j)} \right\|^2 \right)$<ul>
+<li>Marginal variance: $\sigma_f^2 = \mathrm{Var}(f_i) = k(\mathbf x^{(i)}, \mathbf x^{(i)})$</li>
+<li>Lengthscale: $l_d$</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
 </div>
 </div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"> </div>
+
+
+
+<div class="output_png output_subarea ">
+<img src="MLPR Revision_files/MLPR Revision_71_0.png"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -12827,15 +12888,15 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Posterior">Posterior<a class="anchor-link" href="#Posterior">&#182;</a></h2><ul>
-<li>$\mathbb E(\mathbf f_* | \mathbf y) = K(X_*, X) \left(K(X,X) + \sigma_y^2 \mathbb I \right)^{-1} \mathbf y$</li>
-<li>$\mathrm{cov}(\mathbf f_* | \mathbf y) = K(X_*, X_*) - K(X_*, X) \left(K(X,X) + \sigma_y^2 \mathbb I \right)^{-1} K(X,X_*)$</li>
-</ul>
+<h3 id="Posterior">Posterior<a class="anchor-link" href="#Posterior">&#182;</a></h3><p>\begin{align*}
+    M &amp;= K(X,X) + \sigma_y^2 \mathbb I \\
+    \mathbb E(\mathbf f_* | \mathbf y) &amp;= K(X_*, X) M^{-1} \mathbf y \\
+    \mathrm{cov}(\mathbf f_* | \mathbf y) &amp;= K(X_*, X_*) - K(X_*, X) M^{-1} K(X,X_*)
+\end{align*}</p>
 <p><strong>1-D posterior:</strong></p>
 <ul>
-<li>$f(\mathbf x^{(*)}) \sim \mathcal N(m, s^2)$</li>
-<li>$(\mathbf k^{(*)})_i = k(\mathbf x^{(*)}, \mathbf x^{(i)}$</li>
-<li>$M = K + \sigma_y^2 \mathbb I$</li>
+<li>$f(\mathbf x^{(*)}) | \mathbf y \sim \mathcal N(m, s^2)$</li>
+<li>$(\mathbf k^{(*)})_i = k(\mathbf x^{(*)}, \mathbf x^{(i)})$</li>
 <li>$m= (\mathbf k^{(*)})^\top M^{-1} \mathbf y$</li>
 <li>$s^2 = k(\mathbf x^{(*)}, \mathbf x^{(*)}) - (\mathbf k^{(*)})^\top M^{-1} \mathbf k^{(*)}$</li>
 </ul>
@@ -12859,7 +12920,7 @@ $( document ).ready(function(){
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_72_0.png"
+<img src="MLPR Revision_files/MLPR Revision_75_0.png"
 >
 </div>
 
@@ -12868,6 +12929,42 @@ $( document ).ready(function(){
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Marginal-likelihood">Marginal likelihood<a class="anchor-link" href="#Marginal-likelihood">&#182;</a></h3><p>\begin{align*}
+    \mathbf y | X, \theta &amp;\sim \mathcal N(\mathbf 0, M) \\ 
+    \theta &amp;= \{ l_d, \sigma_f, \sigma_y, \ldots \} \text{ (kernel parameters and noise)}
+\end{align*}</p>
+<p><strong>Setting hyperparameters:</strong></p>
+<ul>
+<li>Maximum likelihood</li>
+</ul>
+<p><strong>Regularising:</strong></p>
+<ul>
+<li>Regularise log noise variance $\log \sigma_y^2$, to avoid it from getting too small</li>
+<li>Fully Bayesian approch (posterior over hyperparameters must be approximated)
+$$p(f_* | \mathbf y, X) = \int p(f_* | \mathbf y, X, \theta) p(\theta|\mathbf y, X) \mathrm d\theta$$</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Computation-cost-and-limitations">Computation cost and limitations<a class="anchor-link" href="#Computation-cost-and-limitations">&#182;</a></h2><ul>
+<li>Inverting matrix $M$ requires $O(N^3)$ computation cost</li>
+<li>Computing kernel matrix $K$ costs $O(DN^2)$ and uses $O(N^2)$ memory</li>
+<li>Not all functions can be represented by a GP</li>
+<li>The probability of a function being monotonic under any GP is 0</li>
+</ul>
+
+</div>
+</div>
 </div>
     </div>
   </div>
