@@ -12466,6 +12466,14 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Gaussian-mixture-models">Gaussian mixture models<a class="anchor-link" href="#Gaussian-mixture-models">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Optimisation">Optimisation<a class="anchor-link" href="#Optimisation">&#182;</a></h1>
 </div>
 </div>
@@ -12869,6 +12877,76 @@ p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \mathbb E_{\mathcal N(\mathbf w
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Variational-methods">Variational methods<a class="anchor-link" href="#Variational-methods">&#182;</a></h2><p><strong>Ingredients:</strong></p>
+<ol>
+<li>A family of possible distributions $q(\mathbf w; \theta) = \mathcal N(\mathbf w; \mathbf m, V)$ (MLPR exclusive)</li>
+<li>A variational cost function describing the discrepancy between $q$ and target distribution</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Kullback-Leibler-(KL)-divergence">Kullback-Leibler (KL) divergence<a class="anchor-link" href="#Kullback-Leibler-(KL)-divergence">&#182;</a></h3><p>$$D_\text{KL} (p \| q) = \int p(\mathbf z) \log \frac{p(\mathbf z)}{q(\mathbf z)} \mathrm d \mathbf z = \begin{cases}
+    0 &amp; p(\mathbf z) = q(\mathbf z) \\
+    \text{positive} &amp; \text{otherwise}
+\end{cases}$$</p>
+<p>NB: $D_\text{KL}(p \| q) \ne D_\text{KL}(q \| p)$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Minimising-$D_\text{KL}(p\|q)$">Minimising $D_\text{KL}(p\|q)$<a class="anchor-link" href="#Minimising-$D_\text{KL}(p\|q)$">&#182;</a></h3><ul>
+<li>$\mathbf m = \mathbb E_p [\mathbf z]$ and $V = \mathrm{Var}_p [\mathbf z]$</li>
+<li>May not be sensible, such as bimodal distribution</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt"> </div>
+
+
+
+<div class="output_png output_subarea ">
+<img src="MLPR Revision_files/MLPR Revision_75_0.png"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Minimising-$D_\text{KL}(q\|p)$">Minimising $D_\text{KL}(q\|p)$<a class="anchor-link" href="#Minimising-$D_\text{KL}(q\|p)$">&#182;</a></h3><p>$$D_\text{KL} \left( q(\mathbf w; \theta) \| p(\mathbf w | \mathcal D) \right) = -\int q(\mathbf w; \theta) \log p(\mathbf w| \mathcal D) \mathrm d \mathbf w + \underbrace{\int q(\mathbf w; \theta) \log q(\mathbf w; \theta) \mathrm d \mathbf w}_{\text{negative entropy, } -H(q)}$$</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Gaussian-Processes">Gaussian Processes<a class="anchor-link" href="#Gaussian-Processes">&#182;</a></h1>
 </div>
 </div>
@@ -12917,7 +12995,7 @@ p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \mathbb E_{\mathcal N(\mathbf w
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_74_0.png"
+<img src="MLPR Revision_files/MLPR Revision_80_0.png"
 >
 </div>
 
@@ -12983,7 +13061,7 @@ p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \mathbb E_{\mathcal N(\mathbf w
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_78_0.png"
+<img src="MLPR Revision_files/MLPR Revision_84_0.png"
 >
 </div>
 
