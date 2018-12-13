@@ -12748,7 +12748,7 @@ $( document ).ready(function(){
     &amp;= \underset{\mathbf w}{\mathrm{arg\,min}} \left[ -\log P(\mathcal D | \mathbf w) + \frac{1}{2\sigma_w^2} \mathbf w^\top \mathbf w \right] \\
     &amp;= \text{Optimum of L2 regularised NLL(cost)}
 \end{align*}</p>
-<h3 id="Posterior-predictive-distribution">Posterior predictive distribution<a class="anchor-link" href="#Posterior-predictive-distribution">&#182;</a></h3><p>$$P(y^* | \mathbf x^*, \mathcal D) = \int p(y^*, \mathbf w | \mathbf x^*, \mathcal D) \mathrm d \mathbf w = \int P(y^* | \mathbf x^*, \mathbf w) p (\mathbf w | \mathcal D) \mathrm d \mathbf w$$</p>
+<h3 id="Posterior-predictive-distribution">Posterior predictive distribution<a class="anchor-link" href="#Posterior-predictive-distribution">&#182;</a></h3><p>$$P(y^* | \mathbf x^*, \mathcal D) = \int p(y^*, \mathbf w | \mathbf x^*, \mathcal D) \mathrm d \mathbf w = \int P(y^* | \mathbf x^*, \mathbf w) p (\mathbf w | \mathcal D) \mathrm d \mathbf w = \mathbb E_{p (\mathbf w | \mathcal D)} \left[ P(y^* | \mathbf x^*, \mathbf w) \right]$$</p>
 
 </div>
 </div>
@@ -12798,15 +12798,19 @@ $( document ).ready(function(){
 <li><strong>MAP</strong>: $\displaystyle \mathbf w^* = \underset{\mathbf w}{\mathrm{arg\,min}} \left[ \mathrm{NLL} + \frac{1}{2\sigma_w^2} \mathbf w^\top \mathbf w \right]$</li>
 <li><strong>Posterior prediction:</strong> <ul>
 <li>Contours are not parallel</li>
-<li>Gaussian approximation
-  \begin{align*}
-<pre><code>  p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \int \sigma(\mathbf w^\top \mathbf x^*) \mathcal N(\mathbf w; \mathbf m, V) \mathrm d \mathbf w \\
-  &amp;= \mathbb E_{\mathcal N(\mathbf w; \mathbf m, V)} \left[ \sigma(\mathbf w^\top \mathbf x^*) \right] \\
-  &amp;= \mathbb E_{\mathcal N(a; \mathbf m^\top \mathbf x^*, (\mathbf x^*)^\top V \mathbf x^*)} \left[ \sigma(a) \right]
-</code></pre>
-  \end{align*}</li>
+<li>Gaussian approximation (with <a href="#Laplace-approximation">Laplace approximation</a> or <a href="#Variational-methods">variaional methods</a>)
+\begin{align*}
+p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \mathbb E_{\mathcal N(\mathbf w; \mathbf m, V)} \left[ \sigma(\mathbf w^\top \mathbf x^*) \right] \\
+&amp;= \mathbb E_{\mathcal N(a; \mathbf m^\top \mathbf x^*, (\mathbf x^*)^\top V \mathbf x^*)} \left[ \sigma(a) \right]
+\end{align*}</li>
 <li>Murphy's approximation
   $$p(y^*=1 | \mathbf x, \mathcal D) \approx \sigma(\kappa \mathbf m^\top \mathbf x) \text{,} \quad \kappa = \frac{1}{\sqrt{1 + \frac{\pi}{8} \mathbf x^\top V \mathbf x}}$$</li>
+<li><a href="#Monte-Carlo-approximation">Monte Carlo approximation</a>
+  $$p(y^*=1 | \mathbf x, \mathcal D) \approx \frac{1}{S} \sum_{s=1}^S p(y^*=1 | \mathbf x, \mathbf w^{(s)}) \text{,} \quad \mathbf w^{(s)} \sim p(\mathbf w | \mathcal D)$$</li>
+<li><a href="#Importance-sampling">Importance sampling</a>
+  $$p(y^*=1 | \mathbf x, \mathcal D) \approx \frac{1}{S} \sum_{s=1}^S p(y^*=1 | \mathbf x, \mathbf w^{(s)}) r^{(s)}$$
+  $$p(\mathcal D) = \mathbb E_{p(\mathbf w)} \left[ p(\mathcal D | \mathbf w) \right] \approx \frac{1}{S} \sum_{s=1}^S p(\mathcal D | \mathbf w^{(s)}) \frac{p(\mathbf w^{(s)})}{q(\mathbf w^{(s)})} \equiv \frac{1}{S} \sum_{s=1}^S \tilde r^{(s)}$$
+  $$r^{(s)} = \frac{p(\mathbf w^{(s)} | \mathcal D)}{q(\mathbf w^{(s)})} = \frac{p(\mathcal D | \mathbf w^{(s)}) p(\mathbf w^{(s)})}{q(\mathbf w^{(s)}) p(\mathcal D)} \approx \frac{\tilde r^{(s)}}{\sum_{s=1}^S \tilde r^{(s)}} \text{,} \quad \mathbf w^{(s)} \sim q(\mathbf w)$$</li>
 </ul>
 </li>
 </ul>
@@ -12832,6 +12836,30 @@ $( document ).ready(function(){
 <li>If the distribution is not Gaussian, the values of the densities won't match. </li>
 <li>If the distribution is multi-modal, an optimiser could get stuck in bad local optima. </li>
 <li>If the posterior is flat in some direction, the zero curvature will have a non-postive-definite Hessian. </li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Monte-Carlo-approximation">Monte Carlo approximation<a class="anchor-link" href="#Monte-Carlo-approximation">&#182;</a></h2><p>$$\mathbb E_{p(\mathbf w| \mathcal D)} \left[ f(\mathbf w) \right] \approx \frac{1}{S} \sum_{s=1}^S f(\mathbf w^{(s)}) \text{,} \quad \mathbf w^{(s)} \sim p(\mathbf w | \mathcal D)$$</p>
+<ul>
+<li>Samples $\mathbf w^{(s)}$ can be drawn from $p(\mathbf w | \mathcal D)$ using MCMC, Gibbs sampler, etc. </li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Importance-sampling">Importance sampling<a class="anchor-link" href="#Importance-sampling">&#182;</a></h2><p>$$\mathbb E_{p(\mathbf w | \mathcal D)} \left[ f(\mathbf w) \right] \approx \frac{1}{S} \sum_{s=1}^S f(\mathbf w^{(s)}) \frac{p(\mathbf w^{(s)} | \mathcal D)}{q(\mathbf w^{(s)})} \text{,} \quad \mathbf w^{(s)} \sim q(\mathbf w)$$</p>
+<ul>
+<li>Importance weight: $\displaystyle r^{(s)} = \frac{p(\mathbf w^{(s)} | \mathcal D)}{q(\mathbf w^{(s)})}$</li>
 </ul>
 
 </div>
@@ -12889,7 +12917,7 @@ $( document ).ready(function(){
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_72_0.png"
+<img src="MLPR Revision_files/MLPR Revision_74_0.png"
 >
 </div>
 
@@ -12955,7 +12983,7 @@ $( document ).ready(function(){
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_76_0.png"
+<img src="MLPR Revision_files/MLPR Revision_78_0.png"
 >
 </div>
 
