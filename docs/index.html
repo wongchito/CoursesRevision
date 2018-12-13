@@ -12746,7 +12746,7 @@ $( document ).ready(function(){
 <h2 id="Estimator">Estimator<a class="anchor-link" href="#Estimator">&#182;</a></h2><h3 id="Maximum-a-posteriori-(MAP)">Maximum a posteriori (MAP)<a class="anchor-link" href="#Maximum-a-posteriori-(MAP)">&#182;</a></h3><p>\begin{align*}
     \mathbf w^* &amp;= \underset{\mathbf w}{\mathrm{arg\,max}} p(\mathbf w | \mathcal D) \\
     &amp;= \underset{\mathbf w}{\mathrm{arg\,min}} \left[ -\log P(\mathcal D | \mathbf w) + \frac{1}{2\sigma_w^2} \mathbf w^\top \mathbf w \right] \\
-    &amp;= \text{Optimum of L2 regularised log-likelihood}
+    &amp;= \text{Optimum of L2 regularised NLL(cost)}
 \end{align*}</p>
 <h3 id="Posterior-predictive-distribution">Posterior predictive distribution<a class="anchor-link" href="#Posterior-predictive-distribution">&#182;</a></h3><p>$$P(y^* | \mathbf x^*, \mathcal D) = \int p(y^*, \mathbf w | \mathbf x^*, \mathcal D) \mathrm d \mathbf w = \int P(y^* | \mathbf x^*, \mathbf w) p (\mathbf w | \mathcal D) \mathrm d \mathbf w$$</p>
 
@@ -12773,12 +12773,12 @@ $( document ).ready(function(){
 <li><strong>Model:</strong> $\displaystyle f(\mathbf x; \mathbf w) = \mathbf w^\top \mathbf x$ and $y|\mathbf x, \mathbf w \overset{\text{iid}}{\sim} \mathcal N (f, \sigma_y^2 )$</li>
 <li><strong>Likelihood:</strong> $\displaystyle P(\mathcal D | \mathbf w) = \prod_n \mathcal N(y^{(n)}; \mathbf w^\top \mathbf x^{(n)}, \sigma_y^2) = \mathcal N(\mathbf y; X \mathbf w, \sigma_y^2 \mathbb I)$</li>
 <li><strong>Prior:</strong> $\displaystyle p(\mathbf w) = \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I)$</li>
-<li><strong>Posterior:</strong> $\displaystyle p(\mathbf w | \mathcal D) \propto \mathcal N(\mathbf y; X \mathbf w, \sigma_y^2 \mathbb I) \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I) \propto \mathcal N(\mathbf w; \mathbf w_N, V_N)$<ul>
+<li><strong>Posterior:</strong> $\displaystyle p(\mathbf w | \mathcal D) \propto \mathcal N(\mathbf y; X \mathbf w, \sigma_y^2 \mathbb I) \cdot \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I) \propto \mathcal N(\mathbf w; \mathbf w_N, V_N)$<ul>
 <li>$\displaystyle V_N = (\sigma_y^{-2} X^\top X + \sigma_w^{-2} \mathbb I)^{-1}$</li>
 <li>$\displaystyle \mathbf w_N = \sigma_y^{-2} V_N X^\top \mathbf y$</li>
 </ul>
 </li>
-<li><strong>MAP:</strong> $\displaystyle \mathbf w^* = \mathbf w_N = (X^\top X + \sigma_y^2 \sigma_w^{-2} \mathbb I)^{-1} X^\top \mathbf y$ (optimum of L2 regularised cost with $\displaystyle \lambda = \frac{\sigma_y^2}{\sigma_w^2}$</li>
+<li><strong>MAP:</strong> $\displaystyle \mathbf w^* = \mathbf w_N = (X^\top X + \sigma_y^2 \sigma_w^{-2} \mathbb I)^{-1} X^\top \mathbf y$ (optimum of L2 regularised cost with $\displaystyle \lambda = \frac{\sigma_y^2}{\sigma_w^2}$)</li>
 <li><strong>Posterior prediction:</strong> $\displaystyle p(y^* | \mathbf x^*, \mathcal D) = \mathcal N \left( y^*; (\mathbf x^*)^\top \mathbf w_N, (\mathbf x^*)^\top V_N \mathbf x^* + \sigma_y^2 \right)$</li>
 <li><strong>Square loss:</strong> $\displaystyle \hat{y^*} = \mathbb E_{p(y^* | \mathbf x^*, \mathcal D)} [y^*] = (\mathbf x^*)^\top \mathbf w_N$</li>
 </ul>
@@ -12796,7 +12796,42 @@ $( document ).ready(function(){
 <li><strong>Prior:</strong> $p(\mathbf w) = \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I)$</li>
 <li><strong>Posterior:</strong> $\displaystyle p(\mathbf w | \mathcal D) \propto P(\mathcal D | \mathbf w) \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I) \propto P(\mathcal D | \mathbf w) \cdot \exp \left( -\frac{1}{2 \sigma_w^2} \mathbf w^\top \mathbf w \right)$</li>
 <li><strong>MAP</strong>: $\displaystyle \mathbf w^* = \underset{\mathbf w}{\mathrm{arg\,min}} \left[ \mathrm{NLL} + \frac{1}{2\sigma_w^2} \mathbf w^\top \mathbf w \right]$</li>
-<li><strong>Posterior prediction:</strong> Contours are not parallel</li>
+<li><strong>Posterior prediction:</strong> <ul>
+<li>Contours are not parallel</li>
+<li>Gaussian approximation
+  \begin{align*}
+<pre><code>  p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \int \sigma(\mathbf w^\top \mathbf x^*) \mathcal N(\mathbf w; \mathbf m, V) \mathrm d \mathbf w \\
+  &amp;= \mathbb E_{\mathcal N(\mathbf w; \mathbf m, V)} \left[ \sigma(\mathbf w^\top \mathbf x^*) \right] \\
+  &amp;= \mathbb E_{\mathcal N(a; \mathbf m^\top \mathbf x^*, (\mathbf x^*)^\top V \mathbf x^*)} \left[ \sigma(a) \right]
+</code></pre>
+  \end{align*}</li>
+<li>Murphy's approximation
+  $$p(y^*=1 | \mathbf x, \mathcal D) \approx \sigma(\kappa \mathbf m^\top \mathbf x) \text{,} \quad \kappa = \frac{1}{\sqrt{1 + \frac{\pi}{8} \mathbf x^\top V \mathbf x}}$$</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Laplace-approximation">Laplace approximation<a class="anchor-link" href="#Laplace-approximation">&#182;</a></h2><p><strong>Step 1: Matching the distributions</strong></p>
+<p>$$p(\mathbf w | \mathcal D) \approx \mathcal N(\mathbf w; \mathbf w^*, H^{-1})$$</p>
+<ul>
+<li><strong>Energy:</strong> $E(\mathbf w) = -\log p(\mathbf w, \mathcal D)$</li>
+<li><strong>Approximated mean:</strong> $\displaystyle \mathbf w^* = \underset{\mathbf w}{\mathrm{arg\,min}} E(\mathbf w)$</li>
+<li><strong>Information:</strong> $H = (H_{ij})$ and $\displaystyle H_{ij} = \left. \frac{\partial^2 E(\mathbf w)}{\partial w_i \partial w_j} \right|_{\mathbf w = \mathbf w^*}$</li>
+</ul>
+<p><strong>Step 2: Aproximating the normaliser</strong></p>
+<p>$$P(\mathcal D) \approx p(\mathbf w^*, \mathcal D) \left| 2 \pi H^{-1} \right|^{1/2}$$</p>
+<p><strong>Limitations:</strong></p>
+<ul>
+<li>If the distribution is not Gaussian, the values of the densities won't match. </li>
+<li>If the distribution is multi-modal, an optimiser could get stuck in bad local optima. </li>
+<li>If the posterior is flat in some direction, the zero curvature will have a non-postive-definite Hessian. </li>
 </ul>
 
 </div>
@@ -12854,7 +12889,7 @@ $( document ).ready(function(){
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_71_0.png"
+<img src="MLPR Revision_files/MLPR Revision_72_0.png"
 >
 </div>
 
@@ -12920,7 +12955,7 @@ $( document ).ready(function(){
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_75_0.png"
+<img src="MLPR Revision_files/MLPR Revision_76_0.png"
 >
 </div>
 
