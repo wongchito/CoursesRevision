@@ -12116,7 +12116,7 @@ $( document ).ready(function(){
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Regularisation">Regularisation<a class="anchor-link" href="#Regularisation">&#182;</a></h2><p>Penalising extreme solutions of weights by adding sum of the square weights in the cost function.</p>
-<p>\begin{align*}
+<h3 id="L2-regularisation">L2 regularisation<a class="anchor-link" href="#L2-regularisation">&#182;</a></h3><p>\begin{align*}
 &amp;&amp;E_\lambda (\mathbf w; \mathbf y, \Phi) &amp;= (\mathbf y - \Phi \mathbf w)^\top (\mathbf y - \Phi \mathbf w) + \lambda \mathbf w^\top \mathbf w \\
 \Rightarrow &amp;&amp;\hat{\mathbf w} &amp;= (\Phi^\top \Phi + \lambda \mathbb I)^{-1} \Phi^\top \mathbf y
 \end{align*}</p>
@@ -12466,7 +12466,56 @@ $( document ).ready(function(){
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Gaussian-mixture-models">Gaussian mixture models<a class="anchor-link" href="#Gaussian-mixture-models">&#182;</a></h3>
+<h3 id="Gaussian-mixture-models">Gaussian mixture models<a class="anchor-link" href="#Gaussian-mixture-models">&#182;</a></h3><ul>
+<li><strong>Latent variable:</strong> $\displaystyle z^{(n)} \sim \mathrm{Discrete}(\boldsymbol\pi)$, i.e. $\displaystyle p(z^{(n)}=k) = \pi_k$</li>
+<li><strong>Mixture component:</strong> $\displaystyle p(\mathbf x^{(n)} | z^{(n)}=k, \theta) = \mathcal N(\mathbf x^{(n)}; \boldsymbol\mu_k, \Sigma_k)$, where $\theta = \{ \boldsymbol\pi, \{ \boldsymbol\mu_k, \Sigma_k \} \}$</li>
+<li><strong>Log-likelihood:</strong> $\displaystyle \log p(\mathcal D | \theta) = \sum_{n=1}^N \log p(\mathbf x^{(n)} | \theta) = \sum_{n=1}^N \log \left[ \sum_{k=1}^K \pi_k p(\boldsymbol x^{(n)} | z^{(n)} = k, \boldsymbol\theta) \right]$</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Gradient-based-fitting">Gradient-based fitting<a class="anchor-link" href="#Gradient-based-fitting">&#182;</a></h4><ul>
+<li>Parameters need to be transformed to be unconstrained. <ul>
+<li>Covariance matrix $\Sigma$: $\Sigma = LL^\top$, where $L_{ij} = \begin{cases}
+  \tilde L_{ij} &amp; i \neq j \\ \exp \tilde L_{ij} &amp; i=j
+\end{cases}$</li>
+<li>Latent varialbe probability $\boldsymbol\pi$: use softmax</li>
+</ul>
+</li>
+<li>Don't initialise parameters as $\begin{cases} \boldsymbol\mu_k = \mathbf 0 \\ \Sigma_k = \mathbb I \end{cases}$, otherwise all points move together in each iteration because of the identical gradients of NLL. </li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Expectation-maximisation-(EM)-algorithm">Expectation-maximisation (EM) algorithm<a class="anchor-link" href="#Expectation-maximisation-(EM)-algorithm">&#182;</a></h4><ul>
+<li><p><strong>E-step:</strong> Set soft responsibilities
+$$r_k^{(n)} = P(z^{(n)}=k | \boldsymbol x^{(n)}, \boldsymbol\theta) = \frac{\pi_k \mathcal N(\boldsymbol x^{(n)}; \boldsymbol\mu_k, \Sigma_k)}{\sum_{k'}\pi_{k'} \mathcal N(x^{(n)}; \boldsymbol\mu_{k'}, \Sigma_{k'})} \text{,} \quad r_k = \sum_{n=1}^N r_k^{(n)}$$</p>
+</li>
+<li><p><strong>M-step:</strong> Update parameter $\theta$
+$$\pi_k = \frac{r_k}{N} \text{,} \quad \boldsymbol\mu_k = \frac{1}{r_k} \sum_{n=1}^N r_k^{(n)} \boldsymbol x^{(n)} \text{,} \quad \Sigma_k = \displaystyle\frac{1}{r_k} \sum_{n=1}^N r_k^{(n)} \boldsymbol x^{(n)} \boldsymbol x^{(n)\top} - \boldsymbol\mu_k \boldsymbol\mu_k^\top$$</p>
+</li>
+</ul>
+<h5 id="Theoretical-basis">Theoretical basis<a class="anchor-link" href="#Theoretical-basis">&#182;</a></h5><p>\begin{align*}
+    &amp;&amp; D_{KL} \left( Q(\mathbf z) \| P(\mathbf z|X, \theta) \right) &amp;= \sum_{\mathbf z} Q(\mathbf z) \log \frac{Q(\mathbf z)}{P(\mathbf z | X, \theta)} \\
+    &amp;&amp; &amp;= \sum_{\mathbf z} Q(\mathbf z) \log \frac{Q(\mathbf z)}{p(X, \mathbf z | \theta)} + \log p(X|\theta) \geq 0 \\
+    \Rightarrow &amp;&amp; \log p(X|\theta) &amp;\geq \mathcal L(Q, \theta) \\
+    &amp;&amp; &amp;= \sum_n \sum_k Q(z^{(n)}=k) \log \left[ \pi_k \mathcal N(\mathbf x^{(n)}; \boldsymbol\mu_k, \Sigma_k) \right] - \sum_{\mathbf z} Q(\mathbf z) \log Q(\mathbf z)
+\end{align*}</p>
+<ul>
+<li><strong>E-step:</strong> $Q(z^{(n)}=k) = P(z^{(n)}=k | \mathbf x^{(n)}, \theta^{(t)}) = r_k^{(n)}$</li>
+<li><strong>M-step:</strong> $\displaystyle \theta^{(t+1)} = \underset{\theta}{\mathrm{arg\,max}} \mathcal L(Q, \theta)$</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -12924,7 +12973,7 @@ p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \mathbb E_{\mathcal N(\mathbf w
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_75_0.png"
+<img src="MLPR Revision_files/MLPR Revision_77_0.png"
 >
 </div>
 
@@ -13056,7 +13105,7 @@ p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \mathbb E_{\mathcal N(\mathbf w
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_83_0.png"
+<img src="MLPR Revision_files/MLPR Revision_85_0.png"
 >
 </div>
 
@@ -13122,7 +13171,7 @@ p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \mathbb E_{\mathcal N(\mathbf w
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_87_0.png"
+<img src="MLPR Revision_files/MLPR Revision_89_0.png"
 >
 </div>
 
