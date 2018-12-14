@@ -1,0 +1,117 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+%\usepackage{mathtools} %prescript
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage[margin=0.75in]{geometry}
+
+\title{ASD Formulas}
+
+\begin{document}
+%\begin{multicols}{2}
+
+\section*{Introduction}
+\begin{enumerate}
+
+%1.2 Survival theory
+\item Survival func: $S(t) = 1 - F(t) = P(T>t) = \int_t^\infty f(u) \mathrm{d} u$ \\
+$f(u) = - \frac{\mathrm{d}}{\mathrm{d}u} S(u)$, $S(0) = 1$, $S(\infty) = 0$
+
+\item Empirical survival func: $\displaystyle \hat{S}_n (t) = \frac{1}{n} \sum_{i=1}^n I_{(t, \infty)} \left( T_i \right)$, $n \hat{S}_n (t) \sim \text{Bin} \left( n, S(t) \right)$
+
+%1.3
+\item Hazard func: $\displaystyle h(t) = \frac{f(t)}{S(t)}$, $\displaystyle S(t) = \exp \left( - \int_0^t h(u) \mathrm{d} u \right) = \exp \left( - H(x) \right)$, $\displaystyle E[t] = \int_0^\infty S(t) \mathrm{d}t$
+
+%1.4 EDF, Kaplan-Meier estimate
+\end{enumerate}
+
+\section*{Mortality tables}
+\begin{enumerate}[resume]
+
+\item Prob of dying: $q_x = \frac{d_x}{l_x} = \frac{l_x - l_{x+1}}{l_x}$
+
+\item Prob of surviving: $p_x = 1 - q_x = \frac{l_{x+1}}{l_x}$
+
+\item $\displaystyle e_x = \sum_{i=1}^{\infty} i P[\text{death in year (} x+i \text{)}] = \frac{\sum_{n=x+1}^{\infty} l_n}{l_x}$
+
+\item Force of motality: $\mu_x = - \frac{1}{l} \frac{\text{d} l_x}{\text{d} x} = - \log{(p_x)}$
+
+\item Mortality rate: $\displaystyle m_x = \frac{\text{number of deaths}}{\text{person-time at risk}} = \frac{d_x}{\int_x^{x+1} l_t \mathrm{d} t} = \frac{d_x}{\int_0^1 l_{x+t} \mathrm{d} t}$ \\
+Central mortality rate: $\displaystyle m_x = \frac{d_x}{l_x - \frac{d_x}{2}}$
+
+\item Prob that die within $n$ yrs: ${}_n q_x = \frac{l_x - l_{x+n}}{l_x}$
+
+\item Prob of surviving $n$ yrs: ${}_n p_x = \frac{l_{x+n}}{l_n} = 1 - {}_n q_x$
+
+\item Prob that die in age $x+m \sim x+m+n$: $\displaystyle {}_{m|n} q_x = \frac{l_{x+m} - l_{x+m+n}}{l_x} = {}_m p_x \cdot {}_n q_{x+m}$
+
+\item $\displaystyle {}_n p_x = \exp{\left(- \int_0^n \mu_{x+t} \mathrm{d} t \right)}$, $\displaystyle l_x = \exp{\left(- \int_0^x \mu_t \mathrm{d} t \right)}$
+
+%2.5 Interpolation
+\item Linear interpolation (increasing $\mu$, deaths Uniformly distributed) \\
+${}_t l_x = l_x + t \left( l_{x+1} - l_x \right) = l_x - t d_x$, ${}_t q_x = t q_x$, $\mu_{x+t} = \frac{q_x}{1 - t q_x}$
+
+\item Exponential interpolation (constant $\mu$) \\
+$\displaystyle {}_t l_x = l_x \left( \frac{l_{x+1}}{l_x} \right)^t = l_x p_x^t$, $\displaystyle \mu_{x+t} = - \log \left( \frac{l_{x+1}}{l_x} \right) = - \log \left( p_x \right)$
+
+\item Hyperbolic interpolation (decreasing $\mu$) \\
+$\displaystyle {}_t l_x = \frac{l_x p_x}{p_x + t q_x}$, $\displaystyle {}_t p_x = \frac{p_x}{p_x + t q_x}$, $\displaystyle \mu_{x+t} = \frac{q_x}{p_x + t q_x} = \frac{q_x}{1 - q_x (1-t)}$
+
+%2.6 Select table
+\item Select table: $l_{[x+1]} = l_x \cdot p_x'$ (forward, then calc all new $l$s), $l_{[x]}$(for backward only)
+
+\end{enumerate}
+
+\section*{Parametric models and estimation}
+\begin{enumerate}[resume]
+
+%3.1 Hazard funcs
+\item de Moivre hazard: $h(t) = \frac{1}{\omega - t}$, where $l_\omega = 0 \text{ or negligible}$ \\
+$f(t) = \frac{1}{\omega}$ (deaths Uniformly distributed)
+
+\item Weibull hazard: $h(t) = \gamma t^{(\gamma -1)}; t>0, \gamma>0$, $H(t) = t^\gamma$ \\
+$\gamma<1$: decreasing; $\gamma=1$: constant, $\gamma>1$: increasing \\
+Generalised with a scale parameter $\alpha$ and a location parameter $\mu$: $\displaystyle h(t) = \frac{\gamma}{\alpha} \left( \frac{t-\mu}{\alpha} \right)^{\gamma-1}$
+
+\item Gompertz hazard: $h(t) = B c^t$, logarithm is linear in $t$ \\
+$H(t) = - \left( c^t -1 \right) \ln g$, where $\displaystyle \ln g = \frac{-B}{\ln c}$\\
+Gompertz-Makeham hazard: $h(t) = A + B c^t$ (adult mortality in developed countries)
+
+%3.2 Log-linear models
+\item Log-linear models: $\log (T) = \alpha + \sigma \varepsilon$
+
+%3.5 Graphical methods
+
+%3.6 More on models
+\item 1
+
+%3.7 Applying
+\end{enumerate}
+
+\section*{Non-par and dist-free approaches}
+\begin{enumerate}[resume]
+%4.1
+\item Kaplan-Meier estimator: $\displaystyle \hat{S}(t) = \prod_{\left\{ j: t_j \leq t \right\}} \left( 1- \frac{d_j}{n_j} \right)$ \\
+Variance: 
+
+%4.2
+\item Nelson-Aalen estimator: $\displaystyle \hat{H}(t) = \sum_{\left\{ j: t_j \leq t \right\}} \left( \frac{d_j}{n_j} \right)$ \\
+Breslow estimator: $\displaystyle \hat{S}(t) = \exp \left( - \hat{H} (t) \right)$ \\
+(greater than K-M estimator by Taylor series, asymptotically equivalent)
+
+%4.3
+\item Logrank test: 
+\end{enumerate}
+
+\section*{Semi-par surv modelling}
+\begin{enumerate}[resume]
+%5.1 Cox PH
+\item Cox PH model: $h(t,X) = h_0 (t) \psi (X;\beta)$, commonly $\psi (X;\beta) = \exp \left( \beta^T X \right)$ log-linear form \\
+Likelihood $\displaystyle L(\beta) = \prod_{j=1}^d \frac{\psi(i_j)}{\sum_{k \in R(\tau_j)} \psi(k)}$, $\displaystyle I(\hat{\beta}) = - \frac{\partial^2 \ln L(\hat{\beta})}{\partial \beta^2}$, \\
+$95\%$ confidence interval for $\beta$: $\displaystyle \hat{\beta} \pm z_{\alpha/2} \sqrt{\frac{1}{I(\hat{\beta})}}$
+
+\end{enumerate}
+%\end{multicols}
+\end{document}

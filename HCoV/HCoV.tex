@@ -1,0 +1,282 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage[margin=0.75in]{geometry}
+
+\title{HCoV Cheat Sheet}
+
+\begin{document}
+\begin{multicols}{2}
+
+\section*{Basic algebra and geometry of complex numbers}
+\begin{enumerate}
+
+\item $\overline{zw}=\bar{z}\bar{w}$, $|z|=z\bar{z}$, $|zw|=|z||w|$
+
+\item For $z=x+iy$, \\$x= \frac{z + \bar{z}}{2}$ and $y= \frac{z - \bar{z}}{2i}$
+
+\item For $f(x,y) = u(x,y) + i v(x,y)$, \\$u(x,y) = \frac{1}{2} \left( f(x,y) + \overline{f(x,y)} \right)$, \\$v(x,y) = \frac{1}{2i} \left( f(x,y) - \overline{f(x,y)} \right)$
+
+\item Triangle inequality: $|z_1+z_2| \leq |z_1|+|z_2|$
+
+\item Reverse triangle inequality: $|z+w| \geq |z|-|w|$
+
+\item $\mathrm{arg}(z) = \left\{ \mathrm{Arg} (z) + 2 \pi k | k \in \mathbb{Z} \right\}$, \\$-\pi < \mathrm{Arg}(z) \leq \pi$
+
+\item De Moivre's formula: \\$\left( \cos \theta + i \sin \theta \right) ^n = \cos (n\theta) + i \sin (n\theta)$
+
+\item Roots of unity: \\$1^{1/q} = \left\{ \exp \left( i 2 \pi (k/q) \right) | k \in \mathbb{Z} \right\}$, \\$z^{1/q} = |z|^{1/q} \exp (i\theta/q) \omega^k$, \\$z^{p/q} = |z|^{p/q} \exp (ip\theta/q) \omega^{pk}$
+
+\item $\mathrm{arg}(zw) = \mathrm{arg}(z) + \mathrm{arg}(w)$, \\$\mathrm{arg}(1/z) = \mathrm{arg}(\bar{z}) = -\mathrm{arg}(z)$
+
+\item M\"obius transformation: \\rational function $f(z) = \frac{az+b}{cz+d}$, $ad \neq bc$, \\because $f'(z) \neq 0 \Rightarrow f(z) \neq \text{Const}$, \\$f(z) = \frac{az+b}{cz+d} = \frac{a+\frac{b}{z}}{c+\frac{d}{z}} \Rightarrow f(\infty) = \frac{a}{c}$
+
+\item Extended complex plane: $\tilde{\mathbb{C}} = \mathbb{C} \cup \{\infty\}$, \\
+$a+\infty=\infty$, $b\infty = \infty$, ($a \in \mathbb{C}$, $b \in \mathbb{C}^{\times}$), \\
+$\frac{a}{0} = \infty$, $\frac{a}{\infty} = 0$, ($a \in \mathbb{C}^{\times}$)
+
+\item Riemann sphere: \\
+$\varphi : \tilde{\mathbb{C}} \to S^2$, $\varphi(z) = \left( \frac{2x}{|z|^2+1}, \frac{2y}{|z|^2+1}, \frac{|z|^2-1}{|z|^2+1} \right)$, \\
+$\varphi(\infty) = \displaystyle \lim_{|z| \to \infty} \varphi(z) = (0,0,1)$, \\
+$\psi : S^2 \to \tilde{\mathbb{C}}$, \[\psi(X,Y,Z) = 
+\begin{cases}
+\frac{X+iY}{1-Z} & \quad (X,Y,Z) \neq (0,0,1) \\
+\infty & \quad (X,Y,Z) = (0,0,1) \\
+\end{cases}
+\]
+\end{enumerate}
+
+\section*{Holomorphicity}
+\begin{enumerate}[resume]
+\item $f$ is holomorphic at $z_0$ $\Leftrightarrow$ \\
+$f'$ exists in some neighbourhood $U$ of $z_0$, \\
+$\oint_{\Gamma} f(z) \mathrm{d}z = 0$ for all $\Gamma \subset D$, \\
+$f$ is analytic in $D$, \\
+power series expansion of $f$ converges in $D$, \\
+obey Cauchy-Riemann equations $\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}$ and $\frac{\partial v}{\partial x} = -\frac{\partial u}{\partial y}$ in $D$, \\
+$\bar{\partial}f = 0$ in $D$, where $\partial = \frac{1}{2} \left( \frac{\partial}{\partial x} - i \frac{\partial}{\partial y} \right)$ and $\bar{\partial} = \frac{1}{2} \left( \frac{\partial}{\partial x} + i \frac{\partial}{\partial y} \right)$, \\
+the dependence on $\bar{z}$ cancels
+
+\item $f$ is entire if it is holomorphic in the whole complex plane. 
+
+\item Harmonic: $\frac{\partial^2 h}{\partial x^2} + \frac{\partial^2 h}{\partial y^2} = 0$
+
+\item Real \& imaginary part of holo func $f$ are harmonic. (showed by C-R equations)
+
+\item $u$ is harmonic, $f=u+iv$ is holomorphic $\Rightarrow$ \\$v$ is its harmonic conjugate
+
+\item $f(z)$ and $g(z)$ are holomorphic $\Rightarrow$ \\$f(z) + g(z)$ and $f(z)g(z)$ are holomorphic. 
+
+\item $P(z) = \sum_{n=0}^{N} a_n z^n$ is entire because $f(z) = z$ is entire, \\$P'(z_0) = \sum_{n=1}^{N} n a_n z_0^{n-1}$
+
+\item $R(z) = \frac{P(z)}{Q(z)}$ is a rational function and holomorphic away from the zeros of $Q(z)$
+
+\item Composition $(f \circ g)(z) = f(g(z))$ is holomorphic. $(f \circ g)' (z_0) = f'(g(z_0)) g'(z_0)$. 
+
+\item $\exp (z) = \exp (x+iy) = e^x (\cos y + i \sin y)$, \\entire, addition property: \\$\exp (z_1 + z_2) = \exp (z_1) \exp (z_2)$, \\periodic: $\exp (z + 2 \pi i) = \exp (z)$
+
+\item $\sin (z) = \frac{e^{iz}-e^{-iz}}{2i}$, $\cos (z) = \frac{e^{iz}+e^{-iz}}{2}$, \\entire, not bounded, \\$\sin (x+iy) = \sin x \cosh y + i \cos x \sinh y$, \\$\cos (x+iy) = \cos x \cosh y - i \sin x \sinh y$
+
+\item $\sinh (z) = \frac{e^z - e^{-z}}{2}$, $\cosh (z) = \frac{e^z + e^{-z}}{2}$, \\$\sinh (iz) = i \sin (z)$, $\cosh (iz) = \cos (z)$
+
+\item $G(z) = \int_{\Gamma} \frac{g(\zeta)}{\zeta - z} \mathrm{d}\zeta$ is holomorphic, \\$g$ is continuous in $\Gamma$, $\Gamma$ need not be closed
+
+\item $f$ is holomorphic around $z_0$ $\Rightarrow$ \\so are $f'$, $f''$, $\ldots$
+
+\item Log def: $\log (z) = \left\{ w | \exp (w) = z \right\}$, \\$\log (z) = \left\{ \ln |z| + i \theta | \theta \in \mathrm{arg}(z) \right\}$, \\$\log (z) = \left\{ \ln |z| + i \mathrm{Arg}(z) + 2 \pi i k | k \in \mathbb{Z} \right\}$, \\$\log \left( re^{i\theta} \right) = \left\{ \ln r + i \theta + i 2 \pi k | k \in \mathbb{Z} \right\}$, \\$\log (z_1 z_2) = \log (z_1) + \log (z_2)$ (equality of sets) \\$\log (1/z)  = -\log (z)$
+
+\item $\mathrm{Log}(z) = \ln |z| + i \mathrm{Arg}(z)$, \\$\mathrm{Log}_0(z) = \ln |z| + i \mathrm{Arg}_0(z)$
+
+\item 
+\begin{align*}
+z^{\alpha} &= \left\{ \exp (\alpha w) | w \in \log (z) \right\} \\
+&= \left\{ \exp \left( \alpha \ln |z| + i \alpha \mathrm{Arg}(z) + i \alpha 2 \pi k \right) | k \in \mathbb{Z} \right\} \\
+&= \left\{ \exp \left( \alpha \mathrm{Log}(z) \right) \exp (i \alpha 2 \pi k) | k \in \mathbb{Z} \right\}
+\end{align*}
+
+\item \[
+z^n = 
+\begin{cases}
+1 & \text{for } n=0 \\
+\underbrace{z z \cdots z}_{n \text{ times}} & \text{for } n > 0 \\
+\frac{1}{z^{-n}} & \text{fot } n < 0 \\
+\end{cases}
+\]
+
+\item Principal branch: $z^{\alpha} = \exp \left( \alpha \mathrm{Log}(z) \right)$, \\$z^{\alpha} z^{\beta} = z^{\alpha + \beta}$, $\frac{\mathrm{d}}{\mathrm{d}z} \left( z^{\alpha} \right) |_{z=z_0} = \alpha z_0^{\alpha -1}$, \\$z_1^{\alpha} z_2^{\alpha} = (z_1 z_2)^{\alpha}$ NOT TRUE IN GENERAL
+\end{enumerate}
+
+\section*{Complex integration}
+\begin{enumerate}[resume]
+\item $\left| \int_a^b f(t) \mathrm{d}t \right| \leq \int_a^b |f(t)| \mathrm{d}t$
+
+\item $\int_{\Gamma} f(z) \mathrm{d}z = \int_{z_1}^{z_2} f(z(t)) \dot{z}(t) \mathrm{d}t$
+
+\item Arclength $\ell (\Gamma)= \int_{\Gamma} |\mathrm{d}z|$
+
+\item ML Lemma: $$\left| \int_{\Gamma} f(z) \mathrm{d}z \right| \leq \int_{\Gamma} |f(z)| |\mathrm{d}z| \leq \max_{z \in \Gamma} |f(z)| \ell (\Gamma) = ML$$
+
+\item Complex linear
+
+\item $\int_{-\Gamma} f(z) \mathrm{d}z = - \int_{\Gamma} f(z) \mathrm{d}z$
+
+\item $\displaystyle \int_{\Gamma} f(z) \mathrm{d}z = \sum_{j=1}^n \int_{\Gamma_j} f(z) \mathrm{d}z$, \\where $\Gamma_j$ is a regular component of $\Gamma$. 
+
+\item Contour integral only depends on the endpoints. 
+
+\item FT$\mathbb{C}$: $\int_{\Gamma} f(z) \mathrm{d}z = F(z_1) - F(z_0)$
+
+\item Closed contour: $\oint_{\Gamma} f(z) \mathrm{d}z = 0$
+
+\item Path-independence Lemma: \\$F$ exists in $D$ $\Leftrightarrow$ \\$\oint_{\Gamma} f(z) \mathrm{d}z$ vanishes for all closed contours $\Gamma$ in $D$ $\Leftrightarrow$ \\$\int_{\Gamma} f(z) \mathrm{d}z$ are independent of the path
+
+\item Jordan Curve Theorem: loop separates the plane into 2 domains (interior and exterior), with it as common boundary
+
+\item C$\int$T: $D$ is a simply-connected domain, $f$ is a holomorphic function, $\oint_{\Gamma} f(z) \mathrm{d}z = 0$
+
+\item \[
+\oint_{\Gamma} \frac{1}{z-z_0} \mathrm{d}z = 
+\begin{cases}
+2 \pi i &\text{for } z_0 \text{ in the interior of } \Gamma \\
+0 &\text{otherwise}
+\end{cases}
+\]
+
+\item C$\int$F: $\displaystyle f(z) = \frac{1}{2 \pi i} \oint_{\Gamma} \frac{f(\zeta)}{\zeta-z} \mathrm{d}\zeta$, \\$\displaystyle f^{(n)}(z) = \frac{n!}{2 \pi i} \oint_{\Gamma} \frac{f(\zeta)}{(\zeta-z)^{n+1}} \mathrm{d}\zeta$
+
+\item Morera's theorem: $f$ is continuous in $D$, \\all the loop integrals vanish $\Rightarrow$ \\ $f$ is holomorphic
+
+\item Cauchy estimate: $\left| f^{(n)}(z_0) \right| \leq \frac{n!M}{R^n}$, \\where $R=|z-z_0|$, $|f(z)| \leq M$. 
+
+\item Liouville's theorem: \\Bounded, Entire $\Rightarrow$ CONSTANT func
+
+\item Maximum modulus principle: \\$f$ is holomorphic, $|f(z)| \leq M$, \\If $|f(z)|$ achieves max at $z_0 \in D$ $\Rightarrow$ \\$f$ is Constant in $D$
+
+\item Max-min principle: \\$\phi$ is harmonic, bounded above or below $M$, \\If $\exists z_0 \in D$, $\phi(z_0) = M$ $\Rightarrow$ \\$\phi$ is Constant in $D$
+\end{enumerate}
+
+\section*{Series expansions}
+\begin{enumerate}[resume]
+\item Sequence: $\{z_n\}$ or $\{z_0, z_1, z_2, \ldots\}$, \\converge: $\lim_{n \to \infty} z_n = z$
+
+\item Cauchy criterion (be a Cauchy sequence): \\$\forall \varepsilon > 0$, $\exists N(\varepsilon)$, $\forall n, m \geq N$, s.th. $|z_n - z_m| < \varepsilon$
+
+\item Sequence converges $\Rightarrow$ Cauchy
+
+\item $\displaystyle \lim_{n \to \infty} S_n = \lim_{n \to \infty} \sum_{j=0}^n c_j = S$ $\Rightarrow$ \\series converges to $S$, $S = \displaystyle \sum_{j=0}^{\infty} c_j$
+
+\item $\displaystyle \sum_{j=0}^{\infty} c_j$ converges $\Rightarrow$ $\displaystyle \lim_{j \to \infty} c_j =0$
+
+\item $\displaystyle \sum_{j=1}^{\infty} \frac{1}{j^p}$ converges for any real $p>1$
+
+\item Comparison test: If $\sum_{j=0}^{\infty} M_j$ is convergent, $M_j \geq 0$, $|c_j| \leq M_j$ for all sufficiently large $j$, then $\sum_{j=0}^{\infty} c_j$ converges. \\Comparing with $\frac{1}{j_p}$ ($p>1$) or $c^j$ ($|c|<1$). 
+
+\item $\displaystyle \sum_{j=0}^{\infty} c^j = \frac{1}{1-c}$, if $|c|<1$. 
+
+\item Ratio test: $L = \displaystyle \lim_{j \to \infty} \left| \frac{c_{j+1}}{c_j} \right|$, \\$L<1$ converges; $L>1$ diverges; $L=1$ dk
+
+\item Sequence $\{ f_n \}$ converges POINTWISE to $f$ (for each $z$, $\{ f_n(z) \}$ converges)
+
+\item UNIFORMLY converge: $\forall \varepsilon >0$, $\exists N$, $\forall n \geq N$, s.th. $|f_n(z) - f(z)| < \varepsilon$
+
+\item Uniform limit of continuous function \\$\Rightarrow$ Continuous
+
+\item Weierstrass M-test: If $\sum_{j=0}^{\infty} M_j$ is convergent, $M_j \geq 0$, $|f_j(z)| \leq M_j$ for all sufficiently large $j$, then $\sum_{j=0}^{\infty} f_j(z)$ converges UNIFORMLY
+
+\item Taylor series: $$\sum_{j=0}^{\infty} \frac{f^{(j)} (z_0)}{j!} (z-z_0)^{j}$$
+
+\item Maclaurin series: $z_0=0$
+
+\item Taylor series theorem: \\$f(z)$ is holomorphic in $|z-z_0| <R$ $\Rightarrow$ \\Taylor series of $f$ converges UNIFORMLY on $|z-z_0| \leq r < R$
+
+\item Taylor series for $\alpha f(z)$: $$\sum_{j=0}^{\infty} \frac{\alpha f^{(j)} (z_0)}{j!} (z-z_0)^j$$
+
+\item Taylor series of $f(z) + g(z)$: $$\sum_{j=0}^{\infty} \frac{f^{(j)} (z_0) + g^{(j)} (z_0)}{j!} (z-z_0)^j$$
+
+\item Cauchy-Hadamard theorem: \\Power series $\sum_{j=0}^{\infty} a_j (z-z_0)^j$, \\radius of convergence $0 \leq R \leq \infty$, \\converges absolutely in $|z-z_0| <R$, \\converges uniformly on any closed disk, \\diverges in $|z-z_0| >R$
+
+\item $\displaystyle R= \frac{1}{\lim_{j \to \infty} \left| \frac{a_{j+1}}{a_j} \right|}$
+
+\item $R>0$ convergent, \\otherwise divergent. \\If admits a convergent power series, analytic
+
+\item Laurent series theorem: \\$f(z)$ is holomorphic in $r < |z-z_0| <R$, \\has a Laurent series on $r_1 \leq |z-z_0| \leq R_1$, \\for all $r_1 >r$ and $R_1 <R$. \\$a_j = \displaystyle \frac{1}{2 \pi i} \oint_{\Gamma} \frac{f(z)}{(z-z_0)^{j+1}} \mathrm{d}z$
+
+\item ZERO of order $m$: \\$f(z_0) = f'(z_0) = \cdots = f^{(m-1)}(z_0) = 0$, $f^{(m)}(z_0) \neq 0$, \\SIMPLE ZERO: $m=1$, \\zeros of finite order of Holo func are isolated
+
+\item Singularities of a rational function are isolated
+
+\item REMOVABLE SINGULARITY: \\no negative powers, \\$f(z) = \sum_{j=0}^{\infty} a_j (z-z_0)^j$
+
+\item POLE of order $m$: \\$a_j=0$ for all $j<-m$, $a_{-m} \neq 0$, \\$f(z) = \frac{a_{-m}}{(z-z_0)^m} + \cdots + a_0 + a_1 (z-z_0) + \cdots$, \\SIMPLE POLE: $m=1$
+
+\item ESSENTIAL SINGULARITY: \\$\infty$ number of nonzero terms with negative powers of $(z-z_0)$
+
+\item Riemann's removable singularities theorem: \\$f$ is holomorphic, \\bounded in $D^{\times}$ centred at $z_0$, \\
+\[
+\hat{f}(z) = 
+\begin{cases}
+f(z) &\quad z \neq z_0 \\
+\lim_{\zeta \to z_0} f(\zeta) &\quad z = z_0 \\
+\end{cases}
+\]
+\end{enumerate}
+
+\section*{Residue theory}
+\begin{enumerate}[resume]
+\item Residue $\mathrm{Res}(f;z_0)$ is $a_{-1}$ of the Laurent series at $z_0$
+
+\item Simple pole at $z_0$: \\$\mathrm{Res}(f;z_0) = \lim_{z \to z_0} (z-z_0) f(z)$, or \\$\mathrm{Res}(f;z_0) = \lim_{z \to z_0} (z-z_0) \frac{g(z)}{h(z)} = \frac{g(z_0)}{h'(z_0)}$, \\because $h(z_0)=0$
+
+\item Pole of order $m$ at $z_0$: \\$\mathrm{Res}(f;z_0) = \displaystyle \lim_{z \to z_0} \frac{1}{(m-1)!} \frac{\mathrm{d}^{m-1}}{\mathrm{d}z^{m-1}} \left( (z-z_0)^m f(z) \right)$
+
+\item Cauchy residue theorem (CRT): $$\oint_{\Gamma} f(z) \mathrm{d}z = 2 \pi i \sum_{\substack{\text{singularities} \\ z_k \in \mathrm{Int} \Gamma}} \mathrm{Res}(f;z_k)$$
+
+\item Meromorphic: for all $z \in D$, \\either $f$ has a pole at $z$, \\or $f$ is holomorphic around $z$
+
+\item Argument principle: \\$\displaystyle \frac{1}{2 \pi i} \oint_{\Gamma} \frac{f'(z)}{f(z)} \mathrm{d}z = N_0(f) - N_{\infty}(f)$, \\$N_0^{\Gamma}(f) = \sum_{\text{zeros inside }\Gamma} \text{order of each zero}$, \\$N_{\infty}^{\Gamma}(f) = \sum_{\text{poles inside }\Gamma} \text{order of each pole}$
+
+\item Rouch\'e's theorem: \\$f$: holomorphic, inside a loop $\Gamma$, \\$g$: holomorphic, on a loop $\Gamma$, \\$|f(z) - g(z)| < |f(z)|$, \\Then, $N_0(f) = N_0(g)$
+
+\item Open mapping theorem: \\$f$ is nonconstant, holomorphic func on $D$, \\$f(D) = \{ w \in \mathbb{C} | w = f(z) \quad \exists z \in D \}$ is open
+
+\item Max modulus principle: \\$f$ is nonconstant, holo func in $D \subset \mathbb{C}$, \\$|f(z)|$ cannot attain its max at $\forall z \in D$
+
+\item By substituting $\cos \theta = \frac{1}{2} \left( z + \frac{1}{z} \right)$, \\$\sin \theta = \frac{1}{2i} \left( z - \frac{1}{z} \right)$, $\mathrm{d}\theta = \frac{\mathrm{d}z}{iz}$, 
+\begin{align*}
+I_T &= \int_0^{2\pi} R(\cos \theta, \sin \theta) \mathrm{d}\theta \\
+&= \oint_{\Gamma} \frac{1}{iz} R \left( \frac{z+\frac{1}{z}}{2}, \frac{z-\frac{1}{z}}{2i} \right) \mathrm{d}z \\
+&= 2 \pi \sum_{\substack{\text{singularities} \\ |z_k| <1}} \mathrm{Res}(f;z_k)
+\end{align*}
+where $f(z) = \frac{1}{z} R \left( \frac{z+\frac{1}{z}}{2}, \frac{z-\frac{1}{z}}{2i} \right)$
+
+\item Cauchy principal value: \\$\mathrm{p.v.}\int_{-\infty}^{\infty} f(x) \mathrm{d}x = \lim_{\rho \to \infty} \int_{-\rho}^{\rho} f(x) \mathrm{d}x$
+
+\item $R(x) = P(x)/Q(x)$: \\$Q(x) \neq 0$, $\deg Q - \deg P >1$, 
+$$\mathrm{p.v.}\int_{-\infty}^{\infty} R(x) \mathrm{d}x = 2 \pi i \sum_{\substack{\text{poles } z_k \\ \mathrm{Im}(z_k) >0}} \mathrm{Res}(R;z_k)$$
+
+\item $R(x) \cos (ax)$ and/or $R(x) \sin (ax)$, \\$\Rightarrow$ $R(x) \exp (iax)$, \\$R(x) = P(x)/Q(x)$: \\$Q(x) \neq 0$, $\deg Q - \deg P \geq 1$, \[
+\mathrm{p.v.}\int_{-\infty}^{\infty} R(x) \exp (iax) \mathrm{d}x
+\]
+\[
+= 
+\begin{cases}
+2 \pi i \sum_{\substack{\text{poles }z_k \\ \mathrm{Im}(z_k)>0}} \mathrm{Res}(f;z_k) &\text{if } a>0 \\
+-2 \pi i \sum_{\substack{\text{poles }z_k \\ \mathrm{Im}(z_k)<0}} \mathrm{Res}(f;z_k) &\text{if } a<0
+\end{cases}
+\]
+
+\item Jordan lemma: \\$\lim_{\rho \to \infty} \int_{C_{\rho}^{+}} \exp (iax) \frac{P(z)}{Q(z)} \mathrm{d}z =0$, \\$a>0$, $\deg Q > \deg P$
+
+\item $R(x) = P(x) / Q(x)$, \\$Q(x) \neq 0$, $\deg Q - \deg P \geq 2$, $$\int_0^{\infty} R(x) \mathrm{d}x = - \sum_{\text{poles }z_k} \mathrm{Res}(f;z_k)$$
+$f(z) = \log (z) R(z)$
+
+\item For $\int_a^{\infty} R(x) \mathrm{d}x$, $f(z) = \log(z-a) R(z)$
+
+\item IMPROPER INTEGRALS WITH POLES
+\end{enumerate}
+
+\end{multicols}
+\end{document}
