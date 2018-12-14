@@ -11831,22 +11831,6 @@ $( document ).ready(function(){
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
-    <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> 
-     <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> 
-     <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]]</span>
-<span class="p">)</span> <span class="c1"># 3*3 matrix</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">])</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="c1"># Rank=2 because row3 = 2*row2 - row1</span>
-</pre></div>
-
-</div>
-</div>
-</div>
 
 <div class="output_wrapper">
 <div class="output">
@@ -11854,11 +11838,10 @@ $( document ).ready(function(){
 
 <div class="output_area">
 
-<div class="prompt"></div>
-
+<div class="prompt"> </div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>2
+<pre>X has shape (3, 3) and rank 2.
 </pre>
 </div>
 </div>
@@ -11869,7 +11852,7 @@ $( document ).ready(function(){
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -11903,7 +11886,7 @@ $( document ).ready(function(){
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -11929,74 +11912,6 @@ $( document ).ready(function(){
 <pre>LinAlgError
 </pre>
 </div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[26]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
-<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exception</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">exception</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[-6. 15. -6.]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># (2, -1, 2) is also a solution</span>
-<span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[27]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([ 6,  9, 12])</pre>
-</div>
-
 </div>
 
 </div>
@@ -12047,7 +11962,7 @@ $( document ).ready(function(){
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_13_0.png"
+<img src="MLPR Revision_files/MLPR Revision_11_0.png"
 >
 </div>
 
@@ -12089,7 +12004,7 @@ $( document ).ready(function(){
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_16_0.png"
+<img src="MLPR Revision_files/MLPR Revision_14_0.png"
 >
 </div>
 
@@ -12122,6 +12037,12 @@ $( document ).ready(function(){
 \end{align*}</p>
 <p>By rewriting $\mathbf y' = \begin{pmatrix} \mathbf y \\ \mathbf 0_K \end{pmatrix}$ and $\Phi' = \begin{pmatrix} \Phi \\ \sqrt{\lambda} \mathbb I_K \end{pmatrix}$, then</p>
 <p>$$E_\lambda (\mathbf w; \mathbf y', \Phi') = (\mathbf y' - \Phi' \mathbf w)^\top (\mathbf y' - \Phi' \mathbf w)$$</p>
+<h3 id="L1-regularisation">L1 regularisation<a class="anchor-link" href="#L1-regularisation">&#182;</a></h3><p>$$c(\mathbf w) = E(\mathbf w) + \lambda \sum_d |w_d| = E(\mathbf w) + \lambda \| \mathbf w \|_1$$</p>
+<ul>
+<li>Some of the parameters will often be exactly zero</li>
+<li><strong>Pros:</strong> L1 regulariser gives spase solutions and its convex (possible to find global optimum if error function is also convex)</li>
+<li><strong>Cons:</strong> L1 regulariser is not differentiable at zero</li>
+</ul>
 
 </div>
 </div>
@@ -12158,8 +12079,8 @@ $( document ).ready(function(){
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Generalisation-error-and-test-error">Generalisation error and test error<a class="anchor-link" href="#Generalisation-error-and-test-error">&#182;</a></h2><p>If test cases are from some (data) distribution $p(\mathbf x, y)$,</p>
 <p>$$\text{Generalisation error} = \mathbb E_{p(\mathbf x, y)} [L(y, f(\mathbf x)] = \int L(y, f(\mathbf x)) p(\mathbf x, y) \mathrm d \mathbf x \mathrm d y$$</p>
-<p>Using <em>Monte Carlo</em> (unbiased) estimate,</p>
-<p>$$\text{Average test error} = \frac{1}{M} \sum_{m=1}^{M} L(y^{(m)}, f(\mathbf x^{(m)}), \quad \mathbf x^{(m)}, y^{(m)} \sim p(\mathbf x, y)$$</p>
+<p>Using <a href="#Monte-Carlo-approximation">Monte Carlo</a> (unbiased) estimate,</p>
+<p>$$\text{Average test error} = \frac{1}{M} \sum_{m=1}^{M} L \left( y^{(m)}, f(\mathbf x^{(m)}) \right), \quad \mathbf x^{(m)}, y^{(m)} \sim p(\mathbf x, y)$$</p>
 <p>One can show $\mathbb E [\text{Average test error}] = \text{Generalisation error}$.</p>
 
 </div>
@@ -12285,7 +12206,7 @@ $( document ).ready(function(){
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_32_0.png"
+<img src="MLPR Revision_files/MLPR Revision_30_0.png"
 >
 </div>
 
@@ -12325,7 +12246,7 @@ $( document ).ready(function(){
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_35_0.png"
+<img src="MLPR Revision_files/MLPR Revision_33_0.png"
 >
 </div>
 
@@ -12400,7 +12321,7 @@ $( document ).ready(function(){
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_41_0.png"
+<img src="MLPR Revision_files/MLPR Revision_39_0.png"
 >
 </div>
 
@@ -12534,6 +12455,31 @@ $$\pi_k = \frac{r_k}{N} \text{,} \quad \boldsymbol\mu_k = \frac{1}{r_k} \sum_{n=
 <h2 id="Gradient-descent">Gradient descent<a class="anchor-link" href="#Gradient-descent">&#182;</a></h2><ul>
 <li>Steepest Gradient Descent: $\mathbf w \leftarrow \mathbf w - \eta \nabla_{\mathbf w} (\mathbf r^\top \mathbf r)$</li>
 <li>Stochastic Gradient Descent: Use gradient of mini-batch of examples</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Newton's-method">Newton's method<a class="anchor-link" href="#Newton's-method">&#182;</a></h2><ul>
+<li><strong>Gradient:</strong> $\displaystyle \mathbf g = \left. \nabla_{\mathbf w} E(\mathbf w) \right|_{\mathbf w= \mathbf w^{(t)}}$</li>
+<li><strong>Hessian matrix:</strong> $\displaystyle H_{ij} = \left. \frac{\partial^2 E(\mathbf w)}{\partial w_i \partial w_j} \right|_{\mathbf w = \mathbf w^{(t)}}$</li>
+<li><strong>Newton's update:</strong> $\displaystyle \mathbf w^{(t+1)} = \mathbf w^{(t)} + H^{-1} \mathbf g$</li>
+<li><strong>Pros:</strong><ul>
+<li>If cost function is quadratic with optimum $\mathbf w^*$ and Hessian $H$, MLE converges in one update. </li>
+<li>If cost function is nearly quadratic, convergence is fast</li>
+<li>No need to tell whether maximising or minimising</li>
+</ul>
+</li>
+<li><strong>Cons:</strong><ul>
+<li>May converge to a saddle-point (local optimum)</li>
+<li>High-memory needed for storing Hessian</li>
+<li>Computational expensive for computing inverse of Hessian</li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -12800,10 +12746,21 @@ $$\pi_k = \frac{r_k}{N} \text{,} \quad \boldsymbol\mu_k = \frac{1}{r_k} \sum_{n=
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Estimator">Estimator<a class="anchor-link" href="#Estimator">&#182;</a></h2><h3 id="Maximum-a-posteriori-(MAP)">Maximum a posteriori (MAP)<a class="anchor-link" href="#Maximum-a-posteriori-(MAP)">&#182;</a></h3><p>\begin{align*}
+<h2 id="Estimator">Estimator<a class="anchor-link" href="#Estimator">&#182;</a></h2><h3 id="Maximum-a-posteriori-(MAP)">Maximum a posteriori (MAP)<a class="anchor-link" href="#Maximum-a-posteriori-(MAP)">&#182;</a></h3><ul>
+<li>If prior $p(\mathbf w) = \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I)$</li>
+</ul>
+<p>\begin{align*}
     \mathbf w^* &amp;= \underset{\mathbf w}{\mathrm{arg\,max}} p(\mathbf w | \mathcal D) \\
     &amp;= \underset{\mathbf w}{\mathrm{arg\,min}} \left[ -\log P(\mathcal D | \mathbf w) + \frac{1}{2\sigma_w^2} \mathbf w^\top \mathbf w \right] \\
     &amp;= \text{Optimum of L2 regularised NLL(cost)}
+\end{align*}</p>
+<ul>
+<li>If prior $p(\mathbf w) \propto \exp (- \| \mathbf w \|_1 )$</li>
+</ul>
+<p>\begin{align*}
+    \mathbf w^* &amp;= \underset{\mathbf w}{\mathrm{arg\,max}} p(\mathbf w | \mathcal D) \\
+    &amp;= \underset{\mathbf w}{\mathrm{arg\,min}} \left[ -\log P(\mathcal D | \mathbf w) + \|\mathbf w\|_1 \right] \\
+    &amp;= \text{Optimum of L1 regularised NLL(cost)}
 \end{align*}</p>
 <h3 id="Posterior-predictive-distribution">Posterior predictive distribution<a class="anchor-link" href="#Posterior-predictive-distribution">&#182;</a></h3><p>$$P(y^* | \mathbf x^*, \mathcal D) = \int p(y^*, \mathbf w | \mathbf x^*, \mathcal D) \mathrm d \mathbf w = \int P(y^* | \mathbf x^*, \mathbf w) p (\mathbf w | \mathcal D) \mathrm d \mathbf w = \mathbb E_{p (\mathbf w | \mathcal D)} \left[ P(y^* | \mathbf x^*, \mathbf w) \right]$$</p>
 
@@ -12973,7 +12930,7 @@ p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \mathbb E_{\mathcal N(\mathbf w
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_77_0.png"
+<img src="MLPR Revision_files/MLPR Revision_76_0.png"
 >
 </div>
 
@@ -13105,7 +13062,7 @@ p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \mathbb E_{\mathcal N(\mathbf w
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_85_0.png"
+<img src="MLPR Revision_files/MLPR Revision_84_0.png"
 >
 </div>
 
@@ -13171,7 +13128,7 @@ p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \mathbb E_{\mathcal N(\mathbf w
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_89_0.png"
+<img src="MLPR Revision_files/MLPR Revision_88_0.png"
 >
 </div>
 
@@ -13212,6 +13169,56 @@ $$p(f_* | \mathbf y, X) = \int p(f_* | \mathbf y, X, \theta) p(\theta|\mathbf y,
 <li>Computing kernel matrix $K$ costs $O(DN^2)$ and uses $O(N^2)$ memory</li>
 <li>Not all functions can be represented by a GP</li>
 <li>The probability of a function being monotonic under any GP is 0</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Ensembles-and-Model-Combination">Ensembles and Model Combination<a class="anchor-link" href="#Ensembles-and-Model-Combination">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Averaging-predictions">Averaging predictions<a class="anchor-link" href="#Averaging-predictions">&#182;</a></h2><ul>
+<li>Assume model being fitted is sensible</li>
+<li>Assume there is not enough data to constrain it</li>
+<li>If model is too simple, all of the posteriors or bootstrap samples will be similar</li>
+</ul>
+<h3 id="Bayesian-predictions"><a href="#Bayesian-Regression">Bayesian predictions</a><a class="anchor-link" href="#Bayesian-predictions">&#182;</a></h3><ul>
+<li>Predictions are averaged over all possible models</li>
+<li><a href="#Monte-Carlo-approximation">Monte Carlo approximation</a> combines distributions and gives a broader distribution, correctly reflecting the range of the location of new output</li>
+</ul>
+<h3 id="Bagging">Bagging<a class="anchor-link" href="#Bagging">&#182;</a></h3><ul>
+<li>Also caled <strong>Bootstrap Aggregation</strong></li>
+<li>Sample with replacement from original data points</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Combining-models">Combining models<a class="anchor-link" href="#Combining-models">&#182;</a></h2><ul>
+<li>Mixture of experts<ul>
+<li>One type of <a href="#Latent-variable-model-(LVM">LVM</a>)</li>
+<li>Neural network classifier weights the predicitions of each expert</li>
+</ul>
+</li>
+<li>Decision tree<ul>
+<li>A series of simple rules</li>
+</ul>
+</li>
+<li>Random Forests</li>
+<li>Boosting</li>
 </ul>
 
 </div>
