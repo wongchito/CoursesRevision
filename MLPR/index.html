@@ -11832,7 +11832,7 @@ $( document ).ready(function(){
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
@@ -11869,7 +11869,7 @@ $( document ).ready(function(){
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -11903,7 +11903,7 @@ $( document ).ready(function(){
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -11937,7 +11937,7 @@ $( document ).ready(function(){
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
@@ -11971,7 +11971,7 @@ $( document ).ready(function(){
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># (2, -1, 2) is also a solution</span>
@@ -11988,7 +11988,7 @@ $( document ).ready(function(){
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[21]:</div>
+<div class="prompt output_prompt">Out[27]:</div>
 
 
 
@@ -12938,7 +12938,68 @@ p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \mathbb E_{\mathcal N(\mathbf w
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Minimising-$D_\text{KL}(q\|p)$">Minimising $D_\text{KL}(q\|p)$<a class="anchor-link" href="#Minimising-$D_\text{KL}(q\|p)$">&#182;</a></h3><p>$$D_\text{KL} \left( q(\mathbf w; \theta) \| p(\mathbf w | \mathcal D) \right) = -\int q(\mathbf w; \theta) \log p(\mathbf w| \mathcal D) \mathrm d \mathbf w + \underbrace{\int q(\mathbf w; \theta) \log q(\mathbf w; \theta) \mathrm d \mathbf w}_{\text{negative entropy, } -H(q)}$$</p>
+<h3 id="Minimising-$D_\text{KL}(q\|p)$">Minimising $D_\text{KL}(q\|p)$<a class="anchor-link" href="#Minimising-$D_\text{KL}(q\|p)$">&#182;</a></h3><p>\begin{align*}
+    D_\text{KL} \left( q(\mathbf w; \theta) \| p(\mathbf w | \mathcal D) \right) &amp;= -\int q(\mathbf w; \theta) \log p(\mathbf w| \mathcal D) \mathrm d \mathbf w + \underbrace{\int q(\mathbf w; \theta) \log q(\mathbf w; \theta) \mathrm d \mathbf w}_{\text{negative entropy, } -H(q)} \\
+    &amp;= \underbrace{\mathbb E_q[\log q(\mathbf w)] - \mathbb E_q[\log p(\mathcal D|\mathbf w)] - \mathbb E_q[\log p(\mathbf w)]}_{J(\mathbf m, V)} + \log p(\mathcal D) \\
+    &amp;\geq 0
+\end{align*}</p>
+<p>NB: $\log p(\mathcal D) \geq -J(q)$, where $-J(q)$ is called ELBO (<strong>E</strong>vidence <strong>L</strong>ower <strong>BO</strong>und)</p>
+<p><strong>Goal:</strong></p>
+<ul>
+<li>Minimise $J(\mathbf m, V)$ with respect to $\{\mathbf m, V\}$</li>
+<li>Maximise $\log p(\mathcal D)$ with respect to hyperparameters</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Negative-entropy-term">Negative entropy term<a class="anchor-link" href="#Negative-entropy-term">&#182;</a></h4><p>\begin{align*}
+    \mathbb E_{\mathcal N(\mathbf w; \mathbf m, V)} \left[ \log \mathcal N(\mathbf w; \mathbf m, V) \right] &amp;= \mathbb E_{\mathcal N(\mathbf w; \mathbf m, V)} \left[ -\frac{1}{2} (\mathbf w - \mathbf m)^\top V^{-1} (\mathbf w - \mathbf m) \right] - \frac{1}{2} \log |2 \pi V| \\
+    &amp;= \mathbb E_{\mathcal N(\mathbf z; \mathbf 0, V)} \left[ -\frac{1}{2} \mathrm{Tr} \left( \mathbf z \mathbf z^\top V^{-1} \right) \right] - \frac{1}{2} \log |2 \pi V| \\
+    &amp;= -\frac{D}{2} - \frac{1}{2} \log |2 \pi V| \\ 
+    &amp;= -\frac{D}{2} (1 + \log 2\pi) + \sum_i \log L_{ii}
+\end{align*}</p>
+<blockquote><p>$\mathbf x^\top A \mathbf x = \mathrm{Tr} \left( \mathbf{xx}^\top A \right) = \mathrm{Tr} \left( A \mathbf{xx}^\top \right)$, $V = LL^\top$ (Cholesky decomposition)</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Cross-entropy-term">Cross-entropy term<a class="anchor-link" href="#Cross-entropy-term">&#182;</a></h4><p>\begin{align*}</p>
+
+<pre><code>- \mathbb E_{\mathcal N(\mathbf w; \mathbf m, V)} \left[ \log \mathcal N(\mathbf w; \mathbf 0, \sigma_w^2 \mathbb I) \right] &amp;= \mathbb E_{\mathcal N(\mathbf w; \mathbf m, V)} \left[ \frac{1}{2} \mathbf w^\top \Sigma^{-1} \mathbf w \right] + \frac{D}{2} \log 2 \pi \sigma_w^2 \\
+&amp;= \frac{1}{2 \sigma_w^2} \left( \mathrm{Tr}(V) + \mathbf m^\top \mathbf m \right) + \frac{D}{2} \log 2 \pi \sigma_w^2 \\
+&amp;= \frac{1}{2 \sigma_w^2} \left( \sum_i \sum_j L_{ij}^2 + \mathbf m^\top \mathbf m \right) + \frac{D}{2} \log 2 \pi \sigma_w^2
+</code></pre>
+<p>\end{align*}</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="The-log-likelihood-term">The log-likelihood term<a class="anchor-link" href="#The-log-likelihood-term">&#182;</a></h4><p><strong>Method 1:</strong> <a href="#Monte-Carlo-approximation">Monte-Carlo approximation</a> (with $S=1$)</p>
+<p><strong>Method 2:</strong> Reparameterisation trick</p>
+<p>$$\mathbb E_{\mathcal N(\mathbf w; \mathbf m, V)} \left[ f(\mathbf w) \right] = \mathbb E_{\mathcal N(\mathbf v; \mathbf 0, \mathbb I)} \left[ f(\mathbf m + L \mathbf v) \right]$$</p>
+<ul>
+<li>Gradients</li>
+</ul>
+<p>\begin{align*}
+    \nabla_{\mathbf m} \mathbb E_{\mathcal N(\mathbf w; \mathbf m, V)} \left[ f(\mathbf w) \right] &amp;= \mathbb E_{\mathcal N(\mathbf v; \mathbf 0, \mathbb I)} \left[ \nabla_{\mathbf m} f(\mathbf m + L \mathbf v) \right] \\
+    &amp;\approx \nabla_{\mathbf m} f(\mathbf m + L \mathbf v) \\
+    \nabla_L \mathbb E_{\mathcal N(\mathbf w; \mathbf m, V)} \left[ f(\mathbf w) \right] &amp;\approx \nabla_L f(\mathbf m + L \mathbf v) \\
+    &amp;= \left[ \nabla_{\mathbf w} f(\mathbf w) \right] \mathbf v^\top
+\end{align*}</p>
 
 </div>
 </div>
@@ -12995,7 +13056,7 @@ p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \mathbb E_{\mathcal N(\mathbf w
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_80_0.png"
+<img src="MLPR Revision_files/MLPR Revision_83_0.png"
 >
 </div>
 
@@ -13061,7 +13122,7 @@ p(y^* = 1| \mathbf x^*, \mathcal D) &amp;\approx \mathbb E_{\mathcal N(\mathbf w
 
 
 <div class="output_png output_subarea ">
-<img src="MLPR Revision_files/MLPR Revision_84_0.png"
+<img src="MLPR Revision_files/MLPR Revision_87_0.png"
 >
 </div>
 
