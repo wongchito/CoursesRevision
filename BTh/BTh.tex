@@ -1,0 +1,125 @@
+\documentclass[11pt,a4paper]{article}
+%\usepackage{times}
+\usepackage{color}
+\usepackage{amsmath, amssymb, amsfonts, mathtools}
+\usepackage{graphicx, wrapfig}
+\usepackage{hyperref}
+\usepackage{natbib}
+\usepackage{siunitx}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage[margin=0.75in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{Bayesian Theory Formulas}
+\fancyhead[R]{Author: s1680642}
+\fancyfoot[C]{Page \thepage}
+
+\title{Bayesian Theory Formulas}
+
+\begin{document}
+\begin{multicols}{2}
+
+\section*{Bayesian Statistics}
+
+\begin{enumerate}
+\item Bayes' Theorem: 
+$$\mathbb{P}(A|B) = \frac{\mathbb{P}(B|A) \mathbb{P}(A)}{\mathbb{P}(B)}$$
+\item Law of Total Probability: 
+$$\mathbb{P}(B) = \sum_{i=1}^{n} \mathbb{P}(B|A_i) \mathbb{P}(A_i)$$
+\item Bayes' Theorem in continuous case: 
+$$\displaystyle \pi(\theta|\boldsymbol x) = \frac{f(\boldsymbol x|\theta) p(\theta)}{f(\boldsymbol x)} \propto f(\boldsymbol x|\theta) p(\theta)$$ 
+Likelihood: $\displaystyle f(\boldsymbol x|\theta) = \prod_{i=1}^n f(x_i | \theta)$ 
+$$f(\boldsymbol x) = \int_\Theta f(\boldsymbol x|\theta) p(\theta) d\theta$$
+
+\item Non-informative prior: bad when transformation
+\item Jeffrey's prior: 
+$$p(\theta) \propto \sqrt{I(\theta|\boldsymbol x)} \propto \sqrt{I(\theta|x)}$$
+$$I(\theta|\boldsymbol x) = - \mathbb{E} \left[ \frac{d^2 \log f(\boldsymbol x|\theta)}{d\theta^2} \right]$$
+\item Transformation of variables: 
+$$\displaystyle g(y) = f(x) \left| \frac{dx}{dy} \right|$$
+
+\item HDPI, CI: choose prior backwards
+\item Bayes estimate w.r.t. the quadratic loss function $L(\theta,a) = (\theta-a)^2$ is the MEAN of the posterior distribution. 
+\item Bayes estimate w.r.t. the absolute error loss function $L(\theta,a) = |\theta-a|$ is the MEDIAN of the posterior distribution. 
+
+\item Bayes factor for $H_0$ against $H_1$ is 
+$$B_{01} = \frac{\mathbb{P}(\theta \in \Theta_0 | \boldsymbol x) / \mathbb{P}(\theta \in \Theta_1 | \boldsymbol x)}{p_0 / p_1}$$ 
+$B_{01}<3$: No evidence of $H_0$ over $H_1$\\
+$B_{01}>3$: Positive evidence for $H_0$\\
+$B_{01}>20$: Strong evidence for $H_0$\\
+$B_{01}>150$: Very strong evidence for $H_0$
+\item $H_0: \theta=\theta_0$ vs $H_1: \theta=\theta_1$: 
+$$B_{01} = \frac{f(\boldsymbol x|\theta_0)}{f(\boldsymbol x|\theta_1)}$$
+\item $H_0: \theta=\theta_0$ vs $H_1: \theta \neq \theta_0$: 
+$$B_{01} = \frac{f(\boldsymbol x|\theta_0)}{\int_{-\infty}^\infty f(\boldsymbol x|\theta) p_1(\theta) d\theta}$$
+\item $H_0: \theta \in \Theta_0$ vs $H_1: \theta \in \Theta_1$: 
+$$B_{01} = \frac{\int_{\Theta_0} f(\boldsymbol x|\theta) p_0(\theta) d\theta}{\int_{\Theta_1} f(\boldsymbol x|\theta) p_1(\theta) d\theta}$$
+
+\item Prior predictive distribution: 
+$$f(\boldsymbol x) = \int_{\theta \in \Theta} f(\boldsymbol x|\theta) p(\theta) d\theta$$
+\item Posterior predictive distribution: 
+$$f(\boldsymbol y|\boldsymbol x) = \int_{\Theta} f(\boldsymbol y|\theta) \pi(\theta|\boldsymbol x) d\theta$$
+\end{enumerate}
+
+\section*{Bayesian Computation}
+\begin{enumerate}[resume]
+\item Monte Carlo integration: \\
+$$\mathbb{E}_\pi (\theta) \approx \frac{1}{n} \sum_{i=1}^n \theta^i \text{, } \mathbb{E}_\pi \left(f(\theta)\right) \approx \frac{1}{n} \sum_{i=1}^n f(\theta^i)$$
+\begin{align*}
+\mathrm{Var}_\pi (\theta) &\approx \frac{1}{n-1} \sum_{i=1}^n \left( \theta^i - \mathbb{E}_\pi (\theta^i) \right)^2 \\
+&= \frac{1}{n-1} \left[ \sum_{i=1}^n (\theta^i)^2 - \frac{1}{n} \left( \sum_{i=1}^n \theta^i \right)^2 \right]
+\end{align*}
+
+\item Method of Inversion: 
+\begin{itemize}
+\item Calculate cdf $F(x)$
+\item Let $F(x)=u$, calculate $x=F^{-1}(u)$
+\end{itemize}
+Algorithm: \\
+\textsc{Step 1: Simulate} $U \sim U[0,1]$ \\
+\textsc{Step 2: Set} $X = F^{-1}(U)$ \\
+Discrete case: (check WS4 Q2)
+
+\item Rejection Sampling: 
+\begin{itemize}
+\item Calculate $\displaystyle M = \sup_p \left( \frac{\pi(\theta|\boldsymbol x)}{h(\theta)} \right)$
+\end{itemize}
+Algorithm: \\
+\textsc{Step 1: Simulate} $\theta \sim h(\theta)$ \\
+\textsc{Step 2: Generate} $Y \sim U[0,Mh(\theta)]$ \\
+\textsc{Step 3: Accept} $\theta$ \textsc{iff} $Y \leq \pi(\theta|\boldsymbol x)$
+
+\item Importance Sampling: \\
+\textsc{Step 1: Simulate} $\theta \sim g(\theta)$ \\
+\textsc{Step 2: Calculate weight} $$w_i = \frac{\pi(\theta^i|\boldsymbol x)}{g(\theta^i)}$$
+\textsc{Step 3: Calculate estimator} $$\hat\theta_g = \frac{1}{n} \sum_{i=1}^n w(\theta^i) \theta^i$$
+
+\item Sampling Importance Resampling (SIR): 
+\textsc{Step 1: Simulate} $\theta \sim g(\theta)$ \\
+\textsc{Step 2: Calculate weight} $$w_i = \frac{\pi(\theta^i|\boldsymbol x)}{g(\theta^i)}$$
+\textsc{Step 3: Calculate updated weight} $$w_i^* = \frac{w_i}{\sum_{j=1}^n w_j}$$
+\textsc{Step 4: Resample these values from these weight with replacement, with resampling probability} $w_i^*$
+
+\item Gibbs Sampler: \\
+\textsc{Step 1: Set initial parameter value for} $\theta_1$ and $\theta_2$ \textsc{denoted by} $\theta_1^0$ and $\theta_2^0$ \\
+\textsc{Step 2: Generate} $\theta_1^{t+1} \sim \pi(\theta_1^{t+1} | \boldsymbol x, \theta_2^t)$ \\
+\textsc{Step 3: Generate} $\theta_2^{t+1} \sim \pi(\theta_2^{t+1} | \boldsymbol x, \theta_1^{t+1})$ \\
+\textsc{Step 4: Increase} $t$ \textsc{by one and return to Step 2} \\
+\textsc{Step 5: Discard} $\boldsymbol\theta^0, \ldots, \boldsymbol\theta^N$ \textsc{as burn-in}
+
+\item Metropolis-Hastings: \\
+\textsc{Step 1: Set initial parameter value for} $\boldsymbol\theta$ \textsc{denoted by} $\boldsymbol\theta^0$ \\
+\textsc{Step 2: Given the current position}, $\boldsymbol\theta^t = \boldsymbol\theta$, \textsc{generate a new value} $\boldsymbol\theta'$ \textsc{from the distribution} $q(\boldsymbol\theta'|\boldsymbol\theta)$ \\
+\textsc{Step 3: Calculate} 
+$$\alpha(\boldsymbol\theta, \boldsymbol\theta') = \min \left( 1, \frac{\pi(\boldsymbol\theta) q(\boldsymbol\theta'|\boldsymbol\theta)}{\pi(\boldsymbol\theta') q(\boldsymbol\theta|\boldsymbol\theta')} \right)$$
+\textsc{Step 4: With probability} $\alpha(\boldsymbol\theta, \boldsymbol\theta')$, set $\boldsymbol\theta^{t+1} = \boldsymbol\theta'$, else set $\boldsymbol\theta^{t+1} = \boldsymbol\theta$ \\
+\textsc{Step 5: Discard} $\boldsymbol\theta^0, \ldots, \boldsymbol\theta^N$ \textsc{as burn-in}
+\end{enumerate}
+
+\end{multicols}
+\end{document}
