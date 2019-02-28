@@ -12301,12 +12301,12 @@ To use the future default and silence this warning we advise to pass `rcond=None
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[152]:</div>
+<div class="prompt input_prompt">In&nbsp;[158]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Linear regression for quartic data&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Linear regression for logarithmic data&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Training RSS: </span><span class="si">{:.3e}</span><span class="se">\t</span><span class="s1">Testing RSS: </span><span class="si">{:.3e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rss1_train</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rss1_test</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cubic regression for quartic data&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cubic regression for logarithmic data&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Training RSS: </span><span class="si">{:.3e}</span><span class="se">\t</span><span class="s1">Testing RSS: </span><span class="si">{:.3e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rss3_train</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rss3_test</span><span class="p">))</span>
 </pre></div>
 
@@ -12324,10 +12324,10 @@ To use the future default and silence this warning we advise to pass `rcond=None
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Linear regression for quartic data
-	Training RSS: 3.297e+02	Testing RSS: 4.175e+01
-Cubic regression for quartic data
-	Training RSS: 1.243e+02	Testing RSS: 1.767e+01
+<pre>Linear regression for logarithmic data
+	Training RSS: 1.109e+02	Testing RSS: 1.802e+01
+Cubic regression for logarithmic data
+	Training RSS: 1.100e+02	Testing RSS: 1.754e+01
 </pre>
 </div>
 </div>
@@ -12434,12 +12434,12 @@ To use the future default and silence this warning we advise to pass `rcond=None
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[157]:</div>
+<div class="prompt input_prompt">In&nbsp;[159]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Linear regression for quartic data&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Linear regression for reciprocal&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Training RSS: </span><span class="si">{:.3e}</span><span class="se">\t</span><span class="s1">Testing RSS: </span><span class="si">{:.3e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rss1_train</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rss1_test</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cubic regression for quartic data&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Cubic regression for reciprocal&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">Training RSS: </span><span class="si">{:.3e}</span><span class="se">\t</span><span class="s1">Testing RSS: </span><span class="si">{:.3e}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rss3_train</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rss3_test</span><span class="p">))</span>
 </pre></div>
 
@@ -12457,9 +12457,9 @@ To use the future default and silence this warning we advise to pass `rcond=None
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Linear regression for quartic data
+<pre>Linear regression for reciprocal
 	Training RSS: 1.109e+02	Testing RSS: 1.802e+01
-Cubic regression for quartic data
+Cubic regression for reciprocal
 	Training RSS: 1.100e+02	Testing RSS: 1.754e+01
 </pre>
 </div>
