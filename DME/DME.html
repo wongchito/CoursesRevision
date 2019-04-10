@@ -13138,7 +13138,7 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Data-Mining-and-Exploration">Data Mining and Exploration<a class="anchor-link" href="#Data-Mining-and-Exploration">&#182;</a></h1>
+<h1 id="Data-Mining-and-Exploration-(INFR-11007)">Data Mining and Exploration (INFR 11007)<a class="anchor-link" href="#Data-Mining-and-Exploration-(INFR-11007)">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -13458,10 +13458,10 @@ Set 2: [   0    1    1    1    2    3    4    4    5 9000]
 </li>
 <li>Sample covariance matrix<ul>
 <li>Positive semi-definite</li>
-<li>Total variance $\displaystyle \sum_{i=1}^d \mathrm{Var}(x_i) = \sum_{i=1}^d \lambda_i$ (by eigenvalue decomopsition $\mathrm{Cov}(\boldsymbol x) = U \Lambda U^\top$)</li>
+<li>Total variance $\displaystyle \sum_{i=1}^d \mathrm{Var}(x_i) = \sum_{i=1}^d \lambda_i$ (by eigenvalue decomopsition $\mathrm{Cov}(\mathbf x) = \mathbf U \boldsymbol\Lambda \mathbf U^\top$)</li>
 </ul>
 </li>
-<li>Sample correlation matrix: $\displaystyle \rho(\boldsymbol x) = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\boldsymbol x)} \right) \mathrm{Cov}(\boldsymbol x) \mathrm{diag} \left( \frac{1}{\mathrm{std}(\boldsymbol x)} \right)$</li>
+<li>Sample correlation matrix: $\displaystyle \rho(\mathbf x) = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\mathbf x)} \right) \mathrm{Cov}(\mathbf x) \mathrm{diag} \left( \frac{1}{\mathrm{std}(\mathbf x)} \right)$</li>
 </ul>
 <p><strong>Robust measures:</strong></p>
 <ul>
@@ -13515,9 +13515,7 @@ y_i = y_j
 <h4 id="Box-plot">Box plot<a class="anchor-link" href="#Box-plot">&#182;</a></h4><ul>
 <li>Based on robust measures (quantiles)</li>
 </ul>
-<p><img src="boxplot.pdf" width="500"></p>
-<p><a href="boxplot.pdf">(Alternative link)</a></p>
-
+<embed src="boxplot.pdf" type="application/pdf" width="500px" height="520px"/>
 </div>
 </div>
 </div>
@@ -13595,13 +13593,13 @@ y_i = y_j
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Standardisation">Standardisation<a class="anchor-link" href="#Standardisation">&#182;</a></h4><p><strong>Centring matrix</strong></p>
-$$\tilde X = X C_n$$<ul>
-<li>$C_n = I_n - \frac{1}{n} \boldsymbol 1_n \boldsymbol 1_n^\top$</li>
-<li>$C_n C_n = C_n$</li>
+$$\tilde {\mathbf X} = \mathbf{X C}_n$$<ul>
+<li>$\mathbf C_n = \mathbf I_n - \frac{1}{n} \boldsymbol 1_n \boldsymbol 1_n^\top$</li>
+<li>$\mathbf C_n \mathbf C_n = \mathbf C_n$</li>
 <li>Multiply from the left instead removes the sample mean of each column</li>
 </ul>
 <p><strong>Scaling to unit variance</strong></p>
-$$\boldsymbol z_i = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\boldsymbol x)} \right) \tilde{\boldsymbol x}_i$$
+$$\mathbf z_i = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\mathbf x)} \right) \tilde{\mathbf x}_i$$
 </div>
 </div>
 </div>
@@ -13629,20 +13627,165 @@ $$\boldsymbol z_i = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\boldsymbol x)} \
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="PCA-by-variance-maximisation">PCA by variance maximisation<a class="anchor-link" href="#PCA-by-variance-maximisation">&#182;</a></h3>\begin{align*}
-\text{First component: } &amp; \begin{cases}
-\underset{\boldsymbol w_1}{\text{maximise}} &amp; \mathrm{Var}(z_1) = \mathrm{Var}(\boldsymbol w_1^\top \boldsymbol x) = \boldsymbol w_1^\top \Sigma \boldsymbol w_1 \\
-\text{subject to} &amp; \| \boldsymbol w_1 \| = 1
+<h3 id="PCA-by-variance-maximisation">PCA by variance maximisation<a class="anchor-link" href="#PCA-by-variance-maximisation">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Sequtial-variance-maximisation">Sequtial variance maximisation<a class="anchor-link" href="#Sequtial-variance-maximisation">&#182;</a></h4>\begin{align*}
+\text{First PC: } &amp; \begin{cases}
+\underset{\mathbf w_1}{\text{maximise}} &amp; \mathrm{Var}(z_1) = \mathrm{Var}(\mathbf w_1^\top \mathbf x) = \mathbf w_1^\top \boldsymbol\Sigma \mathbf w_1 \\
+\text{subject to} &amp; \| \mathbf w_1 \| = 1
 \end{cases} \\
-\text{Subsequent components: } &amp; \begin{cases}
-\underset{\boldsymbol w_m}{\text{maximise}} &amp; \boldsymbol w_m^\top \Sigma \boldsymbol w_m \\
-\text{subject to} &amp; \| \boldsymbol w_m \| = 1 \\
-&amp; \boldsymbol w_m^\top w_1 = 0 \quad i = 1, \ldots, m-1
+\text{Subsequent PCs: } &amp; \begin{cases}
+\underset{\mathbf w_m}{\text{maximise}} &amp; \mathbf w_m^\top \boldsymbol\Sigma \mathbf w_m \\
+\text{subject to} &amp; \| \mathbf w_m \| = 1 \\
+&amp; \mathbf w_m^\top \mathbf w_1 = 0 \quad i = 1, \ldots, m-1
 \end{cases}
 \end{align*}<ol>
-<li>Let $\boldsymbol w_1 = U \boldsymbol a$, then $\displaystyle \boldsymbol w_1^\top \Sigma \boldsymbol w_1 = \sum_{i=1}^d a_i^2 \lambda_i$ and $\displaystyle \| \boldsymbol w_1 \| = \sum_{i=1}^d a_i^2 = 1$</li>
+<li>Let $\mathbf w_1 = \mathbf{Ua}$, then $\displaystyle \mathbf w_1^\top \boldsymbol\Sigma \mathbf w_1 = \sum_{i=1}^d a_i^2 \lambda_i$ and $\displaystyle \| \mathbf w_1 \| = \sum_{i=1}^d a_i^2 = 1$</li>
+<li>$\mathbf a = (1, 0, \ldots, 0)^\top$ is the solution of the optimisation problem if $\lambda_1 &gt; \lambda_i$</li>
+<li>$\mathbf w_1 = \mathbf u_1 = \mathbf{Ue}_1$ is the first PC direction, with variance $\lambda_1$</li>
+<li>For subsequent calculations, constraints $a_i=0 \ (i=1,\ldots,m-1)$ exist</li>
+</ol>
+<ul>
+<li>PCs (scores) uncorrelated: 
+\begin{align*}
+\mathbb E [z_i z_j] &amp;= \mathbb E [\mathbf w_i^\top \mathbf{xx}^\top \mathbf w_j] \\
+&amp;= \mathbf w_i^\top \boldsymbol\Sigma \mathbf w_j \\
+&amp;= \mathbf e_i^\top \mathbf U^\top \mathbf U \boldsymbol\Lambda \mathbf U^\top \mathbf{Ue}_j \\
+&amp;= 0
+\end{align*}</li>
+<li>Fraction of variance explained: $\displaystyle \frac{\sum_{i=1}^k \lambda_i}{\sum_{i=1}^d \lambda_i}$</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Simultaneous-variance-maximisation">Simultaneous variance maximisation<a class="anchor-link" href="#Simultaneous-variance-maximisation">&#182;</a></h4>\begin{align*}
+\underset{\mathbf w_1, \ldots, \mathbf w_k}{\text{maximise}} &amp;\quad \sum_{i=1}^k \mathbf w_i^\top \boldsymbol\Sigma \mathbf w_i \\
+\text{subject to} &amp;\quad \| \mathbf w_i \| = 1 &amp;\quad i = 1, \ldots, k \\
+&amp;\quad \mathbf w_i^\top \mathbf w_j = 0 &amp;\quad i \neq j
+\end{align*}<ul>
+<li>Subtle techinical point: not using greedy algorithms as in <a href="#PCA-by-variance-maximisation">sequential approach</a>, which are not guaranteed to yeild optimal solutions</li>
+<li>However, same results as <a href="#PCA-by-variance-maximisation">sequential approach</a></li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="PCA-by-minimisation-of-approximation-error">PCA by minimisation of approximation error<a class="anchor-link" href="#PCA-by-minimisation-of-approximation-error">&#182;</a></h3><p>Approximation error: $\displaystyle \mathbb E \| \mathbf x - \mathbf{Px} \|^2 = \mathbb E \| \mathbf x - \mathbf W_k \mathbf W_k^\top \mathbf x \|^2 = \mathbb E \| \mathbf x - \sum_{i=1}^k \mathbf w_k \mathbf w_k^\top \mathbf x \|^2$</p>
+<ul>
+<li>$\underset{d\times k}{\mathbf W_k} = (\mathbf w_1, \ldots, \mathbf w_k)$, where $\mathbf w_i$ are orthogonal vectors spanning a $k$-dim subspace of $\mathbb R^d$</li>
+</ul>
+\begin{align*}
+\underset{\mathbf w_1, \ldots, \mathbf w_k}{\text{minimise}} &amp;\quad \mathbb E \| \mathbf x - \sum_{i=1}^k \mathbf w_k \mathbf w_k^\top \mathbf x \|^2 \\
+\text{subject to} &amp;\quad \| \mathbf w_i \| = 1 &amp;\quad i = 1, \ldots, k \\
+&amp;\quad \mathbf w_i^\top \mathbf w_j = 0 &amp;\quad i \neq j
+\end{align*}<ul>
+<li>Equivalent to <a href="#Simultaneous-variance-maximisation">simultaneous variance maximisation</a></li>
+<li>Optimal $\mathbf w_i$ are the first $k$ eigenvectors $\mathbf u_i$ of $\boldsymbol\Sigma$</li>
+<li>$\displaystyle \mathbb E \| \mathbf x - \sum_{i=1}^k \mathbf w_k \mathbf w_k^\top \mathbf x \|^2 = \sum_{i=k+1}^d \lambda_i$</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="PCA-by-low-rank-matrix-approximation">PCA by low rank matrix approximation<a class="anchor-link" href="#PCA-by-low-rank-matrix-approximation">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Approximating-the-data-matrix">Approximating the data matrix<a class="anchor-link" href="#Approximating-the-data-matrix">&#182;</a></h4>\begin{align*}
+\underset{\mathbf M}{\text{minimise}} &amp;\quad \| \mathbf X - \mathbf M \|_F^2 = \sum_{ij} \left( (\mathbf X)_{ij} - (\mathbf M)_{ij} \right)^2 \\
+\text{subject to} &amp;\quad \mathrm{rank}(\mathbf M) = k &amp;\quad k&lt;r=\mathrm{rank}(\mathbf X)
+\end{align*}<ul>
+<li>Optimal solution: $\hat{\mathbf X} = \mathbf U_k \mathbf S_k \mathbf V_k^\top$ (truncated singular value decomposition)</li>
+<li>Singular values relate to eigenvalues: $\displaystyle \lambda_i = \frac{s_i^2}{n}$</li>
+<li>Right singular vectors $\mathbf v_i$ are eigenvectors and hence PC directions</li>
+<li>PC scores: $\mathbf z_i = \mathbf{Xv}_i = \mathbf{USV}^\top \mathbf{Ve}_i = \mathbf{USe}_i = s_i \mathbf u_i$</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Approximating-the-sample-covariance-matrix">Approximating the sample covariance matrix<a class="anchor-link" href="#Approximating-the-sample-covariance-matrix">&#182;</a></h4>\begin{align*}
+\underset{\mathbf M}{\text{minimise}} &amp;\quad \| \boldsymbol\Sigma - \mathbf M \|_F \\
+\text{subject to} &amp;\quad \mathrm{rank}(\mathbf M) = k &amp;\quad k&lt;r=\mathrm{rank}(\mathbf X) \\
+&amp;\quad \mathbf M^\top = \mathbf M
+\end{align*}<ul>
+<li>Optimal solution: $\hat{\boldsymbol\Sigma} = \mathbf V_k \boldsymbol\Lambda_k \mathbf V_k^\top$ (eigendecomposition)</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Approximating-the-Gram-matrix">Approximating the Gram matrix<a class="anchor-link" href="#Approximating-the-Gram-matrix">&#182;</a></h4><ol>
+<li>Eigendecomposition: $\displaystyle \underset{n\times n}{\mathbf G} = \mathbf X \mathbf X^\top \overset{\text{SVD}}{=} (\mathbf{USV}^\top) (\mathbf{USV}^\top)^\top = \mathbf{USS}^\top \mathbf U^\top = \mathbf U \tilde{\boldsymbol\Lambda} \mathbf U^\top$</li>
+<li>Approximate $\mathbf G$ like <a href="#Approximating-the-sample-covariance-matrix">sample cov</a>: $\displaystyle \hat{\mathbf G} = \sum_{i=1}^k s_i^2 \mathbf u_i \mathbf u_i^\top = \sum_{i=1}^k \mathbf z_i \mathbf z_i^\top$</li>
 </ol>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Probabilistic-PCA">Probabilistic PCA<a class="anchor-link" href="#Probabilistic-PCA">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Probabilistic-model">Probabilistic model<a class="anchor-link" href="#Probabilistic-model">&#182;</a></h4>\begin{align*}
+    \underset{K \times 1}{\mathbf z} &amp;\sim \mathcal N(\mathbf 0, \mathbf I_K) \\
+    \underset{D \times 1}{\boldsymbol\varepsilon} &amp;\sim \mathcal N(\mathbf 0, \sigma^2 \mathbf I_D) \\
+    \underset{D \times 1}{\mathbf x} &amp;= \underset{D \times K}{\mathbf W} \ \underset{K \times 1}{\mathbf z} + \underset{D \times 1}{\boldsymbol\mu} + \underset{D \times 1}{\boldsymbol\varepsilon}
+\end{align*}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Joint,-conditional-and-observation-distributions">Joint, conditional and observation distributions<a class="anchor-link" href="#Joint,-conditional-and-observation-distributions">&#182;</a></h4>\begin{align*}
+p(\mathbf x | \mathbf z) &amp;= \mathcal N(\mathbf x; \mathbf{Wz}+\boldsymbol\mu, \sigma^2 \mathbf I_D) \\
+p(\mathbf x) &amp;= \mathcal N(\mathbf x; \boldsymbol\mu, \mathbf{WW}^\top+\sigma^2 \mathbf I_D)
+\end{align*}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Maximum-likelihood">Maximum likelihood<a class="anchor-link" href="#Maximum-likelihood">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Dimensionality-Reduction">Dimensionality Reduction<a class="anchor-link" href="#Dimensionality-Reduction">&#182;</a></h2>
 </div>
 </div>
 </div>
