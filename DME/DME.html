@@ -13170,8 +13170,8 @@ $( document ).ready(function(){
     <div class="prompt"> </div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Set 1: [0 1 1 1 2 3 4 4 5 9]
-Set 2: [   0    1    1    1    2    3    4    4    5 9000]
+<pre>Set 1: 0, 1, 1, 1, 2, 3, 4, 4, 5, 9
+Set 2: 0, 1, 1, 1, 2, 3, 4, 4, 5, 9000
 </pre>
 </div>
 </div>
@@ -13561,26 +13561,6 @@ y_i = y_j
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"> </div>
-
-
-
-<div class="output_png output_subarea ">
-<img src="DME_files/DME_21_0.png"
->
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
@@ -13606,7 +13586,7 @@ $$\mathbf z_i = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\mathbf x)} \right) \
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Outlier-detection-and-removal">Outlier detection and removal<a class="anchor-link" href="#Outlier-detection-and-removal">&#182;</a></h4><ul>
+<h4 id="Outlier">Outlier<a class="anchor-link" href="#Outlier">&#182;</a></h4><ul>
 <li>Turkey's fences $$[Q_1 - k(Q_3-Q_1), Q_3 + k(Q_3-Q_1)] = [Q_1 - k \mathrm{IQR}(x), Q_3 + k \mathrm{IQR}(x)]$$<ul>
 <li>$k \geq 0$ (most commonly $k=1.5$)</li>
 <li>Used in <a href="#Box-plot">box plots</a></li>
@@ -13627,14 +13607,14 @@ $$\mathbf z_i = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\mathbf x)} \right) \
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="PCA-by-variance-maximisation">PCA by variance maximisation<a class="anchor-link" href="#PCA-by-variance-maximisation">&#182;</a></h3>
+<h3 id="Variance-maximisation">Variance maximisation<a class="anchor-link" href="#Variance-maximisation">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Sequtial-variance-maximisation">Sequtial variance maximisation<a class="anchor-link" href="#Sequtial-variance-maximisation">&#182;</a></h4>\begin{align*}
+<h4 id="Sequtial">Sequtial<a class="anchor-link" href="#Sequtial">&#182;</a></h4>\begin{align*}
 \text{First PC: } &amp; \begin{cases}
 \underset{\mathbf w_1}{\text{maximise}} &amp; \mathrm{Var}(z_1) = \mathrm{Var}(\mathbf w_1^\top \mathbf x) = \mathbf w_1^\top \boldsymbol\Sigma \mathbf w_1 \\
 \text{subject to} &amp; \| \mathbf w_1 \| = 1
@@ -13667,13 +13647,13 @@ $$\mathbf z_i = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\mathbf x)} \right) \
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Simultaneous-variance-maximisation">Simultaneous variance maximisation<a class="anchor-link" href="#Simultaneous-variance-maximisation">&#182;</a></h4>\begin{align*}
+<h4 id="Simultaneous">Simultaneous<a class="anchor-link" href="#Simultaneous">&#182;</a></h4>\begin{align*}
 \underset{\mathbf w_1, \ldots, \mathbf w_k}{\text{maximise}} &amp;\quad \sum_{i=1}^k \mathbf w_i^\top \boldsymbol\Sigma \mathbf w_i \\
 \text{subject to} &amp;\quad \| \mathbf w_i \| = 1 &amp;\quad i = 1, \ldots, k \\
 &amp;\quad \mathbf w_i^\top \mathbf w_j = 0 &amp;\quad i \neq j
 \end{align*}<ul>
-<li>Subtle techinical point: not using greedy algorithms as in <a href="#PCA-by-variance-maximisation">sequential approach</a>, which are not guaranteed to yeild optimal solutions</li>
-<li>However, same results as <a href="#PCA-by-variance-maximisation">sequential approach</a></li>
+<li>Subtle techinical point: not using greedy algorithms as in <a href="#Sequential">sequential approach</a>, which are not guaranteed to yeild optimal solutions</li>
+<li>However, same results as <a href="#Sequential">sequential approach</a></li>
 </ul>
 
 </div>
@@ -13682,7 +13662,7 @@ $$\mathbf z_i = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\mathbf x)} \right) \
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="PCA-by-minimisation-of-approximation-error">PCA by minimisation of approximation error<a class="anchor-link" href="#PCA-by-minimisation-of-approximation-error">&#182;</a></h3><p>Approximation error: $\displaystyle \mathbb E \| \mathbf x - \mathbf{Px} \|^2 = \mathbb E \| \mathbf x - \mathbf W_k \mathbf W_k^\top \mathbf x \|^2 = \mathbb E \| \mathbf x - \sum_{i=1}^k \mathbf w_k \mathbf w_k^\top \mathbf x \|^2$</p>
+<h3 id="Approximation-error-minimisation">Approximation error minimisation<a class="anchor-link" href="#Approximation-error-minimisation">&#182;</a></h3><p>Approximation error: $\displaystyle \mathbb E \| \mathbf x - \mathbf{Px} \|^2 = \mathbb E \| \mathbf x - \mathbf W_k \mathbf W_k^\top \mathbf x \|^2 = \mathbb E \| \mathbf x - \sum_{i=1}^k \mathbf w_k \mathbf w_k^\top \mathbf x \|^2$</p>
 <ul>
 <li>$\underset{d\times k}{\mathbf W_k} = (\mathbf w_1, \ldots, \mathbf w_k)$, where $\mathbf w_i$ are orthogonal vectors spanning a $k$-dim subspace of $\mathbb R^d$</li>
 </ul>
@@ -13691,7 +13671,7 @@ $$\mathbf z_i = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\mathbf x)} \right) \
 \text{subject to} &amp;\quad \| \mathbf w_i \| = 1 &amp;\quad i = 1, \ldots, k \\
 &amp;\quad \mathbf w_i^\top \mathbf w_j = 0 &amp;\quad i \neq j
 \end{align*}<ul>
-<li>Equivalent to <a href="#Simultaneous-variance-maximisation">simultaneous variance maximisation</a></li>
+<li>Equivalent to <a href="#Simultaneous">simultaneous variance maximisation</a></li>
 <li>Optimal $\mathbf w_i$ are the first $k$ eigenvectors $\mathbf u_i$ of $\boldsymbol\Sigma$</li>
 <li>$\displaystyle \mathbb E \| \mathbf x - \sum_{i=1}^k \mathbf w_k \mathbf w_k^\top \mathbf x \|^2 = \sum_{i=k+1}^d \lambda_i$</li>
 </ul>
@@ -13702,14 +13682,14 @@ $$\mathbf z_i = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\mathbf x)} \right) \
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="PCA-by-low-rank-matrix-approximation">PCA by low rank matrix approximation<a class="anchor-link" href="#PCA-by-low-rank-matrix-approximation">&#182;</a></h3>
+<h3 id="Low-rank-matrix-approximation">Low rank matrix approximation<a class="anchor-link" href="#Low-rank-matrix-approximation">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Approximating-the-data-matrix">Approximating the data matrix<a class="anchor-link" href="#Approximating-the-data-matrix">&#182;</a></h4>\begin{align*}
+<h4 id="Data-matrix">Data matrix<a class="anchor-link" href="#Data-matrix">&#182;</a></h4>\begin{align*}
 \underset{\mathbf M}{\text{minimise}} &amp;\quad \| \mathbf X - \mathbf M \|_F^2 = \sum_{ij} \left( (\mathbf X)_{ij} - (\mathbf M)_{ij} \right)^2 \\
 \text{subject to} &amp;\quad \mathrm{rank}(\mathbf M) = k &amp;\quad k&lt;r=\mathrm{rank}(\mathbf X)
 \end{align*}<ul>
@@ -13725,7 +13705,7 @@ $$\mathbf z_i = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\mathbf x)} \right) \
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Approximating-the-sample-covariance-matrix">Approximating the sample covariance matrix<a class="anchor-link" href="#Approximating-the-sample-covariance-matrix">&#182;</a></h4>\begin{align*}
+<h4 id="Sample-covariance-matrix">Sample covariance matrix<a class="anchor-link" href="#Sample-covariance-matrix">&#182;</a></h4>\begin{align*}
 \underset{\mathbf M}{\text{minimise}} &amp;\quad \| \boldsymbol\Sigma - \mathbf M \|_F \\
 \text{subject to} &amp;\quad \mathrm{rank}(\mathbf M) = k &amp;\quad k&lt;r=\mathrm{rank}(\mathbf X) \\
 &amp;\quad \mathbf M^\top = \mathbf M
@@ -13739,9 +13719,9 @@ $$\mathbf z_i = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\mathbf x)} \right) \
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Approximating-the-Gram-matrix">Approximating the Gram matrix<a class="anchor-link" href="#Approximating-the-Gram-matrix">&#182;</a></h4><ol>
+<h4 id="Gram-matrix">Gram matrix<a class="anchor-link" href="#Gram-matrix">&#182;</a></h4><ol>
 <li>Eigendecomposition: $\displaystyle \underset{n\times n}{\mathbf G} = \mathbf X \mathbf X^\top \overset{\text{SVD}}{=} (\mathbf{USV}^\top) (\mathbf{USV}^\top)^\top = \mathbf{USS}^\top \mathbf U^\top = \mathbf U \tilde{\boldsymbol\Lambda} \mathbf U^\top$</li>
-<li>Approximate $\mathbf G$ like <a href="#Approximating-the-sample-covariance-matrix">sample cov</a>: $\displaystyle \hat{\mathbf G} = \sum_{i=1}^k s_i^2 \mathbf u_i \mathbf u_i^\top = \sum_{i=1}^k \mathbf z_i \mathbf z_i^\top$</li>
+<li>Approximate $\mathbf G$ like <a href="#Sample-covariance-matrix">sample cov</a>: $\displaystyle \hat{\mathbf G} = \sum_{i=1}^k s_i^2 \mathbf u_i \mathbf u_i^\top = \sum_{i=1}^k \mathbf z_i \mathbf z_i^\top$</li>
 </ol>
 
 </div>
@@ -13757,7 +13737,7 @@ $$\mathbf z_i = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\mathbf x)} \right) \
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Probabilistic-model">Probabilistic model<a class="anchor-link" href="#Probabilistic-model">&#182;</a></h4>\begin{align*}
+<h4 id="Model">Model<a class="anchor-link" href="#Model">&#182;</a></h4>\begin{align*}
     \underset{K \times 1}{\mathbf z} &amp;\sim \mathcal N(\mathbf 0, \mathbf I_K) \\
     \underset{D \times 1}{\boldsymbol\varepsilon} &amp;\sim \mathcal N(\mathbf 0, \sigma^2 \mathbf I_D) \\
     \underset{D \times 1}{\mathbf x} &amp;= \underset{D \times K}{\mathbf W} \ \underset{K \times 1}{\mathbf z} + \underset{D \times 1}{\boldsymbol\mu} + \underset{D \times 1}{\boldsymbol\varepsilon}
@@ -13768,7 +13748,7 @@ $$\mathbf z_i = \mathrm{diag} \left( \frac{1}{\mathrm{std}(\mathbf x)} \right) \
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Joint,-conditional-and-observation-distributions">Joint, conditional and observation distributions<a class="anchor-link" href="#Joint,-conditional-and-observation-distributions">&#182;</a></h4>\begin{align*}
+<h4 id="Distributions">Distributions<a class="anchor-link" href="#Distributions">&#182;</a></h4>\begin{align*}
 p(\mathbf x | \mathbf z) &amp;= \mathcal N(\mathbf x; \mathbf{Wz}+\boldsymbol\mu, \sigma^2 \mathbf I_D) \\
 p(\mathbf x) &amp;= \mathcal N(\mathbf x; \boldsymbol\mu, \mathbf{WW}^\top+\sigma^2 \mathbf I_D)
 \end{align*}
@@ -13778,7 +13758,26 @@ p(\mathbf x) &amp;= \mathcal N(\mathbf x; \boldsymbol\mu, \mathbf{WW}^\top+\sigm
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Maximum-likelihood">Maximum likelihood<a class="anchor-link" href="#Maximum-likelihood">&#182;</a></h4>
+<h4 id="Maximum-likelihood">Maximum likelihood<a class="anchor-link" href="#Maximum-likelihood">&#182;</a></h4>\begin{align*}
+\mathbf W_{\text{ML}} &amp;= \mathbf U_k (\boldsymbol\Lambda_k - \sigma^2 \mathbf I)^{1/2} \mathbf R \\
+\sigma^2_{\text{ML}} &amp;= \frac{1}{d-k} \sum_{i=k+1}^d \lambda_i
+\end{align*}<ul>
+<li>$\mathbf U_k$ are $k$ principal eigenvectors of $\hat{\boldsymbol\Sigma} = \mathrm{cov}(\mathbf X) = \frac{1}{n}\mathbf{XX}^\top$</li>
+<li>$\boldsymbol\Lambda_k$ is diagonal matrix with eighenvalues</li>
+<li>$\mathbf R$ is arbitrary orthogonal matrix, interpreted as a rotation in the latent space, indicating not unique solutions</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Relation-to-PCA">Relation to PCA<a class="anchor-link" href="#Relation-to-PCA">&#182;</a></h4>$$p(\mathbf z | \mathbf x) = \mathcal N(\mathbf z; \mathbf M^{-1} \mathbf W^\top (\mathbf x - \boldsymbol\mu), \sigma^2 \mathbf M^{-1})$$<ul>
+<li>$\mathbf M = \mathbf W^\top \mathbf W + \sigma^2 \mathbf I$</li>
+<li>Projection $\displaystyle \hat{\mathbf x} = \mathbf W_{\text{ML}} \mathbb E[\mathbf z|\mathbf x] = \mathbf W_{\text{ML}} \mathbf M^{-1}_{\text{ML}} \mathbf W^\top_{\text{ML}} \mathbf x \to \mathbf U_k \mathbf U_k \mathbf U_k^\top \mathbf x$ as $\sigma^2 \to 0$</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -13786,6 +13785,414 @@ p(\mathbf x) &amp;= \mathcal N(\mathbf x; \boldsymbol\mu, \mathbf{WW}^\top+\sigm
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Dimensionality-Reduction">Dimensionality Reduction<a class="anchor-link" href="#Dimensionality-Reduction">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Linear">Linear<a class="anchor-link" href="#Linear">&#182;</a></h3><ul>
+<li>Does not take manifold structure of data into account</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Data-points">Data points<a class="anchor-link" href="#Data-points">&#182;</a></h4><ol>
+<li>Observed data $\tilde{\mathbf X} = (\tilde{\mathbf x}_1, \ldots, \tilde{\mathbf x}_n)$</li>
+<li>Centre data $\mathbf X = \tilde{\mathbf X} \mathbf C_n$ <a href="#Standardisation">(Standardisation)</a></li>
+<li>Compute PC scores $\mathbf X = \mathbf U_k^\top \mathbf X$, via computation of PC directions</li>
+<li>Compute PC scores $\mathbf Z = \sqrt{\tilde{\boldsymbol\Lambda}_k} \mathbf V_k^\top$ directly from <a href="#Gram-matrix">Gram matrix</a></li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Inner-products">Inner products<a class="anchor-link" href="#Inner-products">&#182;</a></h4>$$\mathbf G = \mathbf X^\top \mathbf X = \mathbf C_n^\top \tilde{\mathbf X}^\top \tilde{\mathbf X} \mathbf C_n = C_n \tilde{\mathbf G} \mathbf C_n$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Distances">Distances<a class="anchor-link" href="#Distances">&#182;</a></h4>$$\mathbf G = -\frac{1}{2} \mathbf C_n \boldsymbol\Delta \mathbf C_n$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Kernel-PCA">Kernel PCA<a class="anchor-link" href="#Kernel-PCA">&#182;</a></h3><p><strong>New data matrix:</strong></p>
+$$\boldsymbol\Phi = (\boldsymbol\phi_1, \ldots, \boldsymbol\phi_n) = (\phi(\mathbf x_1), \ldots, \phi(\mathbf x_n))$$<p><strong>Uncentred Gram matrix:</strong></p>
+$$(\tilde{\mathbf G})_{ij} = \boldsymbol\phi_i^\top \boldsymbol\phi_j = \phi(\mathbf x_1)^\top \phi(\mathbf x_j) = k(\mathbf x_i, \mathbf x_j)$$<p><strong>Example kernels:</strong></p>
+<ul>
+<li>Polynomial kernel: $k(\mathbf x, \mathbf x') = (\mathbf x^\top \mathbf x')^a$</li>
+<li>Gaussian kernel: $\displaystyle k(\mathbf x, \mathbf x') = \exp \left( -\frac{\| \mathbf x - \mathbf x' \|^2}{2\sigma^2} \right)$</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Multidimensional-scaling">Multidimensional scaling<a class="anchor-link" href="#Multidimensional-scaling">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Metric-MDS">Metric MDS<a class="anchor-link" href="#Metric-MDS">&#182;</a></h4>$$\underset{\mathbf z_1, \ldots, \mathbf z_n}{\text{minimise}} \quad \sum_{i&lt;j} w_{ij} ( \| \mathbf z_i - \mathbf z_j \| - \delta_{ij})^2$$<ul>
+<li>$\delta_{ij}$ are dissimilarities measuring difference between two data items, e.g. Euclidean distances. </li>
+<li>$w_{ij} \geq 0$ specified by user</li>
+<li>If $\displaystyle w_{ij} = \frac{1}{\delta_{ij}}$, Sammon nonlinear mapping, emphasising the faithful representation of small dissimilarities</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Nonmetric-MDS">Nonmetric MDS<a class="anchor-link" href="#Nonmetric-MDS">&#182;</a></h4>$$\underset{\mathbf z_1, \ldots, \mathbf z_n, f}{\text{minimise}} \quad \sum_{i&lt;j} w_{ij} \left( \| \mathbf z_i - \mathbf z_j \| - f(\delta_{ij}) \right)^2$$<ul>
+<li>Only relation between $\delta_{ij}$ matter</li>
+<li>$f$ is monotonic</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Classical-MDS">Classical MDS<a class="anchor-link" href="#Classical-MDS">&#182;</a></h4><ul>
+<li>$\boldsymbol\Delta$ is distance matrix between the unknown vectors, not necessarily postive semidefinite</li>
+<li>Follow <a href="#Distances">this steps</a></li>
+<li><p>Choose small $k$ to avoid negative eigenvalues</p>
+</li>
+<li><p>Alternatively, approximate negative definite $\boldsymbol\Delta$ by</p>
+</li>
+</ul>
+\begin{align*}
+\underset{\mathbf M}{\text{minimise}} &amp;\quad \left\| (-\frac{1}{2} \mathbf C_n \boldsymbol\Delta \mathbf C_n) - \mathbf M^\top \mathbf M \right\|_F \\
+\text{subject to} &amp;\quad \mathrm{rank}(\mathbf M^\top \mathbf M) = k
+\end{align*}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Isomap">Isomap<a class="anchor-link" href="#Isomap">&#182;</a></h3><ul>
+<li>Use geodesic distances representing the shortest paths along the curved surface</li>
+</ul>
+<ol>
+<li>Find the neighbours of each data point in high-dimensional data</li>
+<li>Compute the geodesic pairwise distances between all points</li>
+<li>Embed the data via MDS so as to preserve these distances</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Predictive-Modelling-and-Generalisation">Predictive Modelling and Generalisation<a class="anchor-link" href="#Predictive-Modelling-and-Generalisation">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Losses">Losses<a class="anchor-link" href="#Losses">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Prediction-loss">Prediction loss<a class="anchor-link" href="#Prediction-loss">&#182;</a></h4>$$\mathcal J(h) = \mathbb E_{p(\hat y, y)} [\mathcal L(\hat y, y)] = \mathbb E_{p(\mathbf x, y)} [\mathcal L(h(\mathbf x), y)]$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Training-loss">Training loss<a class="anchor-link" href="#Training-loss">&#182;</a></h4>$$J_{\boldsymbol\lambda}^* = \min_{\boldsymbol\theta} J_{\boldsymbol\lambda}(\boldsymbol\theta) = \frac{1}{n} \sum_{i=1}^n L(h_{\boldsymbol\lambda}(\mathbf x_i; \boldsymbol\theta), y_i)$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Generalisation-performance">Generalisation performance<a class="anchor-link" href="#Generalisation-performance">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Generalisation-loss">Generalisation loss<a class="anchor-link" href="#Generalisation-loss">&#182;</a></h4><p><strong>For prediction functions:</strong></p>
+$$\mathcal J(\hat h) = \mathbb E_{p(\mathbf x, y)} \left[ \mathcal L(\hat h(x), y) \right]$$<p><strong>For algorithms:</strong></p>
+$$\bar{\mathcal J}(\mathcal A) = \mathbb E_{p(\mathcal D^{\text{train}})} \left[ \mathcal J (\hat h) \right] = \mathbb E_{p(\mathcal D^{\text{train}})} \left[ \mathcal J(\mathcal A(\mathcal D^{\text{train}})) \right]$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Overfitting-and-underfitting">Overfitting and underfitting<a class="anchor-link" href="#Overfitting-and-underfitting">&#182;</a></h4><p>Overfitting: reduce complexity of model $\to$ reduce prediction loss</p>
+<p>Underfitting: choose more flexible model $\to$ reduce prediction loss</p>
+$$\underset{\boldsymbol\theta}{\text{minimise}} \quad \mathcal J_{\boldsymbol\lambda}(\boldsymbol\theta) + \lambda_{\text{reg}} R(\boldsymbol\theta)$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Hyperparameter-selection">Hyperparameter selection<a class="anchor-link" href="#Hyperparameter-selection">&#182;</a></h4><p>Consider both complexity and training size of models</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Estimating-the-generalisation-performance">Estimating the generalisation performance<a class="anchor-link" href="#Estimating-the-generalisation-performance">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Methods">Methods<a class="anchor-link" href="#Methods">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="Hold-out-approach">Hold-out approach<a class="anchor-link" href="#Hold-out-approach">&#182;</a></h5><p>Prediction function:</p>
+$$\hat h = \mathcal A(\mathcal D^{\text{train}})$$<p>Prediction loss on $\tilde{\mathcal D}$ (validation/test set):</p>
+$$\hat{\mathcal J}(\hat h; \tilde{\mathcal D}) = \frac{1}{\tilde n} \sum_{i=1}^{\tilde n} \mathcal L(\hat h(\tilde{\mathbf x_i}), \tilde y_i)$$<ul>
+<li>Common split ratios: 6:4, 7:3 or 8:2</li>
+<li>Increase ratio if the number of hyperparameter is large</li>
+<li>Split randomly</li>
+<li>Stratification (classes are in the same proportions in both sets)</li>
+<li>Drawback (use cross-validation to avoid)</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="Cross-validation">Cross-validation<a class="anchor-link" href="#Cross-validation">&#182;</a></h5><p>$K$-fold:</p>
+$$\mathcal D_k^{\text{train}} = \bigcup_{i \neq k} \mathcal D_i \quad \mathcal D_k^{\text{val}} = \mathcal D_k$$<p>Prediction function and loss for the $k$-th fold:</p>
+$$\hat h_k = \mathcal A(\mathcal D_k^{\text{train}}) \quad \hat{\mathcal J_k} = \hat{\mathcal J}(\hat h_k; \mathcal D_k^{\text{val}})$$<p>Cross-validation score:</p>
+$$\mathrm{CV} = \frac{1}{K} \sum_{i=1}^K \hat{\mathcal J_k} = \frac{1}{K} \sum_{i=1}^K \hat{\mathcal J} \left( \mathcal A(\mathcal D_k^{\text{train}}); \mathcal D_k^{\text{val}} \right) = \hat{\bar{\mathcal J}}(\mathcal A)$$<p>Estimated variance of CV score:</p>
+$$\begin{cases}
+\displaystyle \mathrm{Var}(\mathrm{CV}) \approx \frac{1}{K} \mathrm{Var}(\hat{\mathcal J}) \\
+\displaystyle \mathrm{Var}(\hat{\mathcal J}) \approx \frac{1}{K} \sum_{k=1}^K (\hat{\mathcal J_k} - \mathrm{CV})^2
+\end{cases}$$<p>indeed, $\displaystyle \hat{\mathrm{Var}}(\mathrm{CV}) = \frac{1}{K(K-1)} \sum_{k=1}^K (\hat{\mathcal J_k} - \mathrm{CV})^2$</p>
+<ul>
+<li>LOOCV: generally expensive, but possible in e.g. Gaussian time series and spatial models</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Hyperparameter-selection-and-performance-evaluation">Hyperparameter selection and performance evaluation<a class="anchor-link" href="#Hyperparameter-selection-and-performance-evaluation">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="Two-times-hold-out">Two times hold-out<a class="anchor-link" href="#Two-times-hold-out">&#182;</a></h5><ol>
+<li>Split off test set $\mathcal D^{\text{test}}$ for estimating the performance of final prediction function</li>
+<li>Split remaining data into $\mathcal D^{\text{train}}$ and $\mathcal D^{\text{val}}$</li>
+<li>Tune parameters $\boldsymbol\lambda$ in an algorithm $\displaystyle \hat h_{\boldsymbol\lambda} = \mathcal A_{\boldsymbol\lambda}(\mathcal D^{\text{train}})$</li>
+<li>Compute prediction loss $\displaystyle \mathrm{PL}(\boldsymbol\lambda) = \hat{\mathcal J}(\hat h_{\boldsymbol\lambda}; \mathcal D^{\text{val}})$ and choose $\displaystyle \hat{\boldsymbol\lambda} = \underset{\boldsymbol\lambda}{\arg\min} \mathrm{PL}(\boldsymbol\lambda)$</li>
+<li>Re-estimate on union of training and validation data $\displaystyle \hat h = \mathcal A_{\hat{\boldsymbol\lambda}} (\mathcal D^{\text{train}} \cup \mathcal D^{\text{val}})$</li>
+<li>Compute prediction loss on test data $\displaystyle \hat{\mathcal J} = \hat{\mathcal J}(\hat h; \mathcal D^{\text{test}})$</li>
+<li>Re-estimate on all data $\displaystyle \hat h_{\boldsymbol\lambda} = \mathcal A_{\hat{\boldsymbol\lambda}} (\mathcal D)$</li>
+</ol>
+<ul>
+<li>Re-estimation sometimes needs to be skipped</li>
+<li>Optimisation methods over $\boldsymbol\lambda$: grid search, random search, Bayesian optimisation</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="Cross-validation-and-hold-out">Cross-validation and hold-out<a class="anchor-link" href="#Cross-validation-and-hold-out">&#182;</a></h5><ol>
+<li>Split off test set $\mathcal D^{\text{test}}$ for estimating the performance of final prediction function</li>
+<li>Compute CV score on remaining data $\mathcal D^{\text{train}}$: $\displaystyle \mathrm{EPL}(\boldsymbol\lambda) = \mathrm{CV} = \hat{\bar{\mathcal J}} (\mathcal A_{\boldsymbol\lambda})$</li>
+<li>Choose $\displaystyle \hat{\boldsymbol\lambda} = \underset{\boldsymbol\lambda}{\arg\min} \mathrm{EPL}(\boldsymbol\lambda)$ OR simplest model and $\displaystyle \mathrm{EPL}(\hat{\boldsymbol\lambda}) \in \left[\min \mathrm{CV} \pm \sqrt{\mathrm{Var}(\min \mathrm{CV})}\right]$</li>
+<li>Re-estimate on whole training data $\displaystyle \hat h = \mathcal A_{\hat{\boldsymbol\lambda}}(\mathcal D^{\text{train}})$</li>
+<li>Compute prediction loss on test data $\displaystyle \hat{\mathcal J} = \hat{\mathcal J}(\hat h; \mathcal D^{\text{test}})$</li>
+<li>Re-estimate on all data $\displaystyle \hat h_{\boldsymbol\lambda} = \mathcal A_{\hat{\boldsymbol\lambda}} (\mathcal D)$</li>
+</ol>
+<ul>
+<li>Minimal CV score is an optimistic estimate of prediction loss</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Loss-functions">Loss functions<a class="anchor-link" href="#Loss-functions">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="In-regression">In regression<a class="anchor-link" href="#In-regression">&#182;</a></h4><ul>
+<li>Square loss: $\displaystyle L(\hat y, y) = \frac{1}{2} (\hat y - y)^2$</li>
+<li>Absolute loss: $\displaystyle L(\hat y, y) = |\hat y - y|$ (more robust than square loss because not grow quickly, but not differentiable)</li>
+<li>Huber loss: $\displaystyle L(\hat y, y) = \begin{cases}
+\displaystyle \frac{1}{2} (\hat y - y)^2 &amp; \text{if } |\hat y - y| &lt; \delta \\
+\displaystyle \delta |y - \hat y| - \frac{1}{2}\delta^2 &amp; \text{otherwise}
+\end{cases}$ (combimes good properties of square and absolute loss)</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="In-classification">In classification<a class="anchor-link" href="#In-classification">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="Non-differentiable">Non-differentiable<a class="anchor-link" href="#Non-differentiable">&#182;</a></h5>$$\mathbf L_{\hat y, y} = \begin{pmatrix}
+L(1,1) &amp; L(1,2) &amp; \cdots &amp; L(1,K) \\
+L(2,1) &amp; L(2,2) &amp; \cdots &amp; L(2,K) \\
+\vdots &amp; \vdots &amp; &amp; \vdots \\
+L(K,1) &amp; L(K,2) &amp; \cdots &amp; L(K,K)
+\end{pmatrix}$$<p><strong>Zero-one loss:</strong></p>
+$$L(i,j) = \begin{cases}
+1 &amp; i \neq j \\
+0 &amp; i = j
+\end{cases}$$<ul>
+<li>Expectation: $\displaystyle \mathcal J(h) = \sum_{i \neq j} p(i,j) = \mathbb P(i\neq j)$ (misclassification/error rate)</li>
+</ul>
+<p><strong>Binary classification:</strong></p>
+<table>
+<thead><tr>
+<th>$\hat y$</th>
+<th>$y$</th>
+<th>event</th>
+<th>joint probability $p(\hat y, y)$</th>
+<th>shorthand notation</th>
+<th>rate</th>
+<th>conditional probability $p(\hat y</th>
+<th>y)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>True Positive</td>
+<td>$\mathbb P(\hat y=1, y=1)$</td>
+<td>$p(1,1)$</td>
+<td>TP rate<br>sensitivity, hit rate, recall</td>
+<td>$\mathbb P(\hat y=1</td>
+<td>y=1)$</td>
+</tr>
+<tr>
+<td>1</td>
+<td>-1</td>
+<td>False Positive</td>
+<td>$\mathbb P(\hat y=1, y=-1)$</td>
+<td>$p(1,-1)$</td>
+<td>FP rate<br>type 1 error, fall-out</td>
+<td>$\mathbb P(\hat y=1</td>
+<td>y=-1)$</td>
+</tr>
+<tr>
+<td>-1</td>
+<td>1</td>
+<td>False Negative</td>
+<td>$\mathbb P(\hat y=-1, y=1)$</td>
+<td>$p(-1,1)$</td>
+<td>FN rate<br>type 2 error</td>
+<td>$\mathbb P(\hat y=-1</td>
+<td>y=1)$</td>
+</tr>
+<tr>
+<td>-1</td>
+<td>-1</td>
+<td>True Negative</td>
+<td>$\mathbb P(\hat y=-1, y=-1)$</td>
+<td>$p(-1, -1)$</td>
+<td>TN rate<br>specificity</td>
+<td>$\mathbb P(\hat y=-1</td>
+<td>y=-1)$</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Loss function penalising FP and FN rates:</strong></p>
+$$\mathbf L_{\hat y, y} = \begin{pmatrix}
+0 &amp; \frac{1}{\mathbb P(y=1)} \\
+\frac{1}{\mathbb P(y=-1)} &amp; 0 \\
+\end{pmatrix}$$<ul>
+<li>Expectation: $\displaystyle \mathcal J(h) = \sum_{i,j} L(i,j) p(i,j) = \mathrm{FPR} + \mathrm{FNR}$</li>
+<li>Not meaningful because optimal solution is $\hat y=-1$: $\mathrm{TPR}=0$</li>
+</ul>
+<p><strong>Reciver operating characteristic (ROC):</strong></p>
+<ul>
+<li>TPR vs FPR</li>
+<li>Perfect classifier at upper-left corner</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h5 id="Differentiable">Differentiable<a class="anchor-link" href="#Differentiable">&#182;</a></h5><p>Assume $\hat y(\mathbf x) = \mathrm{sign}(h(\mathbf x))$, correct classification equivalent to margin $yh(\mathbf x) &gt;0$</p>
+<ul>
+<li>Zero-one loss: $\displaystyle L(h(\mathbf x), y) = \begin{cases}
+1 &amp; \text{if } yh(\mathbf x) &lt; 0 \\
+0 &amp; \text{otherwise}
+\end{cases}$</li>
+<li>Square loss: $L(h(\mathbf x), y) = (1-yh(\mathbf x))^2$ (sensitive to outliers and penalises large margins)</li>
+<li>Log loss: $L(h(\mathbf x), y) = \log (1+\exp (-yh(\mathbf x)))$ (equivalent to maximising log-likelihood in logistic regression)</li>
+<li>Exponential loss: $L(h(\mathbf x), y) = \exp(-yh(\mathbf x))$</li>
+<li>Hinge loss: $L(h(\mathbf x),y) = \max(0, 1-yh(\mathbf x))$</li>
+<li>Squared hinge loss: $L(h(\mathbf x),y) = \max(0, 1-yh(\mathbf x))^2$ (differentiable everywhere)</li>
+<li>Huberised squared hinge loss: $\displaystyle L(h(\mathbf x),y) = \begin{cases}
+-4yh(\mathbf x) &amp; \text{if } yh(\mathbf x) &lt; -1 \\
+\max(0, 1-yh(\mathbf x))^2 &amp; \text{otherwise}
+\end{cases}$</li>
+</ul>
+
 </div>
 </div>
 </div>
