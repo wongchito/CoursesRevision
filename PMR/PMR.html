@@ -13714,6 +13714,54 @@ $$p(x_i|x_{i-1}) \begin{cases}
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Learning-HMM">Learning HMM<a class="anchor-link" href="#Learning-HMM">&#182;</a></h3><p><strong>Data</strong>: $\mathcal D = \{ \mathcal D_1, \ldots, \mathcal D_n \}$ where $\mathcal D_j = \mathbf v^{(j)} = (v_1^{(j)}, \ldots, v_d^{(j)})$</p>
+<p><strong>Assumptions</strong>:</p>
+<ul>
+<li>$h_i \in \{ 1, \ldots, K \}$, $v_i \in \{ 1, \ldots, M \}$</li>
+<li>Staionarity</li>
+</ul>
+<p><strong>Parametrisation</strong>:</p>
+<ul>
+<li>Transition distribution $\displaystyle p(h_i = k | h_{i-1} = k'; \mathbf A) = A_{k, k'} \quad \Rightarrow \quad p(h_i | h_{i-1}; \mathbf A) = \prod_{k, k'} A_{k, k'}^{\mathbb 1(h_i=k, h_{i-1}=k)}$</li>
+<li>Emission distribution $\displaystyle p(v_i = m | h_i = k; \mathbf B) = B_{m, k} \quad \Rightarrow \quad p(v_i | h_i; \mathbf B) = \prod_{m, k} B_{m,k}^{\mathbb 1(v_i=m) \mathbb 1(h_i=k)}$</li>
+<li>Initial state distribution $\displaystyle p(h_1=k; \mathbf a) = a_k \quad \Rightarrow \quad p(h_1; \mathbf a) = \prod_k a_k^{\mathbb 1(h_1=k)}$</li>
+</ul>
+<p><strong>Constraints</strong>: $\displaystyle \sum_{k=1}^K A_{k, k'}=1$, $\displaystyle \sum_{m=1}^M B_{m, k}=1$ and $\displaystyle \sum_{k=1}^K a_k=1$</p>
+<p><strong>Task</strong>: Use $\mathcal D$ to learn $\mathbf A$, $\mathbf B$ and $\mathbf a$</p>
+<p><strong>Options</strong>:</p>
+<ol>
+<li><a href="#Unobserved-variables">Gradient ascent</a></li>
+<li><a href="#Parameter-estimation">EM algorithm</a></li>
+</ol>
+<ul>
+<li>Both require computation of posterior expectation</li>
+<li>Option 1 recomputes posterior after each $\epsilon$ update, which may be costly</li>
+</ul>
+<p><strong>Parmetrised model</strong>:</p>
+$$p(\mathbf h, \mathbf v; \boldsymbol\theta) = p(h_1; \mathbf a) p(v_1|h_1; \mathbf B) \prod_{i=2}^d p(h_i | h_{i-1}; \mathbf A) p(v_i | h_i; \mathbf B)$$<p><strong>Log-likelihood</strong>:</p>
+\begin{align*}
+\log p(\mathbf h, \mathcal D_j; \boldsymbol\theta) &amp;= \log p(h_1; \mathbf a) &amp;&amp;+ \sum_{i=2}^d \log p(h_i|h_{i-1}; \mathbf A) &amp;&amp;+ \sum_{i=1}^d \log p(v_i^{(j)}|h_i; \mathbf B) \\
+&amp;= \sum_k \mathbb 1(h_1=k) \log a_k &amp;&amp;+ \sum_{k,k'} \mathbb 1(h_i=k, h_{i-1}=k) \log A_{k,k'} &amp;&amp;+ \sum_{m,k} \mathbb 1(v_i=m) \mathbb 1(h_i=k) \log B_{m,k}
+\end{align*}<p><strong>E-step</strong>:</p>
+\begin{align*}
+J(\boldsymbol\theta, \boldsymbol\theta_{\text{old}}) &amp;= \sum_{j=1}^n \mathbb E_{p(\mathbf h|\mathcal D_j; \boldsymbol\theta_{\text{old}})} [\log p(\mathbf h, \mathcal D_j; \boldsymbol\theta)] \\
+&amp;= \sum_{j=1}^n \mathbb E_{p(h_1|\mathcal D_j; \boldsymbol\theta_{\text{old}})} [\log p(h_1; \mathbf a)] + \sum_{j=1}^n \sum_{i=2}^d \mathbb E_{p(h_i, h_{i-1}|\mathcal D_j; \boldsymbol\theta_{\text{old}})} [\log p(h_i|h_{i-1}; \mathbf A)] + \sum_{j=1}^n \sum_{i=1}^d \mathbb E_{p(h_i|\mathcal D_j; \boldsymbol\theta_{\text{old}})} [\log p(v_i^{(j)}|h_i; \mathbf B)] \\
+&amp;= \sum_{j=1}^n \sum_k p(h_1=k|\mathcal D_j; \boldsymbol\theta_{\text{old}}) \log a_k + \sum_{j=1}^n \sum_{i=2}^d \sum_{k,k'} p(h_i=k, h_{i-1}=k' | \mathcal D_j; \boldsymbol\theta_{\text{old}}) \log A_{k,k'} + \sum_{j=1}^n \sum_{i=1}^d \sum_{m,k} \mathbb 1(v_i^{(j)}=m) p(h_i=k | \mathcal D_j; \boldsymbol\theta_{\text{old}}) \log B_{m,k}
+\end{align*}<ul>
+<li>Marginal posteriors and joint of neighbouring variables are calculated by alpha-beta recursion (sum-product algorithm)</li>
+</ul>
+<p><strong>M-step</strong> (by Lagarange multiplier):</p>
+\begin{align*}
+a_k &amp;= \frac{1}{n} \sum_{j=1}^n p(h_1=k | \mathcal D_j; \boldsymbol\theta_{\text{old}}) \\
+A_{k,k'} &amp;= \frac{\sum_{j=1}^n \sum_{i=2}^d p(h_i=k, h_{i-1}=k' | \mathcal D_j; \boldsymbol\theta_{\text{old}})}{\sum_k \sum_{j=1}^n \sum_{i=2}^d p(h_i=k, h_{i-1}=k' | \mathcal D_j; \boldsymbol\theta_{\text{old}})} \\
+B_{m,k} &amp;= \frac{\sum_{j=1}^n \sum_{i=1}^d \mathbb 1(v_i^{(j)}=m) p(h_i=k|\mathcal D_j; \boldsymbol\theta_{\text{old}})}{\sum_m \sum_{j=1}^n \sum_{i=1}^d \mathbb 1(v_i^{(j)}=m) p(h_i=k|\mathcal D_j; \boldsymbol\theta_{\text{old}})}
+\end{align*}
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Model-based-Learning">Model-based Learning<a class="anchor-link" href="#Model-based-Learning">&#182;</a></h2>
 </div>
 </div>
@@ -13779,11 +13827,12 @@ $$\underbrace{\mathbb E_{p(\mathbf x; \hat{\boldsymbol\theta})} \left[ \mathbf m
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Unobserved-variables">Unobserved variables<a class="anchor-link" href="#Unobserved-variables">&#182;</a></h4><ul>
-<li>Latent variables (e.g. HMM, FA)</li>
+<li>Latent variables (e.g. <a href="#Learning-HMM">HMM</a>, FA)</li>
 <li>Variables for which data are missing</li>
 </ul>
-$$L(\boldsymbol\theta) = p(\mathcal D; \boldsymbol\theta) = \int_{\mathbf u} p(\mathbf u, \mathcal D; \boldsymbol\theta) \mathrm d \mathbf u$$<p>Evaluate by solving inference problem:</p>
-$$\boldsymbol\theta' = \boldsymbol\theta + \epsilon \nabla_{\boldsymbol\theta} \ell(\boldsymbol\theta)$$$$\nabla_{\boldsymbol\theta} \ell(\boldsymbol\theta) = \int_{\mathbf u} [\nabla_{\boldsymbol\theta} \log p(\mathbf u, \mathcal D; \boldsymbol\theta)] p(\mathbf u | \mathcal D; \boldsymbol\theta) \mathrm d \mathbf u = \mathbb E_{\mathbf u \sim p(\mathbf u | \mathcal D; \boldsymbol\theta)} \left[ \nabla_{\boldsymbol\theta} \log p(\mathbf u, \mathcal D; \boldsymbol\theta) \mid \mathcal D; \boldsymbol\theta \right]$$<p>Interpretation: Average of <em>gradient of log-likelihood</em> weighted by <em>plausibility of filled-in missing data</em></p>
+$$L(\boldsymbol\theta) = p(\mathcal D; \boldsymbol\theta) = \int_{\mathbf h} p(\mathbf h, \mathcal D; \boldsymbol\theta) \mathrm d \mathbf h$$<p>Evaluate by solving inference problem:</p>
+$$\boldsymbol\theta' = \boldsymbol\theta + \epsilon \nabla_{\boldsymbol\theta} \ell(\boldsymbol\theta)$$$$\nabla_{\boldsymbol\theta} \ell(\boldsymbol\theta) = \int_{\mathbf h} [\nabla_{\boldsymbol\theta} \log p(\mathbf h, \mathcal D; \boldsymbol\theta)] p(\mathbf u | \mathcal D; \boldsymbol\theta) \mathrm d \mathbf h = \mathbb E_{\mathbf h \sim p(\mathbf h | \mathcal D; \boldsymbol\theta)} \left[ \nabla_{\boldsymbol\theta} \log p(\mathbf h, \mathcal D; \boldsymbol\theta) \mid \mathcal D; \boldsymbol\theta \right]$$<p>Interpretation: Average of <em>gradient of log-likelihood</em> weighted by <em>plausibility of filled-in missing data</em></p>
+<p><a href="#Parameter-estimation">Variational approach</a></p>
 
 </div>
 </div>
@@ -13808,6 +13857,25 @@ $$\nabla_{\boldsymbol\theta} \ell(\boldsymbol\theta) = \sum_{i=1}^n \mathbf m(\m
 </ul>
 $$\ell(\boldsymbol\theta) = \log \left[ \int_{\mathbf u} \tilde p(\mathbf u, \mathcal D; \boldsymbol\theta) \mathrm d \mathbf u \right] - \log \left[ \int_{\mathbf u, \mathbf v} \tilde p(\mathbf u, \mathbf v; \boldsymbol\theta) \mathrm d \mathbf u \mathrm d \mathbf v \right]$$<p>Evaluate by solving inference problem with moment $\displaystyle \mathbf m(\mathbf u, \mathbf v; \boldsymbol\theta) = \nabla_{\boldsymbol\theta} \log \tilde p(\mathbf u, \mathbf v; \boldsymbol\theta)$:</p>
 $$\nabla_{\boldsymbol\theta} \ell(\boldsymbol\theta) = \mathbb E_{p(\mathbf u | \mathcal D; \boldsymbol\theta)} [ \mathbf m(\mathbf u, \mathcal D; \boldsymbol\theta) \mid \mathcal D; \boldsymbol\theta ] - \mathbb E_{p(\mathbf u, \mathbf v; \boldsymbol\theta)} [ \mathbf m(\mathbf u, \mathbf v; \boldsymbol\theta); \boldsymbol\theta ]$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Score-matching">Score matching<a class="anchor-link" href="#Score-matching">&#182;</a></h3>\begin{align*}
+\text{Model score function} &amp;&amp; \boldsymbol\psi(\mathbf x; \boldsymbol\theta) &amp;= \nabla_{\mathbf x} \log p(\mathbf x; \boldsymbol\theta) = \nabla_{\mathbf x} \log \tilde p(\mathbf x; \boldsymbol\theta) \\
+\text{Data score function} &amp;&amp; \boldsymbol\psi_*(\mathbf x) &amp;= \nabla_{\mathbf x} \log p_*(\mathbf x) \\
+\text{SM cost function} &amp;&amp; J_{\text{sm}}(\boldsymbol\theta) &amp;= \frac{1}{2} \mathbb E_{p_*(\mathbf x)} \| \boldsymbol\psi(\mathbf x; \boldsymbol\theta) - \boldsymbol\psi_*(\mathbf x) \|^2 \\
+&amp;&amp; &amp;= \mathbb E_* \sum_{j=1}^d \left[ \partial_j \psi_j (\mathbf x; \boldsymbol\theta) + \frac{1}{2} \psi_j^2 (\mathbf x; \boldsymbol\theta) \right] + \mathrm{const} \\
+\text{Estimate by sample mean} &amp;&amp; \hat{\boldsymbol\theta} &amp;= \arg \min_{\boldsymbol\theta} J(\boldsymbol\theta) \\
+&amp;&amp; J(\boldsymbol\theta) &amp;= \frac{1}{n} \sum_{i=1}^n \sum_{j=1}^d \left[ \partial_j \psi_j (\mathbf x_i; \boldsymbol\theta) + \frac{1}{2} \psi_j^2 (\mathbf x_i; \boldsymbol\theta) \right]
+\end{align*}<p>Requirements:</p>
+<ul>
+<li>$\displaystyle [p_*(\mathbf x) \psi_j (\mathbf x; \boldsymbol\theta)]_{a_j}^{b_j} = 0$, where $a_j$ and $b_j$ are bounds of $p_*$</li>
+<li>Seconde derivatives of $\log \tilde p(\mathbf x; \boldsymbol\theta)$ exists and is smooth s.t. can be optimised by gradient-based methods</li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -13887,7 +13955,7 @@ $$\mathbf v = \mathbf{Ah} = \sum_{i=1}^D \mathbf a_i h_i = \sum_{k=1}^D \mathbf 
 
 
 <div class="output_png output_subarea ">
-<img src="PMR_files/PMR_38_0.png"
+<img src="PMR_files/PMR_40_0.png"
 >
 </div>
 
@@ -13905,6 +13973,199 @@ $$\mathbf v = \mathbf{Ah} = \sum_{i=1}^D \mathbf a_i h_i = \sum_{k=1}^D \mathbf 
 <li>Non-Gaussianity solves the 'factor rotation' problem in FA</li>
 <li>To estimate $p_h$ is difficult</li>
 </ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Sampling">Sampling<a class="anchor-link" href="#Sampling">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Monte-Carlo-integration">Monte Carlo integration<a class="anchor-link" href="#Monte-Carlo-integration">&#182;</a></h3>$$\mathbb E[x] \approx \frac{1}{n} \sum_{i=1}^n x_i \quad \mathbb E[g(x)] \approx \frac{1}{n} \sum_{i=1}^n g(x_i)$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Importance-sampling">Importance sampling<a class="anchor-link" href="#Importance-sampling">&#182;</a></h3>$$\int g(\mathbf x) \mathrm d \mathbf x = \int g(\mathbf x) \frac{q(\mathbf x)}{q(\mathbf x)} \mathrm d \mathbf x = \mathbb E_{q(\mathbf x)} \left[ \frac{g(\mathbf x)}{q(\mathbf x)} \right] \approx \frac{1}{n} \sum_{i=1}^n \frac{g(\mathbf x_i)}{q(\mathbf x_i)}$$<ul>
+<li>Choose $q(\mathbf x)$ such that $\displaystyle \frac{|g(\mathbf x)|}{q(\mathbf x)}$ approximately constant</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Inverse-transform-sampling">Inverse transform sampling<a class="anchor-link" href="#Inverse-transform-sampling">&#182;</a></h3><h4 id="Discrete">Discrete<a class="anchor-link" href="#Discrete">&#182;</a></h4>$$p(x) = \begin{cases}
+p_1 &amp; x=x_1 \\
+p_2 &amp; x=x_2 \\
+\vdots &amp; \vdots \\
+p_n &amp; x=x_n
+\end{cases}, \quad p_0=0, \sum_{i=1}^n p_i = 1$$<ol>
+<li>Simulate $u \sim \mathcal U[0,1]$</li>
+<li>Set $x=x_k$ if $p_{k-1} \leq u &lt; p_k$</li>
+</ol>
+<h4 id="Continuous">Continuous<a class="anchor-link" href="#Continuous">&#182;</a></h4><ol>
+<li>Calculate inverse of cdf $F_x^{-1}$</li>
+<li>Simulate $u \sim \mathcal U[0,1]$</li>
+<li>Set $x = F_x^{-1}(u)$</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Rejection-sampling">Rejection sampling<a class="anchor-link" href="#Rejection-sampling">&#182;</a></h3><ol>
+<li>Simulate $x \sim q(x)$</li>
+<li>Generate $y|x \sim \mathcal B(f(x))$</li>
+<li>Accept $x$ if $y=1$</li>
+</ol>
+<ul>
+<li>Choose $f(x) \propto p(x) / q(x)$</li>
+<li>$\displaystyle x_i \sim \frac{q(x)f(x)}{\int q(x) f(x) \mathrm d x}$</li>
+<li>Limited to low-dim cases</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Ancestral-sampling">Ancestral sampling<a class="anchor-link" href="#Ancestral-sampling">&#182;</a></h3><p>Example: $p(x_1, \ldots, x_5) = p(x_1) p(x_2) p(x_3 | x_1, x_2) p(x_4 | x_3) p(x_5 | x_2)$</p>
+<ol>
+<li>Simulate $x_1 \sim p(x_1)$ and $x_2 \sim p(x_2)$</li>
+<li>Generate $x_3 \sim p(x_3 | x_1, x_2)$ and $x_5 \sim p(x_5 | x_2)$</li>
+<li>Generate $x_4 \sim p(x_4 | x_3)$ </li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Gibbs-sampling">Gibbs sampling<a class="anchor-link" href="#Gibbs-sampling">&#182;</a></h3><ol>
+<li>Set initial state $\mathbf x^1 = (x_1^1, \ldots, x_d^1)$</li>
+<li>Generate $x_i^k \sim p(x_i | \mathbf x_{\backslash i}^{k-1})$ for $i \in \{ 1, \ldots, d\}$</li>
+</ol>
+<ul>
+<li>Use $p(x_i | \mathrm{MB}(x_i))$ for simplicity</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Variational-Inference-and-Learning">Variational Inference and Learning<a class="anchor-link" href="#Variational-Inference-and-Learning">&#182;</a></h2><ul>
+<li><strong>Concave function</strong> (by Jensen's inequality): $\log \mathbb E [g(x)] \geq \mathbb E [ \log g(x) ]$</li>
+<li><strong>Kullback-Leiber (KL) divergence</strong>: $\displaystyle \mathrm{KL} (p \| q) = \int p(\mathbf x) \log \frac{p(\mathbf x)}{q(\mathbf x)} \mathrm d \mathbf x = \mathbb E_{p(\mathbf x)} \left[ \log \frac{p(\mathbf x)}{q(\mathbf x)} \right]= \begin{cases}
+  0 &amp; p(\mathbf x) = q(\mathbf x) \\
+  \text{positive} &amp; \text{otherwise}
+\end{cases}$<ul>
+<li>Asymmetric $\mathrm{KL}(p\|q) \neq \mathrm{KL}(q\|p)$</li>
+<li>$\arg\min_q \mathrm{KL}(q\|p)$:<ul>
+<li>avoid regions where $p$ is small</li>
+<li>produce good local fit, 'mode seeking'</li>
+</ul>
+</li>
+<li>$\arg\min_q \mathrm{KL}(p\|q)$:<ul>
+<li>nonzero where $p$ is nonzero</li>
+<li>does not care about regions where $p$ is small</li>
+<li>corresponds to MLE</li>
+<li>produce global fit / moment matching</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Auxiliary distribution</strong>: $q(\mathbf y)$ s.t. $\displaystyle p(\mathbf x) = \int p(\mathbf x, \mathbf y) \mathrm d \mathbf y = \int \frac{p(\mathbf x, \mathbf y)}{q(\mathbf y)} q(\mathbf y) \mathrm d \mathbf y = \mathbb E_{q(\mathbf y)} \left[ \frac{p(\mathbf x, \mathbf y)}{q(\mathbf y)} \right]$</li>
+<li><strong>Variational lower bound</strong>: $\displaystyle \log p(\mathbf x) = \log \mathbb E_{q(\mathbf y)} \left[ \frac{p(\mathbf x, \mathbf y)}{q(\mathbf y)} \right] \geq \mathbb E_{q(\mathbf y)} \left[ \log \frac{p(\mathbf x, \mathbf y)}{q(\mathbf y)} \right] \equiv \mathcal F(\mathbf x, q)$</li>
+<li><strong>Free energy</strong>: $\displaystyle \mathcal F(\mathbf x, q) = \mathbb E_{q(\mathbf y)} \left[ \log \frac{p(\mathbf x, \mathbf y)}{q(\mathbf y)} \right] = - \mathrm{KL}(q(\mathbf y) \| p(\mathbf y | \mathbf x)) + \log p(\mathbf x)$<ul>
+<li>Maximised when $q(\mathbf y) = p(\mathbf y | \mathbf x)$</li>
+<li>$\log p(\mathbf x) = \max_{q(\mathbf y)} \mathcal F(\mathbf x, q)$</li>
+<li>$p(\mathbf y | \mathbf x) = \arg \max_{q(\mathbf y)} \mathcal F(\mathbf x, q)$</li>
+<li>Difficulites:<ul>
+<li>optimisation w.r.t. pdf/pmf</li>
+<li>computation of expectation</li>
+</ul>
+</li>
+<li>Restrict to family of variation distributions $\mathcal Q$<ul>
+<li>independence assumptions</li>
+<li>parametric assumptions</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Approximate-posterior-inference">Approximate posterior inference<a class="anchor-link" href="#Approximate-posterior-inference">&#182;</a></h3><p><strong>Task</strong>: Given $\mathbf x = \mathbf x_0$ and joint pdf/pmf $p(\mathbf x, \mathbf y)$, compute $p(\mathbf y | \mathbf x_0)$</p>
+<p><strong>Variational approach</strong>:</p>
+<ol>
+<li>$\log p(\mathbf x_0) = \text{const}$</li>
+<li>$\arg\max_{q(\mathbf y)} \mathcal F(\mathbf x_0, q) = \arg\min_{q(\mathbf y)} \mathrm{KL}(q(\mathbf y \| p(\mathbf y | \mathbf x_0))$</li>
+</ol>
+<p><strong>Nature of approximation</strong>:</p>
+<ul>
+<li>True: correlated bivariate Gaussian. Assume: independence<ul>
+<li>Correct mean, underestimated variance</li>
+</ul>
+</li>
+<li>True: multimodal. Assume: unimodal<ul>
+<li>covers one mode only (mode-seeking)</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Learning-by-Bayesian-inference">Learning by Bayesian inference<a class="anchor-link" href="#Learning-by-Bayesian-inference">&#182;</a></h3><p><strong>Task</strong>: For Bayesian model $p(\mathbf x | \boldsymbol\theta) p(\boldsymbol\theta) = p(\mathbf x, \boldsymbol\theta)$, compute posterior $p(\boldsymbol\theta | \mathcal D)$</p>
+<p>Let $\mathcal D = \mathbf x_0$ and $\boldsymbol\theta = \mathbf y$, then same as before</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Parameter-estimation">Parameter estimation<a class="anchor-link" href="#Parameter-estimation">&#182;</a></h3><p>(in presence of <a href="#Unobserved-variables">unobserved variables</a>)</p>
+<ol>
+<li>Let $\mathcal D= \mathbf x$, $\mathbf h = \mathbf y$ and $p(\mathbf v, \mathbf h; \boldsymbol\theta) = p(\mathbf x, \mathbf y)$</li>
+<li>Write $J_{\mathcal F}(q, \boldsymbol\theta) = \mathcal F(\mathcal D, q; \boldsymbol\theta)$</li>
+<li>$\ell(\boldsymbol\theta) = \log p(\mathcal D; \boldsymbol\theta) = \max_{q(\mathbf h)} J_{\mathcal F}(q, \boldsymbol\theta)$</li>
+<li>Write $\displaystyle J_{\mathcal F} (q, \boldsymbol\theta) = \mathbb E_{q(\mathbf h)} \left[ \log \frac{p(\mathcal D, \mathbf h; \boldsymbol\theta)}{q(\mathbf h)} \right] = \mathbb E_{q(\mathbf h)} [\log p(\mathcal D, \mathbf h; \boldsymbol\theta)] \underbrace{- \mathbb E_{q(\mathbf h)} [\log q(\mathbf h)]}_{\text{entropy of }q(\mathbf h)}$<ul>
+<li>look for $\mathbf h$ that are maximally variable (large entropy) and compatible with observed data</li>
+</ul>
+</li>
+<li>Classical EM algorithm<ul>
+<li>Optimal $q^*(\mathbf h) = p(\mathbf h|\mathcal D; \boldsymbol\theta_k)$</li>
+<li>Expectation step: $\displaystyle J_{\mathcal F}(q^*, \boldsymbol\theta) = \mathbb E_{p(\mathbf h|\mathcal D; \boldsymbol\theta_k)} \log p(\mathcal D, \mathbf h; \boldsymbol\theta) - \mathbb E_{p(\mathbf h|\mathcal D; \boldsymbol\theta_k)} \log p(\mathbf h | \mathcal D; \boldsymbol\theta_k)$</li>
+<li>Maximisation step: $\boldsymbol\theta_{k+1} = \arg\max_{\boldsymbol\theta} J_{\mathcal F} (q^*, \boldsymbol\theta) = \arg\max_{\boldsymbol\theta} \mathbb E_{p(\mathbf h|\mathcal D; \boldsymbol\theta_k)} \log p(\mathcal D, \mathbf h; \boldsymbol\theta)$</li>
+<li>Non-decreasing $\ell(\boldsymbol\theta_{k+1}) \geq J_{\mathcal F}(q_{k+1}^*, \boldsymbol\theta_{k+1}) \geq J_{\mathcal F}(q_{k+1}^*, \boldsymbol\theta_k) = \ell(\boldsymbol\theta_k)$</li>
+</ul>
+</li>
+</ol>
 
 </div>
 </div>
