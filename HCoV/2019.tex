@@ -1,0 +1,549 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{indentfirst}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{HCoV Cheat Sheets}
+\fancyhead[R]{Author: s1889985}
+\fancyfoot[C]{Page \thepage}
+\linespread{0.9}
+
+\title{HCoV Cheat Sheet}
+
+\begin{document}
+\begin{multicols}{2}
+
+
+\begin{itemize}
+    \item Cartesian form: $z=x+iy$
+  
+    Polar form: $z= r(\cos\theta+i\sin\theta)$
+   
+    Exponential form: $z=re^{i\theta}$
+  \item Euler's formula: $e^{i\theta}=\cos\theta + i\sin\theta$
+  \item de Moivre's formula: $\cos(n\theta) + i\sin(n\theta)=(\cos \theta + i \sin \theta)^n$
+  \item $\displaystyle |z|^2= z \bar z \quad \frac{1}{z}= \frac{\bar z}{|z|^2}= \frac{x}{|z|^2}-i\frac{y}{|z|^2}$
+   
+    $\displaystyle Re(z)=\frac{z+\bar z}{2}, Im(z)=\frac{z-\bar z}{2i}$
+  \item Triangle equality: $|z+w| \leq |z|+|w|$
+   
+    Reverse triangle equality: $\left| |z|-|w| \right| \leq |z-w|$
+  \item $\text{arg}(z)=\{ \theta : z= |z|e^{i\theta} \}$ 
+  
+    $\qquad \quad= \{ \text{Arg}(z) + 2\pi k: k \in \mathbb Z \}$  
+  
+    $-\pi < \text{Arg(z)}\leq \pi$ satisfies $z=|z| e^{i \text{Arg}(z)}$
+  
+  \item  Principal value: $\text{Arg}(z)$, has discontinuity at all points $z$ on the negative real axis
+  \item $\text{arg}(zw)=\text{arg}(z)+\text{arg}(w)$
+        
+        $\text{arg}(\bar z)=-\text{arg}(z)$
+    
+        $\text{Arg}(zw)=\text{Arg}(z)+\text{Arg}(w)+ 2k\pi$
+        
+        $\text{Arg}(\bar z)=-\text{Arg}(z) + 2k\pi$
+  \item open $\epsilon$-disc: $D_\epsilon(z_0)=\{ z \in \mathbb C : |z-z_0| < \epsilon\}$
+    
+    closed $\epsilon$-disc: $\bar D_\epsilon(z_0)=\{ z \in \mathbb C : |z-z_0| \leq \epsilon\}$
+    
+    punctured $\epsilon$-disc: $D'_\epsilon(z_0)=\{ z \in \mathbb C : 0<|z-z_0| < \epsilon\} = D_\epsilon(z_0) \backslash \{ z_0 \}$
+\end{itemize}
+
+\section{Holomorphicity}
+
+\begin{itemize}
+    \item $f(z)=f(x+iy)=u(x,y)+iv(x,y)$
+    \item $f$ continuous at $z_0$: $\forall \epsilon >0, \exists \delta >0$ s.t. $|f(z_0)-f(z)|<\epsilon$ whenever $z\in S$ satisfies $|z_0-z|<\delta$
+      
+      e.g.  $f(z)=z,\bar z, |z|$ is continuous
+      
+    \item $f$ continuous $\Leftrightarrow$ the preimage $f^{-1}(U) = \{ z \in \mathbb C : f(z) \in U \}$ is open for all open $U \subseteq \mathbb C$
+    \item $S \subseteq \mathbb C$ is closed \& bounded + $f$ continuous $\Rightarrow f(S)$ is closed \& bounded
+    
+    
+    \item $f$ differentiable at $z_0$: $U \subseteq \mathbb C$ is a neighbourhood of $z_0$, $f: U \rightarrow \mathbb C$, the limit $\displaystyle f'(z_0)=\frac{df}{dz}(z_0)=\lim_{z\rightarrow z_0} \frac{f(z)-f(z_0)}{z-z_0}$ exists
+    \item $f$ holomorphic on $U$: $f$ is differentiable at $z_0$ for every $z_0 \in U$
+    \item $f$ differentiable at $z_0 \Rightarrow f$ continuous at $z_0$
+    \item Chain rule: $(f \circ g)'(z_0)=f'(g(z_0))g'(z_0)$
+    \item C-R equations: $z_0=x_0+iy_0$, $f=u+iv$ differentiable at $z_0 \Rightarrow$
+      $$\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}, \frac{\partial v}{\partial x} = -\frac{\partial u}{\partial y}$$
+    
+    \item $f'(z_0) = \frac{\partial u}{\partial x} + i\frac{\partial v}{\partial x} = -\frac{\partial u}{\partial y} + \frac{\partial v}{\partial y}$
+    
+    \item $f=z$ hol
+    
+      $f=\bar z$ nowhere hol, nowhere differentiable
+      
+      $f=|z|^2$ only diff at the origin, nowhere hol
+    
+    \item hol $\Rightarrow$ C-R
+      
+      C-R + partial derivatives continuous $\Rightarrow$ hol
+    \item $f,g$ hol $\Rightarrow f+g, fg, f/g (g \neq 0)$ hol 
+    \item complex polynomial $P(z)=\sum_{n=0}^N a_n z^n$ is hol on $\mathbb C$
+    \item rational function $R=P/Q$ is hol on $\{ z \in \mathbb C: Q(z) \neq 0 \}$ 
+    \item $U$ open + $g$ hol on $U$ + $f$ hol on $g(U) \Rightarrow f \circ g$ is hol on $U$
+    
+    \item Harmonic: $\displaystyle \frac{\partial^2h}{\partial x^2}(x,y) + \frac{\partial^2h}{\partial y^2}(x,y) = 0$
+    \item Harmonic conjugate: $U$ open, $u$ harmonic, then $v$ is the harmonic conjugate of $u$ if $f=u+iv$ is hol on $U$
+    \item $u,v$ twice cont differentiable (i.e. all the 2nd partial derivatives of $u,v$ are exist and continuous) + $f(z)=u+iv$ is hol $\Rightarrow u,v$ are harmonic 
+    
+    \item $\frac{\partial f}{\partial \bar z} = \frac{1}{2} (\frac{\partial u}{\partial x} - \frac{\partial v}{\partial y}) + \frac{i}{2} (\frac{\partial u}{\partial y} + \frac{\partial v}{\partial x})=0$ iff C-R
+    
+    \item $\partial = \frac{1}{2} (\frac{\partial}{\partial x} - i \frac{\partial}{\partial y})$ and $\bar \partial = \frac{1}{2} (\frac{\partial}{\partial x} + i \frac{\partial}{\partial y})$
+\end{itemize}
+
+\section{Some Complex functions}
+
+\textbf{Exponential}
+\begin{itemize}
+    \item $\exp (z) = \exp (x+iy) = e^x (\cos y + i \sin y)$
+    \item $\exp(z+2\pi i)= \exp(z)$
+    
+      $|\exp(a+ib)|=e^a$
+     
+      $\arg(\exp (a+ib)) = \{ b+2k\pi, k \in \mathbb Z \}$
+    
+      $\exp(nz)= (\exp(z))^n$
+    \item $z=x+iy, w=a+ib$, $\exp(z)=\exp(w) \Rightarrow x=a, y-b=2k\pi$
+    \item Given $z \in \mathbb C \backslash \{0\}$, $\exp(a+ib)=z \Leftrightarrow e^a=|z| \Leftrightarrow a=\ln |z|, b\in \text{arg}(z)$ 
+\end{itemize}
+
+\textbf{Cosine \& sine \& hyperbolic}
+\begin{itemize}
+    \item $\displaystyle \cos(z) := \frac{e^{iz}+e^{-iz}}{2}, \sin(z) := \frac{e^{iz}-e^{-iz}}{2i}$
+\item $\cos(z)$ and $\sin(z)$ are hol on $\mathbb C$
+\item $\tan(z)=\frac{\sin(z)}{\cos(z)}, \cot(z)=\frac{1}{\tan(z)}, \sec(z)=\frac{1}{\cos(z)}, \csc(z)=\frac{1}{\sin(z)}$
+\item $\sin(z+w)=\sin(z)\cos(w)+\cos(z)\sin(w)$
+  
+  $\cos(z+w)=\cos(z)\cos(w)-\sin(z)\sin(w)$
+\item $\sin(x+iy)= \sin (x) \cosh (y) + i\cos (x) \sinh (y)$
+
+  $\cos(x+iy)= \cos (x) \cosh (y) + i\sin (x) \sinh (y)$
+\end{itemize}
+
+\begin{itemize}
+    \item $\displaystyle \cosh(z):= \frac{e^z+e^{-z}}{2}, \sinh(z)=\frac{e^z-e^{-z}}{2}$
+\item $\sinh (iz)= i\sin z, \cosh (iz) = \cos z$
+\end{itemize}
+
+\textbf{Logarithm}
+
+\begin{itemize}
+    \item $\log(z):= \{ w \in \mathbb C: \exp (w) =z \}$
+    \item $w=\log(z) = \log(re^{i\theta}) = \ln|z|+i \arg(z)$
+    
+      $\quad = \{ \ln|z|+i\theta: \theta \in \arg z \}$
+    
+      $\quad = \{ \ln|z|+i\text{Arg}(z)+2 \pi ik: k\in \mathbb Z$ \}
+    
+      $\quad = \{ \ln r +i\theta +i2\pi k: k \in \mathbb Z \}$
+    \item $\log(zw)=\log (z)+\log (w)$ i.e. $u \in \log(zw)$ iff $\exists v_i \in \log (z), v_2 \in \log (w)$ s.t. $u=v_1+v_2$
+    \item $\log(1/z)=-\log(z)$ i.e. $u \in \log(1/z)$ iff $-u \in \log(z)$
+    \item Principal branch: $\text{Log}(z):= \ln|z|+i\text{Arg}(z), z$ is non-zero
+      
+      the non-positive real axis is a branch cut of this function, the origin is a branch point
+    \item Branch cut: $L_{z_0, \phi} = \{ z\in \mathbb C: z=z_0+re^{i \theta}, r \geq 0\}$
+      
+      Cut plane: $D_{z_0, \phi} = \mathbb C \backslash L_{z_0, \phi} \quad$ 
+      
+      ( $L_{0, \phi} = L_\phi, D_{0, \phi} =  D_\phi$, the cut plane associated with the principal branch of the arg and log functions will be denoted by $D$, i.e. $D=D_{-\pi}$
+    \item $\phi < \text{Arg}_\phi (z) \leq \phi +2\pi$, so $\text{Arg} = \text{Arg}_{- \pi}$
+    \item $\text{Log}_\phi (z) = \ln|z|+i\text{Arg}_\phi(z) : \mathbb C \backslash\{0\} \rightarrow \{ a+bi: a\in \mathbb R, \phi < b \leq \phi +2\pi \}$
+    
+    \item $z=\exp(\text{Log}_\phi(z))$, but $\text{Log}_\phi(\exp(z))=z$ is not true
+    \item $\text{Log}_\phi$ is hol on $D_{0,\phi}=\mathbb C \backslash L_{0,\phi}$, $\text{Log}'_\phi(z)=1/z$
+    \item $g:U \rightarrow \mathbb C$ hol on $U \Rightarrow \text{Log}_\phi(g(z))$ is hol on $U \cap g^{-1}(D_\phi)$
+      
+      in particular, if $g$ is hol on $\mathbb C \Rightarrow \text{Log}_\phi(g(z))$ is hol on $g^{-1}(D_\phi)$ i.e. at points $z$ s.t. $g(z) \in D_\phi$)
+\end{itemize}
+
+\textbf{Complex powers}
+
+\begin{itemize}
+    \item $z^\alpha=\{ \exp(\alpha w): w \in \log(z) \}$ 
+    
+      $\quad =\{ \exp(\alpha\ln|z| + i \alpha \text{Arg}(z) + i\alpha2\pi k): k\in \mathbb Z \}$
+    
+      $\quad = \{ \exp(\alpha \text{Log}(z)) \exp(i\alpha 2 \pi k): k \in \mathbb Z \}$
+  
+      $\exp(i\alpha 2 \pi k)=1, \alpha=n \in \mathbb Z$
+    
+  \item if $\alpha\in\mathbb Z \Rightarrow$ exactly one value of $z^\alpha$
+    
+    if $\alpha=p/q$, where $p,q$ coprime, $q \neq 0 \Rightarrow$ exactly $q$ values of $z^\alpha$
+  
+    if $\alpha$ irrational or non-real $\Rightarrow$ infinitely many values of $z^\alpha$
+  
+  \item $1^{1/q}=\{\exp(i2\pi k/q): k\in\mathbb Z\}$
+  
+  $\qquad =\{1, w, w^2, ..., w^{q-1}\}$ 
+  
+  where $w := \exp(i2\pi/q)$ are the $q$ roots of unity
+    
+   $z^{1/q}=\{ \exp(\text{Log(z}/q) \exp(i2\pi k/q) : k\in\mathbb Z\}$
+    
+    $\qquad = \{ |z|^{1/q} \exp(i\text{Arg}(z)/q) w^k: k=0,...,q-1 \}$
+  
+   $z^{p/q}= \{ |z|^{p/q} \exp(ip \text{Arg}(z)/q) w^{pk}: k=0,...,q-1 \}$
+  
+  \item for $\alpha=a+ib$ where $b \neq 0, \exp(i\alpha2\pi k)=\exp(i(a+ib)2\pi k) = \exp(i2\pi ka)\exp(-2\pi kb)$
+  
+  \item Principal branch: $z^\alpha=\exp(\alpha \text{Log}(z))$
+  
+  \item a branch of $z^\alpha$ is hol on $D_\phi$ on which the associated branch $\text{Log}_\phi$ is hol, and for all $z\in D_\phi$, $\frac{d}{dz}z^\alpha = \alpha z^{\alpha-1}$
+  
+    e.g. $z^z=\exp(z\text{Log}{z})$ is hol on set $D$ on which $\text{Log}(z)$ is hol, $\frac{d}{dz}z^z =  \frac{d}{dz}\exp (z\text{Log}(z))=\exp(z\text{Log}(z))(\text{Log}(z)+1)$
+  
+  \item $z^\alpha z^\beta = z^{\alpha+\beta}$ is true if principal branch is chosen for each power function
+  
+    $(zw)^\alpha = z^\alpha w^\alpha$ is not true in general for the principal branch in each case 
+\end{itemize}
+
+\section{Conformal maps \& MT}
+
+\begin{itemize}
+    \item MT: $\displaystyle f(z)=\frac{az+b}{cz+d}, ad \neq bc$
+    \item Extended complex plane: $\tilde{\mathbb C} \cup \{ \infty \}$
+      
+      $a+\infty=\infty, b \cdot \infty=\infty, b/0=\infty, b/\infty=0$
+    \item $f$ fixes the point at infinity: $f(\infty)=\infty$
+    \item MT $f$ = composition of finite translations + rotations + dilations + (one inversion, if do not fix the point at infinity)
+    \item MT maps circlines to circlines
+    \item two triplets of distinct points $(z_1,z_2,z_3), (w_1,w_2,w_3)$, there exists a unique MT $f$ s.t. $f(z_i)=w_i$
+    \item Cross ratio $\displaystyle [z_1,z_2,z_3,z_4]=\frac{z_1-z_3}{z_1-z_4} \frac{z_2-z_4}{z_2-z_3}$, sends $(z_2,z_3,z_4)$ to $(1,0,\infty)$
+    \item MT $f \Rightarrow [f(z_1),f(z_2),f(z_3),f(z_4)]=[z_1,z_2,z_3,z_4]$
+    \item if $[z_1,z_2,z_3,z_4]=[w_1,w_2,w_3,w_4] \Rightarrow \exists$ MT s.t. $h(z_i)=w_i$
+\end{itemize}
+
+\section{Integral}
+
+\begin{itemize}
+    \item $f$ is integrable $\Leftrightarrow u,v$ are integrable in the real sense
+    \item continuous function are integrable
+    \item $\int_a^b f(t)dt= F(b)-F(a)$, $F$ is antiderivative of $f$
+    \item $\left| \int_a^b f(t)dt \right| \leq \int_a^b |f(t)| dt$
+    \item Parametrized curve $\Gamma$ connecting $z_0$ and $z_1$: a continuous function $\gamma: [t_0,t_1] \to \mathbb C$ s.t. $\gamma(t_0)=z_0, \gamma(t_1)=z_1$
+    
+      writing $z_0=z_0+iy_0 \to \gamma(t)=x(t)+iy(t)\to x(t_0)=x_0, y(t_0)=y_0$
+    
+      $\Gamma$ is regular: if $\gamma$ is continuously differentiable and $\gamma'(t) \neq 0$ for all $t \in (t_0,t_1)$
+    \item $ \int_\Gamma f(z)dz= \int_{t_0}^{t_1} f(\gamma(t))\gamma'(t)ft$
+    
+    \item arclength $\ell(\Gamma):= \int_{t_0}^{t_1}|\gamma'(t)|dt \\ = \int_{t_0}^{t_1} \sqrt{x'(t)^2+y'(t)^2} dt$
+    \item M-L lemma: $\Gamma$ is a regular curve, $f: \Gamma \to \mathbb C$ is continuous, then
+      $$\displaystyle \left| \int_\Gamma f(z)dz \right| \leq \int_\Gamma |f(z)||dz|\leq \max_{z\in \Gamma} |f(z)| \ell(\Gamma)$$
+      
+      since $f$ continuous on $\Gamma, \Gamma$ is a closed and bounded subset of $\mathbb C$, $f$ is indeed bounded on $\Gamma$, and the values $\max|f|, min|f|$ are attained on $\Gamma$
+    \item $\int_{-\Gamma}f(z)dz = - \int_\Gamma f(z)dz$
+    \item $\int_\Gamma f(z)dz = \sum_{i=1}^n \int_{\Gamma_i} f(z)dz$
+    \item Path-independence lemma: $D$ domain, $f$ continuous, then
+      
+      $f$ has antiderivative $F$ in $D$
+      
+      $\Leftrightarrow \int_\Gamma f(z)dz=0$ for all closed contous $\Gamma$ in $D$
+      
+      $\Leftrightarrow \int_\Gamma f(z)dz$ are independent of the path $\Gamma$, and depend only on the endpoints
+    \item Jordan curve theorem: a loop $\Gamma, \mathbb C= \text{Int}(\Gamma) \cup \Gamma \cup \text{Ext}(\Gamma)$
+    \item CIT: $\Gamma$ loop, $f$ hol inside \& on $\Gamma \Rightarrow \int_\Gamma f(z)dz=0$
+    \item $D$ simply-connected domain, $f$ hol on $D \Rightarrow f$ has antiderivative on $D$
+    \item $\displaystyle \int_\Gamma \frac{1}{z-z_0}= \begin{cases} 2\pi i & \text{if } z_0 \in \text{Int}(\Gamma) \\ 0 & \text{otherwise}\end{cases}$
+    \item CIF: $\Gamma$ loop, $f$ hol inside \& on $\displaystyle \Gamma, z_0 \in \text{Int}(\Gamma) \Rightarrow f(z_0)=\frac{1}{2\pi i} \int_\Gamma \frac{f(z)}{z-z_0}dz$
+   
+    \item GCIF: $\Gamma$ loop, $f$ hol inside \& on $\displaystyle \Gamma, z_0 \in \text{Int}(\Gamma) \Rightarrow f^{(n)}(z_0)= \frac{n!}{2\pi i}\int_\Gamma \frac{f(z)}{(z-z_0)^{n+1}}dw$
+
+    \item Morera's theorem: $D$ domain, $f$ continuous, $\int_\Gamma f(z)dz=0$ for all loops $\Gamma \subseteq D \Rightarrow f$ hol
+    \item Cauchy estimate: $f$ hol on $\displaystyle D, \bar D_R(z_0) \subseteq D, |f(z)| \leq M \Rightarrow |f^{(n)}(z_0)| \leq \frac{n!M}{R^n}$, 
+    
+    where $R=|z-z_0|$
+    \item Liouville's theorem: $f$ hol \& bounded on $\mathbb C \Rightarrow f$ is constant
+    \item Maximum modulus principle: $f$ hol \& bounded on $D$, if $|f(z)|$ achieves its max at $z_0 \in D \Rightarrow f$ is constant on $D$ 
+    \item Max/Min principle: $\phi$ harmonic \& bounded above or below $M$, $\phi(z_0)=M$ for some $z_0\in D \Rightarrow \phi$ is constant on $D$
+\end{itemize}
+
+\section{Series}
+
+\begin{itemize}
+    \item $\sum_{j=0}^\infty z_j$ is convergent if partial sums $S_n=\sum_{j=0}^n z_j$ is a convergent sequence, with limit $S$, we say $\sum_{j=0}^\infty z_j=S$
+    \item $\sum_{j=0}^\infty z_j$ convergent $\Rightarrow z_n\to 0$ as $n\to 0$
+      
+      $z_n \not\rightarrow 0$ as $n\to 0 \Rightarrow$ divergent 
+    
+      $z_n \to 0$ as $n\to 0 \not\Rightarrow$ convergent 
+      
+      eg. $\sum_{j=1}^\infty \frac{1}{j} (\sum_{j=1}^n \frac{1}{j}=\ln(n+1)=\infty$ as $n \to \infty)$
+    \item $\sum_{n=1}^\infty \frac{1}{n^p}$ convergent if $p>1$
+    
+    \item Comparison test: $|z_n|\leq M_n$ for all sufficiently large $n$, where $\sum_{j=0}^\infty M_j$ is convergent, $M_n \geq 0 \Rightarrow \sum_{j=0}^\infty z_j$ is convergent
+    
+    \item $\sum_{j=0}^\infty c^j$ is convergent iff $|c|<1 , \sum_{j=0}^\infty c^j=\frac{1}{1-c}$
+    \item Ratio test: $\displaystyle L=\lim_{n\to \infty}\left| \frac{z_{n+1}}{z_n}\right|$
+      
+      $L<1$ convergent, $L>1$ divergent, $L=1$ you know nothing
+\end{itemize}
+
+\textbf{When the terms become functions}
+
+\begin{itemize}
+    \item Converge pointwise: for each $z\in S, \forall \epsilon>0, \exists N \in \mathbb N$ s.t. $|f_n(z)-f(z)|<\epsilon$ whenever $n \geq N$
+
+    Converge uniformly: $\forall \epsilon>0, \exists N\in \mathbb N$ s.t. for all $z \in S, |f_n(z)-f(z)|<\epsilon$ whenever $n \geq N$
+  
+    uniform $\Rightarrow$ pointwise
+  
+  \item converge pointwise / uniformly $\Leftrightarrow$ partial sum converge pointwise / uniformly
+  
+  \item $f_n: S\to \mathbb C$ a sequence of continuous functions, $f_n$ converges uniformly to $f:S\to\mathbb C \Rightarrow f$ is continuous
+  
+  \item Weierstrass M-test: $|f_n(z)|\leq M_n$ for all sufficiently large $n$, where $\sum_{j=0}^\infty M_j$ is convergent, $M_n \geq 0 \Rightarrow \sum_{j=0}^\infty f_j(z)$ converges uniformly
+  
+  \item $\sum_{j=0}^\infty M_j$ converges $\Leftrightarrow \exists n_1 \in \mathbb N$ s.t. $\left| \sum_{j=0}^\infty M_j - \sum_{j=0}^n M_j \right| < \epsilon$ whenever $n\geq n_1$
+  
+  \item $f_n: S\to \mathbb C$ a sequence of continuous functions, $f_n$ converges uniformly to $f, \Gamma$ a contour inside $S \Rightarrow \int_\Gamma f_n(z)dz$ converges to $\int_\Gamma f(z)dz$
+  \item Integral and Sum: $f_n: S\to \mathbb C$ a sequence of continuous functions, $\sum_{j=0}^\infty f_j(z)$ converges uniformly on $S, \Gamma$ a contour inside $S \Rightarrow$ 
+    $$\int_\Gamma \sum_{j=0}^\infty f_j(z)dz = \sum_{j=0}^\infty \int_\Gamma f_j(z)dz$$
+  \item $D$ simply-connected domain, $f_n$ hol on $D$, $f_n$ converges uniformly to $f:D\to \mathbb C \Rightarrow f$ hol on $D$
+\end{itemize}
+
+\textbf{Power series}
+
+\begin{itemize}
+    \item $\sum_{j=0}^\infty a_j(z-z_0)^j$ (Given $f$ hol at $z_0$)
+    \item For power series, $\exists R \in [0,\infty] \cup \infty$ s.t. the series
+      
+      converges on $D_R(z_0)$
+    
+      converges uniformly on $\bar D_r(z_0)$ for any $r\in[0,R)$
+    
+      diverges on $\mathbb C \backslash \bar D_R(z_0)$
+      
+      $R$ is the radius of convergence
+    
+    \item $R=\lim_{n\to \infty} \left| \frac{a_n}{a_{n+1}} \right|$ 
+      
+      (NOTE: doesn's assert that $R$ can always be evaluated by taking the limit, since this limit does not in general exist)
+    
+      e.g. $a_j=\begin{cases} 1 & j \text{ is oven} \\ 2 & j \text{ is odd} \end{cases}$
+    \item $f(z)=\sum_{j=0}^\infty a_j(z-z_0)^j$ is hol on $D_R(z_0)$
+\end{itemize}
+
+\textbf{Taylor series}
+
+\begin{itemize}
+    \item $\sum_{j=0}^\infty \frac{f^{(j)}(z_0)}{j!} (z-z_0)^j$
+  
+  Maclaurin series: $z_0=0$
+\item Taylor series theorem: $f$ hol on $D_R(z_0) \Rightarrow$ the Taylor for $f$ centred at $z_0$ converges to $f(z)$ for all $z\in D_R(z_0)$ \& converges uniformly on $\bar D_r(z_0)$ for all $0\leq r<R$
+  
+  i.e. Taylor of $f$ centred at $z_0$ will converge to $f(z)$ everywhere inside the largest open disc centred at $z_0$, on which $f$ is hol
+\item $U$ is open + $f: U\to \mathbb C$ is analytic: if at every point $z\in U, f$ can be expressed as a convergent power series
+\item $U$ is open, $f: U \to \mathbb C$ hol, $\Rightarrow f$ is analytic
+\item 
+  $\displaystyle \exp(z)= \sum_{j=0}^\infty \frac{z^j}{j!} \quad \frac{1}{1-z}= \sum_{n=0}^\infty z^n$
+  
+  $\displaystyle \cos(z)= \sum_{j=0}^\infty (-1)^j \frac{z^{2j}}{(2j)!}$
+
+  $\displaystyle \sin(z)= \sum_{j=0}^\infty (-1)^j \frac{z^{2j+1}}{(2j+1)!}$
+\item $\displaystyle f'(z)= \sum_{j=0}^\infty \frac{f^{(j+1)}(z_0)}{j!}(z-z_0)^j$ for $z\in D_R(z_0)$, where $f$ hol on $D_R(z_0)$
+
+  i.e. Taylor for $f'$ is found by differentiating Taylor for $f$ term-by-term
+\end{itemize}
+
+\textbf{Laurent series}
+
+\begin{itemize}
+    \item $\sum_{j=-\infty}^\infty a_j(z-z_0)^j$
+    \item $A_{r,R}(z_0)=\{ z\in \mathbb C: r<|z-z_0|<R \}$
+    
+      $\bar A_{r,R}(z_0)=\{ z\in \mathbb C: r\leq |z-z_0|\leq R \}$
+    
+    \item Laurent series theorem: $f$ hol on $A_{r,R}(z_0) \Rightarrow f$ can be expressed as a Laurent series centred at $z_0$ which converges on $A_{r,R}(z_0)$ \& converges uniformly on $\bar A_{r_1,R_1}(z_0)$ where $r<r_1\leq R_1<R \leq \infty$, the coefficients are given by
+      
+    $\displaystyle a_j= \frac{1}{2\pi i} \int_\Gamma \frac{f(z)}{(z-z_0)^{j+1}}dz$
+    
+      for any loop $\Gamma$ lying inside $A_{r,R}(z_0)$ and containing $z_0$ in its interior
+    \item trick: $\displaystyle \frac{1}{1-z}=\frac{1}{-z(1-\frac{1}{z})}$
+\end{itemize}
+
+\textbf{Singularities}
+
+\begin{itemize}
+    \item \textbf{singularity}: if $f$ is not hol at $z_0$
+  
+    \textbf{isolated sigularity}: if $\exists R>0$ s.t. $f$ is hol on $D'_R(z_0)$ 
+  \item \textbf{zero}: $f$ is hol on the neighbourhood of $z_0$, if $f(z_0)=0$
+    
+    \textbf{zero of order $m$}: if $f(z_0)=f'(z_0)=...=f^{(m-1)}(z_0)=0, f^{(m)}(z_0)\neq 0$
+  
+    \textbf{isolated zero}: if $\exists R>0$ s.t. $f(z)\neq 0$ for $z \in D'_R(z_0)$ 
+  \item $f$ is hol on the neighbourhood of $z_0$, with a zero of finite order at $z_0 \Rightarrow z_0$ is isolated
+  \item $f$ is hol on the neighbourhood of $z_0$, $f(z_n)=0$ for a sequence of distinct points $z_n \in U$ which converge to $z_0 \Rightarrow f$ is identically zero on some disc centred at $z_0$
+  \item $z_0 \in \mathbb C$ is s singularity of a rational function $f=P/Q \Rightarrow z_0$ is isolated
+  \item \textbf{isolated singularity}:
+    \begin{itemize}
+        \item \textbf{removable singularity}: if $a_j=0$ for all $j<0 \Leftrightarrow$ no negative powers, 
+        
+        $f(z)=\sum_{j=0}^\infty a_j(z-z_0)^j$
+  
+        \item \textbf{pole of order $m$}: if $a_j=0$ for $j<-m$ and $a_{-m}\neq 0 \Leftrightarrow f(z)=\sum_{j=-m}^\infty a_j(z-z_0)^j$
+      
+        \item \textbf{essential singularity}: infinite numbers of non-zero terms with nagative powers
+    \end{itemize}    
+
+  \item for removable singularity $z_0$ of $f$ which is hol on $D'_R(z_0)$, $f(z_0)$ can be re-defined so taht $f$ is hol at $z_0$
+    
+    $$f(z)=\begin{cases}
+    f(z) & z\neq z_0 \\
+    \lim_{\zeta \to z_0}f(\zeta) & z=z_0
+    \end{cases}$$
+  \item $f,g$ hol at $z_0$, where $z_0$ is a zero of $g$ of order $m$,
+    
+    if $z_0$ not a zero of $f \Rightarrow$
+    
+    $f/g$ has \textbf{pole of order $m$} at $z_0$
+  
+    if $z_0$ zero of order $k$ of $f \Rightarrow$ 
+    
+    $f/g$ has \textbf{pole of order $m-k$} at $z_0$ if $m>k$, 
+    
+    has \textbf{removable singularity} at $z_0$ if $m \leq k$
+\end{itemize}
+
+\section{Residue calculus}
+
+\begin{itemize}
+    \item $f$ hol on $D'_R(z_0)$, isolated singularity at $z_0$, $\text{Res}(f,z_0)=a_{-1}$ the coefficient of $(z-z_0)^{-1}$ in the Laurent expansion of $f$ centred at $z_0$ valid on $D'_R(z_0)$
+  
+    \item $f$ hol on $D'_R(z_0)$, \textbf{isolated singularity} at $z_0$, $\Gamma$ a loop inside $ D'_R(z_0), z_0 \in \text{Int}(\Gamma) \Rightarrow$
+    
+    $\int_\Gamma f(z)dz= 2\pi i a_{-1} = 2\pi i \text{Res}(f,z_0)$
+      
+    \item $f$ hol on $D'_R(z_0)$, \textbf{removable singularity} at $z_0 \Rightarrow \text{Res}(f,z_0)=0$
+      
+    \item $f$ hol on $D'_R(z_0)$, with \textbf{a pole of order $m$} at $\displaystyle z_0 \Rightarrow \text{Res}(f,z_0)= \lim_{z\to z_0} \frac{1}{(m-1)!} \frac{d^{m-1}}{dz^{m-1}} ((z-z_0)^m f(z))$
+    
+      1st order: $\text{Res}(f,z_0)= \lim_{z\to z_0} (z-z_0)f(z)$
+    
+      2nd order: $\text{Res}(f,z_0)= \lim_{z\to z_0} \left[ (z-z_0)^2f(z) \right]'$
+    
+    \item $g,h$ hol on $D'_R(z_0)$, $h$ has \textbf{a simple zero} at $z_0$, $g(z_0)\neq 0$, define $\displaystyle f=g/h \Rightarrow \text{Res}(f,z_0)=\frac{g(z_0)}{h'(z_0)}$
+    \item Cauchy residue theorem: $\Gamma$ loop, $f$ hol inside \& on $\Gamma$ except for finitely many isolated singularities $\displaystyle z_1,...,z_k \in \text{Int}(\Gamma) \Rightarrow$
+     $$\int_\Gamma f(z)dz = 2\pi i \sum_{j=1}^k \text{Res}(f,z_j)$$
+    
+    \item $f$ is meromorphic on $D$: if for all $z\in D$
+    
+    either $f$ has a pole of some finite order at $z$
+    
+    or $f$ is hol at $z$
+    \item The argument principle: $\Gamma$ loop, $f$ meromorphic on $\text{Int}(\Gamma)$, $f$ hol \& non-zero on $\Gamma \Rightarrow \frac{1}{2\pi i} \int_\Gamma \frac{f'(z)}{f(z)}dz = N_0(f) - N_\infty(f)$
+    
+    \# \textbf{zeros} of $f$ inside $\Gamma$, counted with multiplicity:   $N_0(f) = \sum_{j=1}^l \text{order of } w_j$ 
+      
+    \# \textbf{poles} of $f$ inside $\Gamma$, counted with multiplicity: $N_\infty(f) = \sum_{j=1}^k \text{order of } z_j$
+
+    \item Rouche's theorem: $\Gamma$ loop, $f,g$ hol inside \& on $\Gamma$ s.t. for all $z\in \Gamma, |f(z)-g(z)|<|f(z)| \Rightarrow N_0(f)=N_0(g)$
+    \item Open mapping theorem: $f$ non-constant and hol on $D \Rightarrow$ the image of $D$ under $f, f(D)=\{ f(z):z\in D \},$ is an open subset of $\mathbb C$
+    \item Maximum modulus theorem:  $f$ non-constant and hol on $D \Rightarrow |f(z)|$ does not attain a maximum on $D$
+\end{itemize}
+
+\textbf{Trigonometric integrals}
+
+\begin{itemize}
+    \item $\cos\theta=\frac{1}{2}(z+\frac{1}{z}), \sin\theta=\frac{1}{2i}(z-\frac{1}{z}), d\theta=\frac{dz}{iz}$
+  
+  $\int_0^{2\pi} R(\cos \theta, \sin \theta)d\theta= \int_{C_1(0)} \frac{1}{iz} R\left( \frac{z+z^{-1}}{2}, \frac{z-z^{-1}}{2i} \right)dz$
+\end{itemize}
+
+\textbf{Improper integrals}
+
+\begin{itemize}
+    \item Cauchy principal value: 
+    
+    $\text{p.v.} \int_{-\infty}^\infty f(x)dx := \lim_{\rho \to \infty} \int_{-\rho}^\rho f(x) dx$
+
+\item Jordan lemma: $R=P/Q$ rational function, $Q \neq 0$, $\deg(Q)\geq \deg(P)+1$, $a\in \mathbb R$ non-zero
+  $\lim_{\rho \to \infty} \int_{C_\rho^+}\exp(iaz)\frac{P(z)}{Q(z)}dz=0, \text{ if } a>0$
+
+  $\lim_{\rho \to \infty} \int_{C_\rho^-}\exp(iaz)\frac{P(z)}{Q(z)}dz=0, \text{ if } a<0$
+
+\item Convert $R(x)\cos(ax), R(x)\sin(ax)$ into real or imaginary part of $R(x)\exp(iax)$
+  
+  e.g. $\displaystyle \int_{-\infty}^\infty \frac{x\sin x}{1+x^2}dx$ is the imaginary part of $\displaystyle \int_{-\infty}^\infty \frac{x\exp(ix)}{1+x^2}dx$, consider contour $C_\rho^+$
+\item e.g. $ \displaystyle \int_{-\infty}^\infty \frac{e^{ax}}{e^x+1}dx$,  consider contour rectangular loop $\Gamma_\rho$ (contour $C_\rho^+$ contains infinity poles in $\rho \to \infty$, hard to calculate)
+\end{itemize}
+
+\textbf{Improper integrals with pole $z=c$}
+
+\begin{itemize}
+    \item $\int_a^c f(x)dx= \lim_{r \downarrow 0} \int_a^{c-r} f(x)dx$
+  
+
+  $ \int_c^b f(x)dx= \lim_{s \downarrow 0} \int_{c+s}^b f(x)dx$
+
+  $\int_a^b f(x)dx= \lim_{r \downarrow 0} \int_a^{c-r} + \lim_{s \downarrow 0} \int_{c+s}^b $
+
+  $r \downarrow 0$: $r\to 0$ through positive values only
+
+\item $\text{p.v.} \int_{-\infty}^\infty f(x)dx = \lim_{\rho \to \infty, r\downarrow 0} \left( \int_{-\rho}^{c-r}  + \int_{c+r}^\rho  \right)$
+\item Consider 2 types of contour:
+\begin{itemize}
+    \item the contour around a singularity, from $c-r$ to $c+r$, and $-C_r^+(c)$
+    \item a small circular arc $S_r$, parametrized by $\gamma(\theta)=c+r\exp(i\theta)$ for $\theta \in [\theta_0,\theta_1]$ for some $0 \leq \theta_0 < \theta_1 \leq 2\pi$
+\end{itemize}
+
+\item $\lim_{r \downarrow 0} \int_{S_r}f(z)dz = i(\theta_1-\theta_0) \text{Res}(f,c)$    
+\end{itemize}
+
+\textbf{Evaluate infinite series, calc $\int_{\Gamma_N} f(z)dz$}
+
+\begin{itemize}
+\item $R=P/Q, Q \neq 0, \deg Q-\deg P \geq 2$
+
+$\displaystyle \int_0^\infty R(x)dx = -\sum_{\text{poles }z_k} \text{Res}(f,z_k)$
+
+$f(z)=\log(z)R(z)$
+
+\item For $\int_0^\infty R(x)dx, f(z)=\log(z-a)R(z)$
+\item $R=P/Q, \deg Q-\deg P \geq 2$
+
+$\displaystyle \sum_{n=-\infty, n\neq z_k}^\infty R(n) = -\sum_{\text{poles } z_k \text{ of } R} \text{Res}(f,z_k)$
+
+$f(z)=\pi \cot(\pi z)R(z)$
+
+\item $R=P/Q, \deg Q-\deg P \geq 2$
+
+$\displaystyle \sum_{n=-\infty, n\neq z_k}^\infty (-1)^n R(n) = -\sum_{\text{poles } z_k \text{ of } R} \text{Res}(f,z_k)$
+
+$f(z)=\pi \csc(\pi z)R(z)$
+
+
+\item eg. $\sum_{n=-\infty}^\infty \frac{1}{n^2} \to f(z)=\frac{\cot(\pi z)}{z^2}$
+
+eg. $\sum_{n=-\infty}^\infty \frac{(-1)^{n+1}}{n^2} \to f(z)=\frac{\csc(\pi z)}{z^2}$
+
+eg. $\sum_{n=-\infty}^\infty \frac{1}{n^2+1} \to f(z)=\frac{\pi \cot(\pi z)}{z^2+1}$
+
+eg $ \sum_{n=-\infty}^\infty \frac{1}{(n-1/2)^2} \to f(z)=\frac{\pi \cot(\pi z)}{(z-1/2)^2}$
+
+\item $\Gamma$ loop with $0$ in its interior 
+
+$\displaystyle \binom{n}{k}=\frac{1}{2\pi i} \int_\Gamma \frac{(1+z)^n}{z^{k+1}}dz$
+
+
+
+
+
+
+
+\end{itemize}
+
+\end{multicols}
+\end{document}
