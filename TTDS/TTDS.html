@@ -13665,24 +13665,15 @@ M &amp;= \#\{q \cap d_i\} \\
 <tbody>
 <tr>
 <td>Unigram LM</td>
-<td>$$P(q</td>
-<td>M<em>d) = \prod</em>{k=1}^K P(t_k</td>
-<td>M<em>d) = \prod</em>{\text{unique }t} P(t</td>
-<td>M_d)^{\operatorname{tf}(t,q)}$$</td>
+<td>$$P(q\mid M_d) = \prod_{k=1}^K P(t_k\mid M_d) = \prod_{\text{unique }t} P(t\mid M_d)^{\operatorname{tf}(t,q)}$$</td>
 </tr>
 <tr>
 <td>Stochastic LM</td>
-<td>$$P(q</td>
-<td>M_d) = P(t_1</td>
-<td>M<em>d) \prod</em>{k=2}^K P(t_k</td>
-<td>M<em>d, t</em>{k-1}, \ldots, t_1)$$</td>
+<td>$$P(q\mid M_d) = P(t_1\mid M_d) \prod_{k=2}^K P(t_k\mid M_d, t_{k-1}, \ldots, t_1)$$</td>
 </tr>
 <tr>
 <td>Bigram LM</td>
-<td>$$P(q</td>
-<td>M_d) = P(t_1</td>
-<td>M<em>d) \prod</em>{k=2}^K P(t_k</td>
-<td>M<em>d, t</em>{k-1})$$</td>
+<td>$$P(q\mid M_d) = P(t_1\mid M_d) \prod_{k=2}^K P(t_k\mid M_d, t_{k-1})$$</td>
 </tr>
 </tbody>
 </table>
@@ -13811,21 +13802,30 @@ $$P(t|d) = \lambda P(t|M_d) + (1-\lambda) P(t|M_c)$$<ul>
 </tr>
 <tr>
 <td>Discounted Gain</td>
-<td>$$\operatorname{DG}(k) = \begin{cases}</td>
+<td>$$\operatorname{DG}(k) = \begin{cases} \operatorname{G}(k) &amp; k=1 \\ \displaystyle \frac{\operatorname{G}(k)}{\log_2 k} &amp; k \geq 2 \end{cases}$$</td>
+</tr>
+<tr>
+<td>Discounted Cumulative Gain</td>
+<td>$$\operatorname{DCG}(k) = \sum_{i=1}^k \operatorname{DG}(k)$$</td>
+</tr>
+<tr>
+<td>Ideal Gain</td>
+<td>$$\operatorname{iG}(k) = G_{(k)}$$ (should include all relevant docs)</td>
+</tr>
+<tr>
+<td>Ideal DG</td>
+<td>$$\operatorname{iDG}(k) = \begin{cases} \operatorname{iG}(k) &amp; k=1 \\ \displaystyle \frac{\operatorname{iG}(k)}{\log_2 k} &amp; k \geq 2 \end{cases}$$</td>
+</tr>
+<tr>
+<td>Ideal DCG</td>
+<td>$$\operatorname{iDCG}(k) = \sum_{i=1}^k \operatorname{iDG}(k)$$</td>
+</tr>
+<tr>
+<td>Normalised DCG</td>
+<td>$$\operatorname{nDCG}(k) = \frac{\operatorname{DCG}(k)}{\operatorname{iDCG}(k)}$$</td>
 </tr>
 </tbody>
 </table>
-<p>\operatorname{G}(k) &amp; k=1 \
-\displaystyle \frac{\operatorname{G}(k)}{\log<em>2 k} &amp; k \geq 2
-\end{cases}$$|
-|Discounted Cumulative Gain|$$\operatorname{DCG}(k) = \sum</em>{i=1}^k \operatorname{DG}(k)$$|
-|Ideal Gain|$$\operatorname{iG}(k) = G_{(k)}$$ (should include all relevant docs)|
-|Ideal DG|$$\operatorname{iDG}(k) = \begin{cases}
-\operatorname{iG}(k) &amp; k=1 \\
-\displaystyle \frac{\operatorname{iG}(k)}{\log_2 k} &amp; k \geq 2
-\end{cases}$$|
-|Ideal DCG|$$\operatorname{iDCG}(k) = \sum_{i=1}^k \operatorname{iDG}(k)$$|
-|Normalised DCG|$$\operatorname{nDCG}(k) = \frac{\operatorname{DCG}(k)}{\operatorname{iDCG}(k)}$$|</p>
 
 </div>
 </div>
